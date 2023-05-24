@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eleadmin.ConvoyManagement.driver.mapper.DriverMapper">
+
+    <!-- 关联查询sql -->
+    <sql id="selectSql">
+        SELECT a.*
+        FROM driver a
+        <where>
+            <if test="param.id != null">
+                AND a.id = #{param.id}
+            </if>
+            <if test="param.jobnumber != null">
+                AND a.jobNumber LIKE CONCAT('%', #{param.jobnumber}, '%')
+            </if>
+            <if test="param.drivername != null">
+                AND a.driverName LIKE CONCAT('%', #{param.drivername}, '%')
+            </if>
+            <if test="param.drivertype != null">
+                AND a.driverType LIKE CONCAT('%', #{param.drivertype}, '%')
+            </if>
+            <if test="param.drivercategory != null">
+                AND a.driverCategory LIKE CONCAT('%', #{param.drivercategory}, '%')
+            </if>
+            <if test="param.driverphone != null">
+                AND a.driverPhone LIKE CONCAT('%', #{param.driverphone}, '%')
+            </if>
+            <if test="param.driverstate != null">
+                AND a.driverState LIKE CONCAT('%', #{param.driverstate}, '%')
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageRel" resultType="com.eleadmin.ConvoyManagement.driver.entity.Driver">
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="selectListRel" resultType="com.eleadmin.ConvoyManagement.driver.entity.Driver">
+        <include refid="selectSql"></include>
+    </select>
+
+
+    <select id="findAllDrivers" resultType="com.eleadmin.ConvoyManagement.driver.entity.Driver">
+        select *
+        from driver
+    </select>
+    <update id="updateDriver" parameterType="com.eleadmin.ConvoyManagement.driver.entity.Driver">
+        update driver set jobNumber=#{jobNumber},driverName=#{driverName},driverType=#{driverType},driverCategory=#{driverCategory},driverPhone=#{driverPhone},driverState=#{driverState} where jobNumber=#{jobNumber}
+    </update>
+    <delete id="deleteDriver">
+        delete from driver where id = #{id}
+    </delete>
+    <insert id="addDriver" parameterType="com.eleadmin.ConvoyManagement.driver.entity.Driver">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into driver
+        (jobNumber,driverName,driverType,driverCategory,driverPhone,driverState,tenant_id)
+        values (#{jobNumber},#{driverName},#{driverType},#{driverCategory},#{driverPhone},#{driverState},2)
+    </insert>
+</mapper>

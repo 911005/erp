@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eleadmin.SalesManagement.customer.mapper.CustomerMapper">
+
+    <!-- 关联查询sql -->
+    <sql id="selectSql">
+        SELECT a.*
+        FROM customer a
+        <where>
+            <if test="param.id != null">
+                AND a.id = #{param.id}
+            </if>
+            <if test="param.unitname != null">
+                AND a.unitName LIKE CONCAT('%', #{param.unitname}, '%')
+            </if>
+            <if test="param.unittype != null">
+                AND a.unitType LIKE CONCAT('%', #{param.unittype}, '%')
+            </if>
+            <if test="param.legalrepresentative != null">
+                AND a.legalRepresentative LIKE CONCAT('%', #{param.legalrepresentative}, '%')
+            </if>
+            <if test="param.unitphone != null">
+                AND a.unitPhone LIKE CONCAT('%', #{param.unitphone}, '%')
+            </if>
+            <if test="param.faxnumber != null">
+                AND a.faxNumber LIKE CONCAT('%', #{param.faxnumber}, '%')
+            </if>
+            <if test="param.unitemail != null">
+                AND a.unitEmail LIKE CONCAT('%', #{param.unitemail}, '%')
+            </if>
+            <if test="param.unitaddress != null">
+                AND a.unitAddress LIKE CONCAT('%', #{param.unitaddress}, '%')
+            </if>
+            <if test="param.zipcode != null">
+                AND a.zipcode LIKE CONCAT('%', #{param.zipcode}, '%')
+            </if>
+            <if test="param.salesman != null">
+                AND a.salesman LIKE CONCAT('%', #{param.salesman}, '%')
+            </if>
+            <if test="param.ratepayingnumber != null">
+                AND a.ratepayingNumber LIKE CONCAT('%', #{param.ratepayingnumber}, '%')
+            </if>
+            <if test="param.state != null">
+                AND a.state LIKE CONCAT('%', #{param.state}, '%')
+            </if>
+            <if test="param.remarks != null">
+                AND a.remarks LIKE CONCAT('%', #{param.remarks}, '%')
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageRel" resultType="com.eleadmin.SalesManagement.customer.entity.Customer">
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="selectListRel" resultType="com.eleadmin.SalesManagement.customer.entity.Customer">
+        <include refid="selectSql"></include>
+    </select>
+
+    <select id="findAllCustomers" resultType="com.eleadmin.SalesManagement.customer.entity.Customer">
+        select *
+        from customer
+    </select>
+
+    <insert id="addCustomer" parameterType="com.eleadmin.SalesManagement.customer.entity.Customer">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            select LAST_INSERT_ID()
+        </selectKey>
+
+        insert into customer
+        (id,unitName,unitType,unitPhone,unitAddress,salesman,state,remarks,tenant_id)
+        values (#{id},#{unitName},#{unitType},#{unitPhone},#{unitAddress},#{salesman},#{state},#{remarks},2)
+    </insert>
+    <update id="updateCustomer" parameterType="com.eleadmin.SalesManagement.customer.entity.Customer">
+        update customer set unitType=#{unitType},unitPhone=#{unitPhone},unitAddress=#{unitAddress},salesman=#{salesman},state=#{state},remarks=#{remarks} where unitName=#{unitName}
+    </update>
+    <delete id="deleteCustomer">
+        delete from customer where id = #{id}
+    </delete>
+</mapper>
