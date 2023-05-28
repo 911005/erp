@@ -1,7 +1,11 @@
 <template>
   <div>
-    <vxe-button status="primary" content="查询罐车信息" @click="findPumpTrucks()"></vxe-button>
-    <vxe-button status="primary" content="新增罐车信息" @click="addPumpTruck()"></vxe-button>
+    <vxe-input v-model="demo.searchInput1" placeholder="请输入泵车编号" type="search" ></vxe-input>
+    <vxe-button status="primary" content="查询" @click="findPumpTrucksBypumpTruckid()"></vxe-button>
+    <vxe-input v-model="demo.searchInput2" placeholder="请输入车牌号" type="search" ></vxe-input>
+    <vxe-button status="primary" content="查询" @click="findPumpTrucksBypumpTruckNumber()"></vxe-button>
+    <vxe-button status="primary" content="查询所有泵车信息" @click="findPumpTrucks()"></vxe-button>
+    <vxe-button status="primary" content="新增泵车信息" @click="addPumpTruck()"></vxe-button>
     <vxe-table
       :cell-style="cellStyle"
       :data="demo.PumpTrucks">
@@ -171,6 +175,8 @@ export default {
       findPumpTrucks()
     })
     const demo = reactive({
+      searchInput1:[],
+      searchInput2:[],
       PumpTrucks: [],
       status: false,
       addStatus: false,
@@ -203,6 +209,21 @@ export default {
       console.log(demo.PumpTrucks)
       return res
     }
+    const findPumpTrucksBypumpTruckNumber = async () =>{
+      const res = await request.get('/pumpTruck/pumptruck/findPumpTrucksBypumpTruckNumber/' +demo.searchInput2);
+      console.log(res)
+      demo.PumpTrucks = res.data
+      console.log(demo.PumpTrucks)
+      return res
+    }
+    const findPumpTrucksBypumpTruckid = async () =>{
+      const res = await request.get('/pumpTruck/pumptruck/findPumpTrucksBypumpTruckid/' +demo.searchInput1);
+      console.log(res)
+      demo.PumpTrucks = res.data
+      console.log(demo.PumpTrucks)
+      return res
+    }
+
     const deleteEvent = async (row) => {
       alert(row.id)
       const res = await request.delete('/pumpTruck/pumptruck/deletePumpTruck/' + row.id)
@@ -246,7 +267,7 @@ export default {
         status: demo.addData.status
       }
       console.log(data)
-      const res = await request.put('/pumpTruck/pumptruck/addPumpTruck', data)
+      const res = await request.post('/pumpTruck/pumptruck/addPumpTruck', data)
       console.log(demo.addData)
       if (res.data.code === 0) {
         return res.data.message;
@@ -263,6 +284,8 @@ export default {
       submitEvent,
       addPumpTruck,
       addEvent,
+      findPumpTrucksBypumpTruckNumber,
+      findPumpTrucksBypumpTruckid,
       cellStyle
     }
   },

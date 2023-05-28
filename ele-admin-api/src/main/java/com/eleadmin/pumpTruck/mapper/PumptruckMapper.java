@@ -36,6 +36,10 @@ public interface PumptruckMapper extends BaseMapper<Pumptruck> {
 
     List<Pumptruck> findAllPumpTrucks();
 
+    List<Pumptruck> findPumpTrucksBypumpTruckNumber(String number);
+
+    List<Pumptruck> findPumpTrucksBypumpTruckid(String id);
+
     void deletePumpTruck(int id);
 
     void updatePumpTruck(Pumptruck pumptruck);

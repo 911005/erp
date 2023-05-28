@@ -19,6 +19,10 @@ public interface CustomerMapper extends BaseMapper<Customer> {
      * 查询所有客户信息
      */
     List<Customer> findAllCustomers();
+
+    List<Customer> findCustomersByunitName(String name);
+
+    List<Customer> findCustomersByunitType(String type);
     /**
      * 删除客户信息
      * @param id

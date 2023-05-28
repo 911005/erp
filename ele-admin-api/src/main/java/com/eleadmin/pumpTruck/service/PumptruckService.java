@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.eleadmin.common.core.web.PageResult;
 import com.eleadmin.pumpTruck.entity.Pumptruck;
 import com.eleadmin.pumpTruck.param.PumptruckParam;
-import com.eleadmin.supplier.entity.Supplier;
 
 import java.util.List;
 
@@ -41,6 +40,10 @@ public interface PumptruckService extends IService<Pumptruck> {
     Pumptruck getByIdRel(Integer id);
 
     List<Pumptruck> findAllPumpTrucks();
+
+    List<Pumptruck> findPumpTrucksBypumpTruckNumber(String number);
+
+    List<Pumptruck> findPumpTrucksBypumpTruckid(String id);
 
     void deletePumpTruck(int id);
 

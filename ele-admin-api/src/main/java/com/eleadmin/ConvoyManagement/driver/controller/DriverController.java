@@ -35,7 +35,20 @@ public class DriverController extends BaseController {
         return driverService.findAllDrivers();
     }
 
-
+    @PreAuthorize("hasAuthority('driver:driver:list')")
+    @OperationLog
+    @ApiOperation("根据id查询")
+    @GetMapping("/findDriversByjobNumber/{jobnumber}")
+    public List<Driver> findDriversByjobNumber(@PathVariable("jobnumber") Integer number) {
+        return driverService.findDriversByjobNumber(number);
+    }
+    @PreAuthorize("hasAuthority('driver:driver:list')")
+    @OperationLog
+    @ApiOperation("根据id查询")
+    @GetMapping("/findDriversBydriverName/{drivername}")
+    public List<Driver> get(@PathVariable("drivername") String  name) {
+        return driverService.findDriversBydriverName(name);
+    }
     @PreAuthorize("hasAuthority('sys:dict:list')")
     @OperationLog
     @ApiOperation("分页查询")

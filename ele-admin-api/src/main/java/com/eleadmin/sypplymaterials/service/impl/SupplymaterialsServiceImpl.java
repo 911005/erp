@@ -54,6 +54,11 @@ public class SupplymaterialsServiceImpl extends ServiceImpl<SupplymaterialsMappe
     }
 
     @Override
+    public List<Supplymaterials> findSupplyMById(String supplymaterialname) {
+        return supplymaterialsMapper.findSupplyMById(supplymaterialname);
+    }
+
+    @Override
     public void deleteSupplyM(int id) {
         supplymaterialsMapper.deleteSupplyM(id);
     }

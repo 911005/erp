@@ -1,5 +1,11 @@
 <template>
   <div>
+    <vxe-input v-model="demo.searchInput1" placeholder="请输入车辆编号" type="search" ></vxe-input>
+    <vxe-button status="primary" content="查询" @click="selectByCarNumber()"></vxe-button>
+    <vxe-input v-model="demo.searchInput2" placeholder="请输入车牌号" type="search" ></vxe-input>
+    <vxe-button status="primary" content="查询" @click="selectBycarIdenNumber()"></vxe-button>
+    <vxe-input v-model="demo.searchInput3" placeholder="请输入负责人" type="search" ></vxe-input>
+    <vxe-button status="primary" content="查询" @click="selectBypersonInCharge()"></vxe-button>
     <vxe-button status="primary" content="查询运输车辆信息" @click="findCars()"></vxe-button>
     <vxe-button status="primary" content="新增运输车辆信息" @click="addCar()"></vxe-button>
     <vxe-table
@@ -130,7 +136,7 @@
 
         <vxe-form-item align="center" title-align="left" :span="24">
           <template #default>
-            <vxe-button @click="addEvent1">提交</vxe-button>
+            <vxe-button @click="addEvent">提交</vxe-button>
             <vxe-button type="reset">重置</vxe-button>
           </template>
         </vxe-form-item>
@@ -153,6 +159,9 @@ export default {
       findCars()
     })
     const demo = reactive({
+      searchInput1: [],
+      searchInput2: [],
+      searchInput3: [],
       cars: [],
       status: false,
       addStatus: false,
@@ -167,9 +176,25 @@ export default {
       console.log(demo.cars)
       return res
     }
-    const selectById = async () =>{
+    const selectByCarNumber = async () =>{
       console.log(111)
-      const res = await request.get('/car/car/selectById');
+      const res = await request.get('/car/car/selectByCarNumber'+demo.searchInput1);
+      console.log(res)
+      demo.cars = res.data
+      console.log(demo.cars)
+      return res
+    }
+    const selectBycarIdenNumber = async () =>{
+      console.log(111)
+      const res = await request.get('/car/car/selectBycarIdenNumber'+demo.searchInput2);
+      console.log(res)
+      demo.cars = res.data
+      console.log(demo.cars)
+      return res
+    }
+    const selectBypersonInCharge = async () =>{
+      console.log(111)
+      const res = await request.get('/car/car/selectBypersonInCharge'+demo.searchInput3);
       console.log(res)
       demo.cars = res.data
       console.log(demo.cars)
@@ -204,7 +229,7 @@ export default {
       demo.addStatus = true
     }
 
-    const addEvent1 = async () => {
+    const addEvent = async () => {
       demo.addStatus = false
       let data = {
         carid: demo.addData.carid,
@@ -217,7 +242,7 @@ export default {
         remarks: demo.addData.remarks
       }
       console.log(data)
-      const res = await request.put('/car/car/addCar', data)
+      const res = await request.post('/car/car/addCar', data)
       console.log(demo.addData)
       if (res.data.code === 0) {
         return res.data.message;
@@ -233,7 +258,10 @@ export default {
       updateEvent,
       submitEvent,
       addCar,
-      addEvent1
+      addEvent,
+      selectByCarNumber,
+      selectBycarIdenNumber,
+      selectBypersonInCharge
     }
   },
 

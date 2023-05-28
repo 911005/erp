@@ -40,6 +40,10 @@ public interface StoragesiloMapper extends BaseMapper<Storagesilo> {
      * 查询所有储粮仓信息
      */
     List<Storagesilo> findAllStoragesilos();
+
+    List<Storagesilo> findStoragesilosBystoragesiloName(String name);
+
+    List<Storagesilo> findStoragesilosBystorageslioType(String type);
     /**
      * 删除储料仓信息
      * @param id

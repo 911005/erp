@@ -43,6 +43,8 @@ public interface SupplymaterialsService extends IService<Supplymaterials> {
 
     List<Supplymaterials> findAllSupplyM();
 
+    List<Supplymaterials> findSupplyMById(String supplymaterialname);
+
     void deleteSupplyM(int id);
 
     boolean addSupplyM(Supplymaterials supplymaterials);

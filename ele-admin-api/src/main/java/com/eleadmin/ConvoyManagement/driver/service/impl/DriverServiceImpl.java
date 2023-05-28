@@ -40,6 +40,16 @@ public class DriverServiceImpl extends ServiceImpl<DriverMapper, Driver> impleme
     }
 
     @Override
+    public List<Driver> findDriversByjobNumber(int number) {
+        return driverMapper.findDriversByjobNumber(number);
+    }
+
+    @Override
+    public List<Driver> findDriversBydriverName(String name) {
+        return driverMapper.findDriversBydriverName(name);
+    }
+
+    @Override
     public Driver getByIdRel(Integer id) {
         DriverParam param = new DriverParam();
         param.setId(id);

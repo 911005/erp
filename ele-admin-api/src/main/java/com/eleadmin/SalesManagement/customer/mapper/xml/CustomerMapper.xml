@@ -63,18 +63,28 @@
         select *
         from customer
     </select>
-
+    <select id="findCustomersByunitName" resultType="com.eleadmin.SalesManagement.customer.entity.Customer">
+        select *
+        from customer where unitName=#{unitname}
+    </select>
+    <select id="findCustomersByunitType" resultType="com.eleadmin.SalesManagement.customer.entity.Customer">
+        select *
+        from customer where unitType=#{unittype}
+    </select>
     <insert id="addCustomer" parameterType="com.eleadmin.SalesManagement.customer.entity.Customer">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
             select LAST_INSERT_ID()
         </selectKey>
-
         insert into customer
-        (id,unitName,unitType,unitPhone,unitAddress,salesman,state,remarks,tenant_id)
-        values (#{id},#{unitName},#{unitType},#{unitPhone},#{unitAddress},#{salesman},#{state},#{remarks},2)
+        (unitName,unitType,legalRepresentative,unitPhone,faxNumber,unitEmail,
+         unitAddress,zipcode,salesman,ratepayingNumber,state,remarks,tenant_id)
+        values (#{unitname},#{unittype},#{legalrepresentative},#{unitphone},#{faxnumber},
+            #{unitemail},#{unitaddress},#{zipcode},#{salesman},#{ratepayingnumber},#{state},#{remarks},2)
     </insert>
     <update id="updateCustomer" parameterType="com.eleadmin.SalesManagement.customer.entity.Customer">
-        update customer set unitType=#{unitType},unitPhone=#{unitPhone},unitAddress=#{unitAddress},salesman=#{salesman},state=#{state},remarks=#{remarks} where unitName=#{unitName}
+        update customer set unitType=#{unittype},legalRepresentative=#{legalrepresentative},unitPhone=#{unitphone}
+                          ,faxNumber=#{faxnumber},unitEmail=#{unitemail},unitAddress=#{unitaddress},zipcode=#{zipcode},
+                           salesman=#{salesman},ratepayingNumber=#{ratepayingnumber},state=#{state},remarks=#{remarks} where unitName=#{unitname}
     </update>
     <delete id="deleteCustomer">
         delete from customer where id = #{id}

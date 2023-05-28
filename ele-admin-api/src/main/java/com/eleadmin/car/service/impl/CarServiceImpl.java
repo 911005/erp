@@ -54,6 +54,21 @@ public class CarServiceImpl extends ServiceImpl<CarMapper, Car> implements CarSe
     }
 
     @Override
+    public List<Car> findCarByCarNumber(String CarNumber) {
+        return carMapper.findCarByCarNumber(CarNumber);
+    }
+
+    @Override
+    public List<Car> findCarBycarIdenNumber(String carIdenNumber) {
+        return carMapper.findCarBycarIdenNumber(carIdenNumber);
+    }
+
+    @Override
+    public List<Car> findCarBypersonInCharge(String personInCharge) {
+        return carMapper.findCarBypersonInCharge(personInCharge);
+    }
+
+    @Override
     public void deleteCar(int id) {
         carMapper.deleteCar(id);
     }

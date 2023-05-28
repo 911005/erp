@@ -1,7 +1,11 @@
 <template>
 <div>
-  <vxe-button status="primary" content="查询" @click="findDrivers()"></vxe-button>
-  <vxe-button status="primary" content="新增" @click="addDriver()"></vxe-button>
+  <vxe-input v-model="dr.searchInput1" placeholder="请输入工号" type="search" ></vxe-input>
+  <vxe-button status="primary" content="查询" @click="findDriversByjobNumber()"></vxe-button>
+  <vxe-input v-model="dr.searchInput2" placeholder="请输入司机名字" type="search" ></vxe-input>
+  <vxe-button status="primary" content="查询" @click="findDriversBydriverName()"></vxe-button>
+  <vxe-button status="primary" content="查询所有司机信息" @click="findDrivers()"></vxe-button>
+  <vxe-button status="primary" content="新增司机信息" @click="addDriver()"></vxe-button>
   <vxe-table
     :data="dr.drivers">
     <vxe-column type="seq" width="60" field="id"></vxe-column>
@@ -110,16 +114,17 @@
 </template>
 
 <script>
-import {reactive, onMounted, provide} from "vue";
+import {reactive, onMounted} from "vue";
 import request from "@/utils/request";
 export default {
   name: "index",
   setup() {
     onMounted(() => {
       findDrivers()
-      deleteEvent()
     })
     const dr = reactive({
+      searchInput1:[],
+      searchInput2:[],
       drivers: [],
       status: false,
       addStatus: false,
@@ -129,6 +134,20 @@ export default {
     const findDrivers = async () => {
       console.log(111)
       const res = await request.get('/driver/driver/findAllDrivers');
+      console.log(res)
+      dr.drivers = res.data
+      console.log(dr.drivers)
+      return res
+    }
+    const findDriversByjobNumber = async () =>{
+      const res = await request.get('/driver/driver/findDriversByjobNumber/' +dr.searchInput1);
+      console.log(res)
+      dr.drivers = res.data
+      console.log(dr.drivers)
+      return res
+    }
+    const findDriversBydriverName = async () =>{
+      const res = await request.get('/driver/driver/findDriversBydriverName/' +dr.searchInput2);
       console.log(res)
       dr.drivers = res.data
       console.log(dr.drivers)
@@ -164,12 +183,12 @@ export default {
     const addEvent=async () => {
       dr.addStatus=false
       let data={
-        jobnumber:dr.addStatus.jobnumber,
-        drivername:dr.addStatus.drivername,
-        drivertype:dr.addStatus.drivertype,
-        drivercategory:dr.addStatus.drivercategory,
-        driverphone:dr.addStatus.driverphone,
-        driverstate:dr.addStatus.driverstate,
+        jobnumber:dr.addData.jobnumber,
+        drivername:dr.addData.drivername,
+        drivertype:dr.addData.drivertype,
+        drivercategory:dr.addData.drivercategory,
+        driverphone:dr.addData.driverphone,
+        driverstate:dr.addData.driverstate,
       }
       console.log(data)
       const res=await request.put('/driver/driver/addDriver',data)
@@ -187,6 +206,8 @@ export default {
       deleteEvent,
       addDriver,
       addEvent,
+      findDriversByjobNumber,
+      findDriversBydriverName
     }
   },
 }

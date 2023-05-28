@@ -68,6 +68,4 @@ public class Customer implements Serializable {
     @ApiModelProperty(value = "备注")
     private String remarks;
 
-    private Integer tenantId;
-
 }

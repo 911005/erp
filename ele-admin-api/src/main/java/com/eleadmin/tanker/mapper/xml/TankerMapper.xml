@@ -56,6 +56,13 @@
     <select id="findAllTankers" resultType="com.eleadmin.tanker.entity.Tanker">
         select * from tanker
     </select>
+    <select id="findTankersBytankCarNumber" resultType="com.eleadmin.tanker.entity.Tanker">
+        select * from tanker where tankCarNumber=#{tankcarnumber}
+    </select>
+    <select id="findTankersBytankCarId" resultType="com.eleadmin.tanker.entity.Tanker">
+        select * from tanker where tankCarId=#{tankcarid}
+    </select>
+
     <update id="updateTanker" parameterType="com.eleadmin.tanker.entity.Tanker">
         update tanker set tankCarId=#{tankcarid},tankCarNumber=#{tankcarnumber},carIdenNumber=#{caridennumber},GPSIdenNumber=#{gpsidennumber},
                           initialTare=#{initialtare},currentTare=#{currenttare},subunit=#{subunit},personInCharge=#{personincharge},

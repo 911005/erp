@@ -54,6 +54,16 @@ public class PumptruckServiceImpl extends ServiceImpl<PumptruckMapper, Pumptruck
     }
 
     @Override
+    public List<Pumptruck> findPumpTrucksBypumpTruckNumber(String number) {
+        return pumptruckMapper.findPumpTrucksBypumpTruckNumber(number);
+    }
+
+    @Override
+    public List<Pumptruck> findPumpTrucksBypumpTruckid(String id) {
+        return pumptruckMapper.findPumpTrucksBypumpTruckid(id);
+    }
+
+    @Override
     public void deletePumpTruck(int id) {
         pumptruckMapper.deletePumpTruck(id);
     }

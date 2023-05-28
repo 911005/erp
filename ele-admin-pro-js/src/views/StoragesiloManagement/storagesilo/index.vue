@@ -1,5 +1,9 @@
 <template>
 <div>
+  <vxe-input v-model="sto.searchInput1" placeholder="请输入储料仓名称" type="search" ></vxe-input>
+  <vxe-button status="primary" content="查询" @click="findStoragesilosBystoragesiloName()"></vxe-button>
+  <vxe-input v-model="sto.searchInput2" placeholder="请输入储存类别" type="search" ></vxe-input>
+  <vxe-button status="primary" content="查询" @click="findStoragesilosBystorageslioType()"></vxe-button>
   <vxe-button status="primary" content="查询" @click="findStoragesilos()"></vxe-button>
   <vxe-button status="primary" content="新增" @click="addStoragesilo()"></vxe-button>
   <vxe-table
@@ -154,6 +158,8 @@ export default {
       findStoragesilos()
     })
     const sto = reactive({
+      searchInput1:[],
+      searchInput2:[],
       storagesilos: [],
       status: false,
       addStatus: false,
@@ -163,6 +169,20 @@ export default {
     const findStoragesilos = async () => {
       console.log(111)
       const res = await request.get('/storagesilo/storagesilo/findAllStoragesilos');
+      console.log(res)
+      sto.storagesilos = res.data
+      console.log(sto.storagesilos)
+      return res
+    }
+    const findStoragesilosBystoragesiloName = async () =>{
+      const res = await request.get('/storagesilo/storagesilo/findStoragesilosBystoragesiloName/' +sto.searchInput1);
+      console.log(res)
+      sto.storagesilos = res.data
+      console.log(sto.storagesilos)
+      return res
+    }
+    const findStoragesilosBystorageslioType = async () =>{
+      const res = await request.get('/storagesilo/storagesilo/findStoragesilosBystorageslioType/' +sto.searchInput2);
       console.log(res)
       sto.storagesilos = res.data
       console.log(sto.storagesilos)
@@ -223,6 +243,8 @@ export default {
       submitEvent,
       deleteEvent,
       addStoragesilo,
+      findStoragesilosBystoragesiloName,
+      findStoragesilosBystorageslioType,
       addEvent,
     }
   },

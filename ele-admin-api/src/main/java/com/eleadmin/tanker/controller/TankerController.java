@@ -53,13 +53,18 @@ public class TankerController extends BaseController {
     @PreAuthorize("hasAuthority('sys:dict:list')")
     @OperationLog
     @ApiOperation("根据id查询")
-    @GetMapping("/selectById/{id}")
-    public ApiResult<Tanker> get(@PathVariable("id") Integer id) {
-        return success(tankerService.getById(id));
-        // 使用关联查询
-        //return success(tankerService.getByIdRel(id));
+    @GetMapping("/findTankersBytankCarId/{id}")
+    public List<Tanker> get(@PathVariable("id") String id) {
+        return tankerService.findTankersBytankCarId(id);
     }
 
+    @PreAuthorize("hasAuthority('sys:dict:list')")
+    @OperationLog
+    @ApiOperation("根据id查询")
+    @GetMapping("/findTankersBytankCarNumber/{tankCarnumber}")
+    public List<Tanker> get1(@PathVariable("tankCarnumber") String tankCarnumber) {
+        return tankerService.findTankersBytankCarNumber(tankCarnumber);
+    }
     @PreAuthorize("hasAuthority('sys:dict:list')")
     @OperationLog
     @ApiOperation("添加")

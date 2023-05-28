@@ -49,6 +49,16 @@ public class TankerServiceImpl extends ServiceImpl<TankerMapper, Tanker> impleme
     }
 
     @Override
+    public List<Tanker> findTankersBytankCarId(String id) {
+        return tankerMapper.findTankersBytankCarId(id);
+    }
+
+    @Override
+    public List<Tanker> findTankersBytankCarNumber(String number) {
+        return tankerMapper.findTankersBytankCarNumber(number);
+    }
+
+    @Override
     public List<Tanker> findAllTankers() {
         return tankerMapper.findAllTankers();
     }

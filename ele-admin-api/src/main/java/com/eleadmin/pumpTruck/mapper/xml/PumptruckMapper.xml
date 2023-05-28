@@ -49,6 +49,12 @@
     <select id="selectListRel" resultType="com.eleadmin.pumpTruck.entity.Pumptruck">
         <include refid="selectSql"></include>
     </select>
+    <select id="findPumpTrucksBypumpTruckNumber" resultType="com.eleadmin.pumpTruck.entity.Pumptruck">
+        select * from pumpTruck where pumpTruckNumber=#{pumptrucknumber}
+    </select>
+    <select id="findPumpTrucksBypumpTruckid" resultType="com.eleadmin.pumpTruck.entity.Pumptruck">
+        select * from pumpTruck where pumpTruckid=#{pumptruckid}
+    </select>
     <select id="findAllPumpTrucks" resultType="com.eleadmin.pumpTruck.entity.Pumptruck">
         select * from pumpTruck
     </select>

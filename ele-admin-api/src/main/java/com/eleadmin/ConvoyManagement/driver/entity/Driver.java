@@ -48,6 +48,5 @@ public class Driver implements Serializable {
     @TableField("driverState")
     private String driverstate;
 
-    private Integer tenantId;
 
 }

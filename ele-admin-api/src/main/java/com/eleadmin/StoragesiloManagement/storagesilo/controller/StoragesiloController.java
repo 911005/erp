@@ -80,26 +80,31 @@ public class StoragesiloController extends BaseController {
         //return success(storagesiloService.pageRel(param));
     }
 
-    @PreAuthorize("hasAuthority('storagesilo:storagesilo:list')")
-    @OperationLog
-    @ApiOperation("查询全部")
-    @GetMapping()
-    public ApiResult<List<Storagesilo>> list(StoragesiloParam param) {
-        PageParam<Storagesilo, StoragesiloParam> page = new PageParam<>(param);
-        //page.setDefaultOrder("create_time desc");
-        return success(storagesiloService.list(page.getOrderWrapper()));
-        // 使用关联查询
-        //return success(storagesiloService.listRel(param));
-    }
+//    @PreAuthorize("hasAuthority('storagesilo:storagesilo:list')")
+//    @OperationLog
+//    @ApiOperation("查询全部")
+//    @GetMapping()
+//    public ApiResult<List<Storagesilo>> list(StoragesiloParam param) {
+//        PageParam<Storagesilo, StoragesiloParam> page = new PageParam<>(param);
+//        //page.setDefaultOrder("create_time desc");
+//        return success(storagesiloService.list(page.getOrderWrapper()));
+//        // 使用关联查询
+//        //return success(storagesiloService.listRel(param));
+//    }
 
     @PreAuthorize("hasAuthority('storagesilo:storagesilo:list')")
     @OperationLog
     @ApiOperation("根据id查询")
-    @GetMapping("/{id}")
-    public ApiResult<Storagesilo> get(@PathVariable("id") Integer id) {
-        return success(storagesiloService.getById(id));
-        // 使用关联查询
-        //return success(storagesiloService.getByIdRel(id));
+    @GetMapping("/findStoragesilosBystoragesiloName/{storagesiloname}")
+    public List<Storagesilo> findStoragesilosBystoragesiloName(@PathVariable("storagesiloname") String storagesiloname) {
+        return storagesiloService.findStoragesilosBystoragesiloName(storagesiloname);
+    }
+    @PreAuthorize("hasAuthority('storagesilo:storagesilo:list')")
+    @OperationLog
+    @ApiOperation("根据id查询")
+    @GetMapping("/findStoragesilosBystorageslioType/{storagesiloType}")
+    public List<Storagesilo> findStoragesilosBystorageslioType(@PathVariable("storagesiloType") String storagesilotype) {
+        return storagesiloService.findStoragesilosBystorageslioType(storagesilotype);
     }
 
     @PreAuthorize("hasAuthority('storagesilo:storagesilo:save')")

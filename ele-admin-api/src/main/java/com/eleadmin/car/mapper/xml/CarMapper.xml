@@ -49,6 +49,15 @@
     <select id="selectListRel" resultType="com.eleadmin.car.entity.Car">
         <include refid="selectSql"></include>
     </select>
+    <select id="findCarByCarNumber" resultType="com.eleadmin.car.entity.Car">
+        select  * from car where carNumber=#{carnumber}
+    </select>
+    <select id="findCarBycarIdenNumber" resultType="com.eleadmin.car.entity.Car">
+        select  * from car where carIdenNumber=#{caridennumber}
+    </select>
+    <select id="findCarBypersonInCharge" resultType="com.eleadmin.car.entity.Car">
+        select  * from car where personInCharge=#{personincharge}
+    </select>
     <select id="findAllCars" resultType="com.eleadmin.car.entity.Car">
         select  * from car
     </select>

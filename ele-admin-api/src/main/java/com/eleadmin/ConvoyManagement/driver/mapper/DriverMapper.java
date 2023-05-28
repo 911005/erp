@@ -39,6 +39,9 @@ public interface DriverMapper extends BaseMapper<Driver> {
      * 查询所有客户信息
      */
     List<Driver> findAllDrivers();
+    List<Driver> findDriversByjobNumber(int number);
+
+    List<Driver> findDriversBydriverName(String name);
     void updateDriver(Driver driver);
     void addDriver(Driver driver);
     void deleteDriver(int id);

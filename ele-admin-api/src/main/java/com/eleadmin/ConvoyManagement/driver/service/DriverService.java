@@ -32,6 +32,10 @@ public interface DriverService extends IService<Driver> {
      */
     List<Driver> listRel(DriverParam param);
 
+    List<Driver> findDriversByjobNumber(int number);
+
+    List<Driver> findDriversBydriverName(String name);
+
     /**
      * 根据id查询
      *

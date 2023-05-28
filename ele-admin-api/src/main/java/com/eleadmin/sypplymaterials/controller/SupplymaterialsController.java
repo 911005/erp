@@ -52,11 +52,9 @@ public class SupplymaterialsController extends BaseController {
     @PreAuthorize("hasAuthority('sys:dict:list')")
     @OperationLog
     @ApiOperation("根据id查询")
-    @GetMapping("/selectById/{id}")
-    public ApiResult<Supplymaterials> get(@PathVariable("id") Integer id) {
-        return success(supplymaterialsService.getById(id));
-        // 使用关联查询
-        //return success(supplymaterialsService.getByIdRel(id));
+    @GetMapping("/findSupplyMById/{supplymaterialname}")
+    public List<Supplymaterials> get(@PathVariable("supplymaterialname") String supplymaterialname) {
+        return supplymaterialsService.findSupplyMById(supplymaterialname);
     }
 
     @PreAuthorize("hasAuthority('sys:dict:list')")

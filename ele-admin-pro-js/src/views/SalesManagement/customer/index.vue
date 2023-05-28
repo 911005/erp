@@ -1,7 +1,13 @@
 <template>
 <div>
-    <vxe-button status="primary" content="查询" @click="findCustomers()"></vxe-button>
-    <vxe-button status="primary" content="新增" @click="addCustomer()"></vxe-button>
+    <vxe-input v-model="cus.searchInput1" placeholder="请输入单位名称" type="search" ></vxe-input>
+    <vxe-button status="primary" content="查询" @click="findCustomersByunitName()"></vxe-button>
+
+    <vxe-input v-model="cus.searchInput2" placeholder="请输入单位类型" type="search" ></vxe-input>
+    <vxe-button status="primary" content="查询" @click="findCustomersByunitType()"></vxe-button>
+
+    <vxe-button status="primary" content="查询所有单位信息" @click="findCustomers()"></vxe-button>
+    <vxe-button status="primary" content="新增单位信息" @click="addCustomer()"></vxe-button>
     <vxe-table
       :data="cus.customers">
       <vxe-column type="seq" width="60" field="id"></vxe-column>
@@ -159,6 +165,8 @@ export default {
       findCustomers()
     })
     const cus=reactive({
+      searchInput1:[],
+      searchInput2:[],
       customers:[],
       status:false,
       addStatus:false,
@@ -174,6 +182,20 @@ export default {
       return res
     }
 
+    const findCustomersByunitName = async () =>{
+      const res = await request.get('/customer/customer/findCustomersByunitName/' +cus.searchInput1);
+      console.log(res)
+      cus.customers = res.data
+      console.log(cus.customers)
+      return res
+    }
+    const findCustomersByunitType = async () =>{
+      const res = await request.get('/customer/customer/findCustomersByunitType/' +cus.searchInput2);
+      console.log(res)
+      cus.customers = res.data
+      console.log(cus.customers)
+      return res
+    }
     const deleteEvent=async (row) => {
       alert(row.id)
       const res = await request.delete('/customer/customer/deleteCustomer/'+row.id)
@@ -206,18 +228,18 @@ export default {
     const addEvent=async () => {
       cus.addStatus=false
       let data={
-        unitname:cus.addStatus.unitname,
-        unittype:cus.addStatus.unittype,
-        legalrepresentative:cus.addStatus.legalrepresentative,
-        unitphone:cus.addStatus.unitphone,
-        faxnumber:cus.addStatus.faxnumber,
-        unitemail:cus.addStatus.unitemail,
-        unitaddress:cus.addStatus.unitaddress,
-        zipcode:cus.addStatus.zipcode,
-        salesman:cus.addStatus.salesman,
-        ratepayingnumber:cus.addStatus.ratepayingnumber,
-        status:cus.addStatus.status,
-        remarks:cus.addStatus.remarks
+        unitname:cus.addData.unitname,
+        unittype:cus.addData.unittype,
+        legalrepresentative:cus.addData.legalrepresentative,
+        unitphone:cus.addData.unitphone,
+        faxnumber:cus.addData.faxnumber,
+        unitemail:cus.addData.unitemail,
+        unitaddress:cus.addData.unitaddress,
+        zipcode:cus.addData.zipcode,
+        salesman:cus.addData.salesman,
+        ratepayingnumber:cus.addData.ratepayingnumber,
+        status:cus.addData.status,
+        remarks:cus.addData.remarks
       }
       console.log(data)
       const res=await request.put('/customer/customer/addCustomer',data)
@@ -236,6 +258,8 @@ export default {
       submitEvent,
       addCustomer,
       addEvent,
+      findCustomersByunitName,
+      findCustomersByunitType
     }
   },
 

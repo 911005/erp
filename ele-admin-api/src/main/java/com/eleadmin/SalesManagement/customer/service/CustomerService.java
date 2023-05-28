@@ -20,6 +20,10 @@ public interface CustomerService extends IService<Customer> {
      */
     List<Customer> findAllCustomers();
 
+    List<Customer> findCustomersByunitName(String name);
+
+    List<Customer> findCustomersByunitType(String type);
+
     /**
      * 删除
      * @param id

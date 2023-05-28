@@ -36,6 +36,12 @@ public interface CarMapper extends BaseMapper<Car> {
 
     List<Car> findAllCars();
 
+    List<Car> findCarByCarNumber(String CarNumber);
+
+    List<Car> findCarBycarIdenNumber(String carIdenNumber);
+
+    List<Car> findCarBypersonInCharge(String personInCharge);
+
     void updateCar(Car car);
 
     void deleteCar(int id);

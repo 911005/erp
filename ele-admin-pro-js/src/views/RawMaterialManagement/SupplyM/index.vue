@@ -1,8 +1,11 @@
 <template>
   <div>
-    <vxe-button status="primary" content="查询供应原材料" @click="findSupplyM()"></vxe-button>
-    <vxe-button status="primary" content="新增供应原材料" @click="addSupplyM()"></vxe-button>
+    <vxe-input v-model="demo.searchInput" placeholder="请输入供应原材料" type="search" ></vxe-input>
+    <vxe-button status="primary" content="查询" @click="findSupplyMById()"></vxe-button>
+    <vxe-button style="padding-right: 10px" status="primary" content="查询所有供应原材料" @click="findSupplyM()"></vxe-button>
+    <vxe-button style="padding-right: 10px" status="primary" content="新增供应原材料" @click="addSupplyM()"></vxe-button>
     <vxe-table
+      :span-method="objectSpanMethod"
       :data="demo.SupplyMaterials">
       <vxe-column type="seq" width="60" field="materialid" title="编号"></vxe-column>
       <vxe-column field="platformmaterialname" title="平台原材料"></vxe-column>
@@ -91,15 +94,43 @@ export default {
       findSupplyM()
     })
     const demo = reactive({
+      searchInput: [],
       SupplyMaterials: [],
       status: false,
       addStatus: false,
       updateData: [],
       addData: []
     })
+
+    const objectSpanMethod= async ({ row, column, rowIndex, visibleData }) =>{
+      const fields=['platformmaterialname']
+      const cellValue = row[column.property]
+      if (cellValue && fields.includes(column.property)){
+        const prevRow = visibleData[rowIndex-1]
+        let nextRow = visibleData[rowIndex + 1]
+        if (prevRow && prevRow[column.property] === cellValue) {
+          return { rowspan: 0, colspan: 0 }
+        } else {
+          let countRowspan = 1
+          while (nextRow && nextRow[column.property] === cellValue) {
+            nextRow = visibleData[++countRowspan + rowIndex]
+          }
+          if (countRowspan > 1) {
+            return {rowspan: countRowspan, colspan: 1}
+          }
+        }
+      }
+    }
     const findSupplyM = async () => {
       console.log(111)
       const res = await request.get('/test1/SupplyMaterials/findAllSupplyM');
+      console.log(res)
+      demo.SupplyMaterials = res.data
+      console.log(demo.SupplyMaterials)
+      return res
+    }
+    const findSupplyMById = async () =>{
+      const res = await request.get('/test1/SupplyMaterials/findSupplyMById/' +demo.searchInput);
       console.log(res)
       demo.SupplyMaterials = res.data
       console.log(demo.SupplyMaterials)
@@ -142,7 +173,7 @@ export default {
         specifications: demo.addData.specifications
       }
       console.log(data)
-      const res = await request.put('/test1/SupplyMaterials/addSupplyM', data)
+      const res = await request.post('/test1/SupplyMaterials/addSupplyM', data)
       console.log(demo.addData)
       if (res.data.code === 0) {
         return res.data.message;
@@ -158,7 +189,9 @@ export default {
       updateEvent,
       submitEvent,
       addSupplyM,
-      addEvent
+      addEvent,
+      objectSpanMethod,
+      findSupplyMById
     }
   },
 

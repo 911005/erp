@@ -52,12 +52,17 @@ public class PumptruckController extends BaseController {
 
     @PreAuthorize("hasAuthority('sys:dict:list')")
     @OperationLog
-    @ApiOperation("根据id查询")
-    @GetMapping("/selectById/{id}")
-    public ApiResult<Pumptruck> get(@PathVariable("id") Integer id) {
-        return success(pumptruckService.getById(id));
-        // 使用关联查询
-        //return success(pumptruckService.getByIdRel(id));
+    @ApiOperation("根据pumpTruckNumber查询")
+    @GetMapping("/findPumpTrucksBypumpTruckNumber/{pumpTruckNumber}")
+    public List<Pumptruck> get(@PathVariable("pumpTruckNumber") String pumpTruckNumber) {
+        return pumptruckService.findPumpTrucksBypumpTruckNumber(pumpTruckNumber);
+    }
+    @PreAuthorize("hasAuthority('sys:dict:list')")
+    @OperationLog
+    @ApiOperation("根据pumpTruckid查询")
+    @GetMapping("/findPumpTrucksBypumpTruckid/{pumpTruckid}")
+    public List<Pumptruck> get2(@PathVariable("pumpTruckid") String pumpTruckid) {
+        return pumptruckService.findPumpTrucksBypumpTruckid(pumpTruckid);
     }
 
     @PreAuthorize("hasAuthority('sys:dict:list')")

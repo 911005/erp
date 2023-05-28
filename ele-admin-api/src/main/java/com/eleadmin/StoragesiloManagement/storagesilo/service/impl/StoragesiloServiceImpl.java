@@ -47,6 +47,7 @@ public class StoragesiloServiceImpl extends ServiceImpl<StoragesiloMapper, Stora
 
 
 
+
     @Autowired
     private StoragesiloMapper storagesiloMapper;
     @Override
@@ -59,6 +60,16 @@ public class StoragesiloServiceImpl extends ServiceImpl<StoragesiloMapper, Stora
         storagesiloMapper.deleteStoragesilo(id);
     }
 
+
+    @Override
+    public List<Storagesilo> findStoragesilosBystoragesiloName(String name) {
+        return storagesiloMapper.findStoragesilosBystoragesiloName(name);
+    }
+
+    @Override
+    public List<Storagesilo> findStoragesilosBystorageslioType(String type) {
+        return storagesiloMapper.findStoragesilosBystorageslioType(type);
+    }
     @Override
     public boolean updateStoragesilo(Storagesilo storagesilo) {
         storagesiloMapper.updateStoragesilo(storagesilo);

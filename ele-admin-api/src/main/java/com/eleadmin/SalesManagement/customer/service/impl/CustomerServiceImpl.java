@@ -30,6 +30,16 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
     }
 
     @Override
+    public List<Customer> findCustomersByunitName(String name) {
+        return customerMapper.findCustomersByunitName(name);
+    }
+
+    @Override
+    public List<Customer> findCustomersByunitType(String type) {
+        return customerMapper.findCustomersByunitType(type);
+    }
+
+    @Override
     public void deleteCustomer(int id) {
         customerMapper.deleteCustomer(id);
     }

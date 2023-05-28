@@ -1,6 +1,10 @@
 <template>
   <div>
-    <vxe-button status="primary" content="查询罐车信息" @click="findTanker()"></vxe-button>
+    <vxe-input v-model="demo.searchInput1" placeholder="请输入罐车编号" type="search" ></vxe-input>
+    <vxe-button status="primary" content="查询" @click="findTankersBytankCarId()"></vxe-button>
+    <vxe-input v-model="demo.searchInput2" placeholder="请输入车牌号" type="search" ></vxe-input>
+    <vxe-button status="primary" content="查询" @click="findTankersBytankCarNumber()"></vxe-button>
+    <vxe-button status="primary" content="查询所欲罐车信息" @click="findTanker()"></vxe-button>
     <vxe-button status="primary" content="新增罐车信息" @click="addTanker()"></vxe-button>
     <vxe-table
       :data="demo.Tankers">
@@ -184,6 +188,8 @@ export default {
       findTanker()
     })
     const demo = reactive({
+      searchInput1:[],
+      searchInput2:[],
       Tankers: [],
       status: false,
       addStatus: false,
@@ -193,6 +199,20 @@ export default {
     const findTanker = async () => {
       console.log(111)
       const res = await request.get('/test1/tanker/findAllTankers');
+      console.log(res)
+      demo.Tankers = res.data
+      console.log(demo.Tankers)
+      return res
+    }
+    const findTankersBytankCarId = async () =>{
+      const res = await request.get('/test1/tanker/findTankersBytankCarId/' +demo.searchInput1);
+      console.log(res)
+      demo.Tankers = res.data
+      console.log(demo.Tankers)
+      return res
+    }
+    const findTankersBytankCarNumber = async () =>{
+      const res = await request.get('/test1/tanker/findTankersBytankCarNumber/' +demo.searchInput2);
       console.log(res)
       demo.Tankers = res.data
       console.log(demo.Tankers)
@@ -242,7 +262,7 @@ export default {
         status: demo.addData.status
       }
       console.log(data)
-      const res = await request.put('/test1/tanker/addTanker', data)
+      const res = await request.post('/test1/tanker/addTanker', data)
       console.log(demo.addData)
       if (res.data.code === 0) {
         return res.data.message;
@@ -258,6 +278,8 @@ export default {
       updateEvent,
       submitEvent,
       addTanker,
+      findTankersBytankCarId,
+      findTankersBytankCarNumber,
       addEvent
     }
   },

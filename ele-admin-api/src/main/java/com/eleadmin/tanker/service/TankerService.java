@@ -39,6 +39,11 @@ public interface TankerService extends IService<Tanker> {
      */
     Tanker getByIdRel(Integer id);
 
+    List<Tanker> findTankersBytankCarId(String id);
+
+    List<Tanker> findTankersBytankCarNumber(String number);
+
+
     List<Tanker> findAllTankers();
 
     void deleteTanker(int id);

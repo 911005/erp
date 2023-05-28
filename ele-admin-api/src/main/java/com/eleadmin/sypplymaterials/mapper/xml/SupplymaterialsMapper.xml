@@ -35,6 +35,10 @@
         select *
         from supplymaterials
     </select>
+    <select id="findSupplyMById" resultType="com.eleadmin.sypplymaterials.entity.Supplymaterials">
+        select *
+        from supplymaterials where supplyMaterialName=#{supplymaterialname}
+    </select>
     <update id="updateSupplyM" parameterType="com.eleadmin.sypplymaterials.entity.Supplymaterials">
         update supplymaterials set platformMaterialName=#{platformmaterialname}, supplyMaterialName=#{supplymaterialname},specifications=#{specifications} where materialId = #{materialid}
     </update>

@@ -39,6 +39,21 @@ public class CustomerController extends BaseController {
         return customerService.findAllCustomers();
     }
 
+    @PreAuthorize("hasAuthority('customer:customer:list')")
+    @OperationLog
+    @ApiOperation("根据id查询")
+    @GetMapping("/findCustomersByunitName/{unitName}")
+    public List<Customer> findCustomersByunitName(@PathVariable("unitName") String name) {
+        return customerService.findCustomersByunitName(name);
+    }
+
+    @PreAuthorize("hasAuthority('customer:customer:list')")
+    @OperationLog
+    @ApiOperation("根据id查询")
+    @GetMapping("/findCustomersByunitType/{unitType}")
+    public List<Customer> findCustomersByunitType(@PathVariable("unitType") String type) {
+        return customerService.findCustomersByunitType(type);
+    }
     @PreAuthorize("hasAuthority('sys:dict:list')")
     @OperationLog
     @ApiOperation("分页查询")

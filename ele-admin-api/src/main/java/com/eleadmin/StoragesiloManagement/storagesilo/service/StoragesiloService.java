@@ -39,7 +39,9 @@ public interface StoragesiloService extends IService<Storagesilo> {
      */
     Storagesilo getByIdRel(Integer id);
 
+    List<Storagesilo> findStoragesilosBystoragesiloName(String name);
 
+    List<Storagesilo> findStoragesilosBystorageslioType(String type);
 
     List<Storagesilo> findAllStoragesilos();
 

@@ -46,8 +46,20 @@
         select *
         from driver
     </select>
+    <select id="findDriversByjobNumber" resultType="com.eleadmin.ConvoyManagement.driver.entity.Driver">
+        select *
+        from driver where jobNumber=#{jobnumber}
+    </select>
+
+    <select id="findDriversBydriverName" resultType="com.eleadmin.ConvoyManagement.driver.entity.Driver">
+        select *
+        from driver where driverName=#{drivername}
+    </select>
+
     <update id="updateDriver" parameterType="com.eleadmin.ConvoyManagement.driver.entity.Driver">
-        update driver set jobNumber=#{jobNumber},driverName=#{driverName},driverType=#{driverType},driverCategory=#{driverCategory},driverPhone=#{driverPhone},driverState=#{driverState} where jobNumber=#{jobNumber}
+        update driver set jobNumber=#{jobnumber},driverName=#{drivername},driverType=#{drivertype},
+                          driverCategory=#{drivercategory},driverPhone=#{driverphone},
+                          driverState=#{driverstate} where jobNumber=#{jobnumber}
     </update>
     <delete id="deleteDriver">
         delete from driver where id = #{id}
@@ -58,6 +70,6 @@
         </selectKey>
         insert into driver
         (jobNumber,driverName,driverType,driverCategory,driverPhone,driverState,tenant_id)
-        values (#{jobNumber},#{driverName},#{driverType},#{driverCategory},#{driverPhone},#{driverState},2)
+        values (#{jobnumber},#{drivername},#{drivertype},#{drivercategory},#{driverphone},#{driverstate},2)
     </insert>
 </mapper>

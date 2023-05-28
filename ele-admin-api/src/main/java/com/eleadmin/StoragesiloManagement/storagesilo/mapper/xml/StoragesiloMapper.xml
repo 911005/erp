@@ -50,7 +50,14 @@
         <include refid="selectSql"></include>
     </select>
 
-
+    <select id="findStoragesilosBystoragesiloName" resultType="com.eleadmin.StoragesiloManagement.storagesilo.entity.Storagesilo">
+        select *
+        from storagesilo where storagesiloName=#{storagesiloName}
+    </select>
+    <select id="findStoragesilosBystorageslioType" resultType="com.eleadmin.StoragesiloManagement.storagesilo.entity.Storagesilo">
+        select *
+        from storagesilo where storageslioType=#{storageslioType}
+    </select>
     <select id="findAllStoragesilos" resultType="com.eleadmin.StoragesiloManagement.storagesilo.entity.Storagesilo">
         select *
         from storagesilo

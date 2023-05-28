@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.eleadmin.tanker.entity.Tanker;
 import com.eleadmin.tanker.param.TankerParam;
+import org.apache.commons.math3.analysis.function.Tan;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -35,6 +36,9 @@ public interface TankerMapper extends BaseMapper<Tanker> {
     List<Tanker> selectListRel(@Param("param") TankerParam param);
 
     List<Tanker> findAllTankers();
+    List<Tanker> findTankersBytankCarId(String id);
+
+    List<Tanker> findTankersBytankCarNumber(String number);
 
     void deleteTanker(int id);
 
