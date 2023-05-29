@@ -39,7 +39,7 @@ public class CustomerController extends BaseController {
         return customerService.findAllCustomers();
     }
 
-    @PreAuthorize("hasAuthority('customer:customer:list')")
+    @PreAuthorize("hasAuthority('sys:dict:list')")
     @OperationLog
     @ApiOperation("根据id查询")
     @GetMapping("/findCustomersByunitName/{unitName}")
@@ -47,7 +47,7 @@ public class CustomerController extends BaseController {
         return customerService.findCustomersByunitName(name);
     }
 
-    @PreAuthorize("hasAuthority('customer:customer:list')")
+    @PreAuthorize("hasAuthority('sys:dict:list')")
     @OperationLog
     @ApiOperation("根据id查询")
     @GetMapping("/findCustomersByunitType/{unitType}")

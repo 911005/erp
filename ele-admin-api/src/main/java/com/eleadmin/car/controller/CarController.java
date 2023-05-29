@@ -46,7 +46,7 @@ public class CarController extends BaseController {
     @OperationLog
     @ApiOperation("查询全部")
     @GetMapping("/findAllCars")
-    public List<Car> list(CarParam param) {
+    public List<Car> list(Car param) {
         return carService.findAllCars();
     }
 

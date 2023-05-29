@@ -92,14 +92,14 @@ public class StoragesiloController extends BaseController {
 //        //return success(storagesiloService.listRel(param));
 //    }
 
-    @PreAuthorize("hasAuthority('storagesilo:storagesilo:list')")
+    @PreAuthorize("hasAuthority('sys:dict:list')")
     @OperationLog
     @ApiOperation("根据id查询")
     @GetMapping("/findStoragesilosBystoragesiloName/{storagesiloname}")
     public List<Storagesilo> findStoragesilosBystoragesiloName(@PathVariable("storagesiloname") String storagesiloname) {
         return storagesiloService.findStoragesilosBystoragesiloName(storagesiloname);
     }
-    @PreAuthorize("hasAuthority('storagesilo:storagesilo:list')")
+    @PreAuthorize("hasAuthority('sys:dict:list')")
     @OperationLog
     @ApiOperation("根据id查询")
     @GetMapping("/findStoragesilosBystorageslioType/{storagesiloType}")

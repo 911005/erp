@@ -52,11 +52,11 @@
 
     <select id="findStoragesilosBystoragesiloName" resultType="com.eleadmin.StoragesiloManagement.storagesilo.entity.Storagesilo">
         select *
-        from storagesilo where storagesiloName=#{storagesiloName}
+        from storagesilo where storagesiloName=#{storagesiloname}
     </select>
     <select id="findStoragesilosBystorageslioType" resultType="com.eleadmin.StoragesiloManagement.storagesilo.entity.Storagesilo">
         select *
-        from storagesilo where storageslioType=#{storageslioType}
+        from storagesilo where storageslioType=#{storagesliotype}
     </select>
     <select id="findAllStoragesilos" resultType="com.eleadmin.StoragesiloManagement.storagesilo.entity.Storagesilo">
         select *
@@ -70,10 +70,15 @@
 
         insert into storagesilo
         (storagesiloName,storageslioType,volume,warnuplimit,warndpwnLimit,safeVolume,username,remarks,storagesiloState,tenant_id)
-        values (#{storagesiloName},#{storageslioType},#{volume},#{warnuplimit},#{warndpwnLimit},#{safeVolume},#{username},#{remarks},#{storagesiloState},2)
+        values (#{storagesiloname},#{storagesliotype},#{volume},#{warnuplimit},#{warndpwnlimit},#{safevolume},
+            #{username},#{remarks},#{storagesilostate},2)
     </insert>
     <update id="updateStoragesilo" parameterType="com.eleadmin.StoragesiloManagement.storagesilo.entity.Storagesilo">
-        update storagesilo set storagesiloName=#{storagesiloName},storageslioType=#{storageslioType},volume=#{volume},warnuplimit=#{warnuplimit},warndpwnLimit=#{warndpwnLimit},safeVolume=#{safeVolume},username=#{username},remarks=#{remarks},storagesiloState=#{storagesiloState} where storagesiloName=#{storagesiloName}
+        update storagesilo set storageslioType=#{storagesliotype},
+                               volume=#{volume},warnuplimit=#{warnuplimit},warndpwnLimit=#{warndpwnlimit},
+                               safeVolume=#{safeVolume},username=#{username},remarks=#{remarks},
+                               storagesiloState=#{storagesilostate} where storagesiloName=#{storagesiloname}
+
     </update>
     <delete id="deleteStoragesilo">
         delete from storagesilo where id = #{id}

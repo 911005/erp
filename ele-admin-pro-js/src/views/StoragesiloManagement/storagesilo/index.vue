@@ -218,15 +218,15 @@ export default {
     const addEvent=async () => {
       sto.addStatus=false
       let data={
-        storagesiloname:sto.addStatus.storagesiloname,
-        storagesliotype:sto.addStatus.storagesliotype,
-        volume:sto.addStatus.volume,
-        warnuplimit:sto.addStatus.warnuplimit,
-        warndpwnlimit:sto.addStatus.warndpwnlimit,
-        safevolume:sto.addStatus.safevolume,
-        username:sto.addStatus.username,
-        remarks:sto.addStatus.remarks,
-        storagesilostate:sto.addStatus.storagesilostate
+        storagesiloname:sto.addData.storagesiloname,
+        storagesliotype:sto.addData.storagesliotype,
+        volume:sto.addData.volume,
+        warnuplimit:sto.addData.warnuplimit,
+        warndpwnlimit:sto.addData.warndpwnlimit,
+        safevolume:sto.addData.safevolume,
+        username:sto.addData.username,
+        remarks:sto.addData.remarks,
+        storagesilostate:sto.addData.storagesilostate
       }
       console.log(data)
       const res=await request.put('/storagesilo/storagesilo/addStoragesilo',data)
