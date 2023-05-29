@@ -5,13 +5,11 @@
       show-overflow
       :row-config="{isHover: true, useKey: true}"
       :column-config="{resizable: true}"
-      :tree-config="{transform: true, rowField: 'id', parentField: 'pid', line: true}"
+      :tree-config="{transform: true, rowField: 'id', parentField: 'pid', line: true,expandAll: true}"
       :data="demo.caregorys"
       :scroll-y="{enabled: false}">
       <vxe-column field="caregory" title="类别名称" tree-node></vxe-column>
-<!--      <vxe-column field="id" title="本级id"></vxe-column>-->
-<!--      <vxe-column field="subproperty" title="等级"></vxe-column>-->
-<!--      <vxe-column field="propertystate" title="状态"></vxe-column>-->
+      <vxe-column field="id" title="本级id"></vxe-column>
       <vxe-column title="操作" width="240">
         <template #default="{ row }">
           <vxe-button v-if="row.children.length === 0" status="warning" content="编辑" @click="updateEvent(row)"></vxe-button>
@@ -78,7 +76,7 @@ export default {
   name: "index",
   setup() {
     onMounted(() => {
-      findProduction()
+      findCaregorys()
     })
     const demo = reactive({
       caregorys: [],
@@ -89,25 +87,23 @@ export default {
     })
     const findCaregorys = async () => {
       console.log(111)
-      const res = await request.get('/production/production/findAllProductions');
+      const res = await request.get('/caregory/caregory/findAllCaregorys');
       console.log(res)
       demo.caregorys = res.data
       console.log(demo.caregorys)
       return res
     }
-    const addProduction=async () => {
+    const addCaregory=async () => {
       demo.addStatus=true
     }
     const addEvent = async() => {
-      demo.status = true;
+      demo.addstatus = false;
       let data={
-        propertyname:demo.addData.propertyname,
-        parentid:demo.addData.parentid,
-        subproperty:demo.addData.subproperty,
-        propertystate:demo.addData.propertystate
+        caregory:demo.addData.caregory,
+        pid:demo.addData.pid
       }
       console.log(data)
-      const res=await request.put('/production/production/addProduction',data)
+      const res=await request.post('/caregory/caregory/addCaregory',data)
       console.log(demo.addData)
       if (res.data.code === 0) {
         return res.data.message;
@@ -123,7 +119,7 @@ export default {
       console.log(demo.updateData)
       demo.status=false
       let data=demo.updateData
-      const res = await request.put('/production/production/updateProduction',data);
+      const res = await request.put('/caregory/caregory/updateCaregory',data);
       if (res.data.code === 0) {
         return res.data.message;
       }
@@ -131,8 +127,8 @@ export default {
     }
 
     const deleteEvent=async (row) => {
-      alert(row.id)
-      const res = await request.delete('/production/production/deleteProduction/'+row.id)
+      alert(row.caregory)
+      const res = await request.delete('/caregory/caregory/deleteCaregory/'+row.caregory)
       if (res.data.code==0){
         return res.data.message
       }
@@ -142,7 +138,8 @@ export default {
 
     return {
       demo,
-      addProduction,
+      findCaregorys,
+      addCaregory,
       addEvent,
       updateEvent,
       deleteEvent,
