@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eleadmin.caregory.mapper.CaregoryMapper">
+
+    <!-- 关联查询sql -->
+    <sql id="selectSql">
+        SELECT a.*
+        FROM caregory a
+        <where>
+            <if test="param.id != null">
+                AND a.id = #{param.id}
+            </if>
+            <if test="param.fircaregory != null">
+                AND a.firCaregory LIKE CONCAT('%', #{param.fircaregory}, '%')
+            </if>
+            <if test="param.subcaregory != null">
+                AND a.subCaregory LIKE CONCAT('%', #{param.subcaregory}, '%')
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageRel" resultType="com.eleadmin.caregory.entity.Caregory">
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="selectListRel" resultType="com.eleadmin.caregory.entity.Caregory">
+        <include refid="selectSql"></include>
+    </select>
+    <select id="findAllCaregorys" resultType="com.eleadmin.caregory.entity.Caregory">
+        select * from caregory
+    </select>
+    <insert id="addCaregory" parameterType="com.eleadmin.caregory.entity.Caregory">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into caregory (Caregory,pid,tenant_id) values (#{caregory},#{pid},2);
+    </insert>
+    <delete id="deleteCaregory">
+        delete from caregory where Caregory=#{caregory}
+    </delete>
+    <update id="updateCaregory" parameterType="com.eleadmin.caregory.entity.Caregory">
+        update caregory set Caregory=#{caregory},pid=#{pid} where id=#{id}
+    </update>
+</mapper>
