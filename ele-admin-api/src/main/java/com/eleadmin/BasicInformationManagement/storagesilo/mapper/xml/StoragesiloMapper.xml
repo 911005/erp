@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eleadmin.BasicInformationManagement.storagesilo.mapper.StoragesiloMapper">
+
+    <!-- 关联查询sql -->
+    <sql id="selectSql">
+        SELECT a.*
+        FROM storagesilo a
+        <where>
+            <if test="param.id != null">
+                AND a.id = #{param.id}
+            </if>
+            <if test="param.storagesiloname != null">
+                AND a.storagesiloName LIKE CONCAT('%', #{param.storagesiloname}, '%')
+            </if>
+            <if test="param.storagesliotype != null">
+                AND a.storageslioType LIKE CONCAT('%', #{param.storagesliotype}, '%')
+            </if>
+            <if test="param.volume != null">
+                AND a.volume LIKE CONCAT('%', #{param.volume}, '%')
+            </if>
+            <if test="param.warnuplimit != null">
+                AND a.warnupLimit LIKE CONCAT('%', #{param.warnuplimit}, '%')
+            </if>
+            <if test="param.warndpwnlimit != null">
+                AND a.warndpwnLimit LIKE CONCAT('%', #{param.warndpwnlimit}, '%')
+            </if>
+            <if test="param.safevolume != null">
+                AND a.safeVolume LIKE CONCAT('%', #{param.safevolume}, '%')
+            </if>
+            <if test="param.username != null">
+                AND a.username LIKE CONCAT('%', #{param.username}, '%')
+            </if>
+            <if test="param.remarks != null">
+                AND a.remarks LIKE CONCAT('%', #{param.remarks}, '%')
+            </if>
+            <if test="param.storagesilostate != null">
+                AND a.storagesiloState LIKE CONCAT('%', #{param.storagesilostate}, '%')
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageRel" resultType="com.eleadmin.BasicInformationManagement.storagesilo.entity.Storagesilo">
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="selectListRel" resultType="com.eleadmin.BasicInformationManagement.storagesilo.entity.Storagesilo">
+        <include refid="selectSql"></include>
+    </select>
+
+    <select id="findStoragesilosBystoragesiloName" resultType="com.eleadmin.BasicInformationManagement.storagesilo.entity.Storagesilo">
+        select *
+        from storagesilo where storagesiloName=#{storagesiloname}
+    </select>
+    <select id="findStoragesilosBystorageslioType" resultType="com.eleadmin.BasicInformationManagement.storagesilo.entity.Storagesilo">
+        select *
+        from storagesilo where storageslioType=#{storagesliotype}
+    </select>
+    <select id="findAllStoragesilos" resultType="com.eleadmin.BasicInformationManagement.storagesilo.entity.Storagesilo">
+        select *
+        from storagesilo
+    </select>
+
+    <insert id="addStoragesilo" parameterType="com.eleadmin.BasicInformationManagement.storagesilo.entity.Storagesilo">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            select LAST_INSERT_ID()
+        </selectKey>
+
+        insert into storagesilo
+        (storagesiloName,storageslioType,volume,warnuplimit,warndpwnLimit,safeVolume,username,remarks,storagesiloState,tenant_id)
+        values (#{storagesiloname},#{storagesliotype},#{volume},#{warnuplimit},#{warndpwnlimit},#{safevolume},
+            #{username},#{remarks},#{storagesilostate},2)
+    </insert>
+    <update id="updateStoragesilo" parameterType="com.eleadmin.BasicInformationManagement.storagesilo.entity.Storagesilo">
+        update storagesilo set storageslioType=#{storagesliotype},
+                               volume=#{volume},warnuplimit=#{warnuplimit},warndpwnLimit=#{warndpwnlimit},
+                               safeVolume=#{safeVolume},username=#{username},remarks=#{remarks},
+                               storagesiloState=#{storagesilostate} where storagesiloName=#{storagesiloname}
+
+    </update>
+    <delete id="deleteStoragesilo">
+        delete from storagesilo where id = #{id}
+    </delete>
+
+</mapper>

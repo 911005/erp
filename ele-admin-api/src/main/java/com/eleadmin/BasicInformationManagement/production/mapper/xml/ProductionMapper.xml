@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eleadmin.BasicInformationManagement.production.mapper.ProductionMapper">
+
+    <!-- 关联查询sql -->
+    <sql id="selectSql">
+        SELECT a.*
+        FROM production a
+        <where>
+            <if test="param.propertyid != null">
+                AND a.propertyId = #{param.propertyid}
+            </if>
+            <if test="param.propertyname != null">
+                AND a.propertyName LIKE CONCAT('%', #{param.propertyname}, '%')
+            </if>
+            <if test="param.parentid != null">
+                AND a.parentId = #{param.parentid}
+            </if>
+            <if test="param.subproperty != null">
+                AND a.subProperty LIKE CONCAT('%', #{param.subproperty}, '%')
+            </if>
+            <if test="param.propertystate != null">
+                AND a.propertystate LIKE CONCAT('%', #{param.propertystate}, '%')
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageRel" resultType="com.eleadmin.BasicInformationManagement.production.entity.Production">
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="selectListRel" resultType="com.eleadmin.BasicInformationManagement.production.entity.Production">
+        <include refid="selectSql"></include>
+    </select>
+
+
+    <select id="findAllProductions" resultType="com.eleadmin.BasicInformationManagement.production.entity.Production">
+        select *
+        from production
+    </select>
+
+    <insert id="addProduction" parameterType="com.eleadmin.BasicInformationManagement.production.entity.Production">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            select LAST_INSERT_ID()
+        </selectKey>
+
+        insert into production
+        (propertyName,parentId,subProperty,propertystate,tenant_id)
+        values (#{propertyname},#{parentid},#{subproperty},#{propertystate},2)
+    </insert>
+    <update id="updateProduction" parameterType="com.eleadmin.BasicInformationManagement.production.entity.Production">
+        update production set propertyName=#{propertyname},parentId=#{parentid},subProperty=#{subproperty},propertystate=#{propertystate} where id = #{id}
+    </update>
+    <delete id="deleteProduction">
+        delete from production where id = #{id}
+    </delete>
+</mapper>

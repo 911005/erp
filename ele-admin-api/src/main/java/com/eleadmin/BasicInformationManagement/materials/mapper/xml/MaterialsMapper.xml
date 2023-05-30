@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eleadmin.BasicInformationManagement.materials.mapper.MaterialsMapper">
+
+    <!-- 关联查询sql -->
+    <sql id="selectSql">
+        SELECT a.*
+        FROM materials a
+        <where>
+            <if test="param.id != null">
+                AND a.id = #{param.id}
+            </if>
+            <if test="param.rawname != null">
+                AND a.rawname LIKE CONCAT('%', #{param.rawname}, '%')
+            </if>
+            <if test="param.caregoryid != null">
+                AND a.caretoryid LIKE CONCAT('%', #{param.caretoryid}, '%')
+            </if>
+            <if test="param.model != null">
+                AND a.model LIKE CONCAT('%', #{param.model}, '%')
+            </if>
+            <if test="param.unitofmeasurement != null">
+                AND a.unitOfMeasurement LIKE CONCAT('%', #{param.unitofmeasurement}, '%')
+            </if>
+            <if test="param.status != null">
+                AND a.status LIKE CONCAT('%', #{param.status}, '%')
+            </if>
+        </where>
+    </sql>
+    <!-- 分页查询 -->
+    <select id="selectPageRel" resultType="com.eleadmin.BasicInformationManagement.materials.entity.Materials">
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="selectListRel" resultType="com.eleadmin.BasicInformationManagement.materials.entity.Materials">
+        <include refid="selectSql"></include>
+    </select>
+    <select id="findmaterials" resultType="com.eleadmin.BasicInformationManagement.materials.entity.Materials">
+        select *
+        from materials
+    </select>
+    <select id="findmaterialsByCaregory" resultType="com.eleadmin.BasicInformationManagement.materials.entity.Materials">
+        select *
+        from materials where caregoryid=#{caregoryid};
+    </select>
+    <update id="updateMaterials" parameterType="com.eleadmin.BasicInformationManagement.materials.entity.Materials">
+        update materials set rawname=#{rawname},caregoryid=#{caregoryid},model=#{model},
+                             unitOfMeasurement=#{unitofmeasurement},status=#{status} where id=#{id}
+    </update>
+    <delete id="deleltematerials" >
+        delete from materials where rawname=#{rawname}
+    </delete>
+    <insert id="addmaterials" parameterType="com.eleadmin.BasicInformationManagement.materials.entity.Materials">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into materials (rawname,caregoryid,model,unitOfMeasurement,status,tenant_id)
+               values (#{rawname},#{caregoryid},#{model},#{unitofmeasurement},#{status},2)
+    </insert>
+</mapper>

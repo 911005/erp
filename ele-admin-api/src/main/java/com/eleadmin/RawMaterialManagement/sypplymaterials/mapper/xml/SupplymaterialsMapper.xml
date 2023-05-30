@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eleadmin.RawMaterialManagement.sypplymaterials.mapper.SupplymaterialsMapper">
+
+    <!-- 关联查询sql -->
+    <sql id="selectSql">
+        SELECT a.*
+        FROM supplymaterials a
+        <where>
+            <if test="param.meterialid != null">
+                AND a.meterialId = #{param.meterialid}
+            </if>
+            <if test="param.platformmaterialname != null">
+                AND a.platformMaterialName LIKE CONCAT('%', #{param.platformmaterialname}, '%')
+            </if>
+            <if test="param.supplymaterialname != null">
+                AND a.supplyMaterialName LIKE CONCAT('%', #{param.supplymaterialname}, '%')
+            </if>
+            <if test="param.specifications != null">
+                AND a.specifications LIKE CONCAT('%', #{param.specifications}, '%')
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageRel" resultType="com.eleadmin.RawMaterialManagement.sypplymaterials.entity.Supplymaterials">
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="selectListRel" resultType="com.eleadmin.RawMaterialManagement.sypplymaterials.entity.Supplymaterials">
+        <include refid="selectSql"></include>
+    </select>
+    <select id="findAllSupplyM" resultType="com.eleadmin.RawMaterialManagement.sypplymaterials.entity.Supplymaterials">
+        select *
+        from supplymaterials
+    </select>
+    <select id="findSupplyMById" resultType="com.eleadmin.RawMaterialManagement.sypplymaterials.entity.Supplymaterials">
+        select *
+        from supplymaterials where supplyMaterialName=#{supplymaterialname}
+    </select>
+    <update id="updateSupplyM" parameterType="com.eleadmin.RawMaterialManagement.sypplymaterials.entity.Supplymaterials">
+        update supplymaterials set platformMaterialName=#{platformmaterialname}, supplyMaterialName=#{supplymaterialname},specifications=#{specifications} where materialId = #{materialid}
+    </update>
+    <delete id="deleteSupplyM">
+        delete from supplymaterials where materialId = #{materialid}
+    </delete>
+    <insert id="addSupplyM" parameterType="com.eleadmin.RawMaterialManagement.sypplymaterials.entity.Supplymaterials">
+        <selectKey keyProperty="materialid" order="AFTER" resultType="java.lang.Integer">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into supplymaterials
+        (platformMaterialName,supplyMaterialName,specifications,tenant_id)
+        values (#{platformmaterialname},#{supplymaterialname},#{specifications},2)
+    </insert>
+
+
+</mapper>
