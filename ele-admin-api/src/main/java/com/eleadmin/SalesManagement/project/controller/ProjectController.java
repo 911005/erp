@@ -1,12 +1,10 @@
 package com.eleadmin.SalesManagement.project.controller;
 
 
-
 import com.eleadmin.SalesManagement.project.entity.Project;
 import com.eleadmin.SalesManagement.project.service.ProjectService;
 import com.eleadmin.common.core.annotation.OperationLog;
-import com.eleadmin.common.core.web.ApiResult;
-import com.eleadmin.common.core.web.BaseController;
+import com.eleadmin.common.core.web.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -32,16 +30,16 @@ public class ProjectController extends BaseController {
     @OperationLog
     @ApiOperation("查询工程")
     @GetMapping("/findAllProject")
-        public List<Project> findAllProject(){
-            return projectService.findAllProject();
-        }
+    public List<com.eleadmin.SalesManagement.project.entity.Project> findAllProject(){
+        return projectService.findAllProject();
+    }
 
     //根据客户名称查找工程
     @PreAuthorize("hasAuthority('sys:dict:list')")
     @OperationLog
     @ApiOperation("根据客户名称查询")
     @GetMapping("/findProjectsBycustomerName/{customerName}")
-    public List<Project> findProjectsBycustomerName(@PathVariable("customerName") String name) {
+    public List<com.eleadmin.SalesManagement.project.entity.Project> findProjectsBycustomerName(@PathVariable("customerName") String name) {
         return projectService.findProjectsBycustomerName(name);
     }
     //根据工程名称查找工程
@@ -49,7 +47,7 @@ public class ProjectController extends BaseController {
     @OperationLog
     @ApiOperation("根据工程名称查询")
     @GetMapping("/findProjectsByprojectName/{projectName}")
-    public List<Project> findProjectsByprojectName(@PathVariable("projectName") String pname) {
+    public List<com.eleadmin.SalesManagement.project.entity.Project> findProjectsByprojectName(@PathVariable("projectName") String pname) {
         return projectService.findProjectsByprojectName(pname);
     }
 
