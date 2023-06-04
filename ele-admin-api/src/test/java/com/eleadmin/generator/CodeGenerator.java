@@ -36,12 +36,12 @@ public class CodeGenerator {
     private static final String DB_USERNAME = "root";
     private static final String DB_PASSWORD = "root";
     // 包名
-    private static final String PACKAGE_NAME = "com.eleadmin.SalesManagement";
+    private static final String PACKAGE_NAME = "com.eleadmin.ProductionCenter";
     // 模块名
-    private static final String MODULE_NAME = "salesContract";
+    private static final String MODULE_NAME = "productiontask";
     // 需要生成的表
     private static final String[] TABLE_NAMES = new String[]{
-            "salescontract"
+            "productiontasks"
     };
     // 需要去除的表前缀
     private static final String[] TABLE_PREFIX = new String[]{

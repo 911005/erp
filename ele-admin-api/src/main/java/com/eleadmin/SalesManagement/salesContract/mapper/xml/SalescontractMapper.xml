@@ -53,25 +53,38 @@
 
 
     <select id="findAllSalescontracts" resultType="com.eleadmin.SalesManagement.salesContract.param.SalescontractParam">
-        SELECT sc.*, c.unitName, p.projectName,
-               p.projectAddress, p.transportationDistance
+        SELECT sc.*, p.*
         FROM salescontract sc
-                 INNER JOIN customer c ON sc.customerId = c.id and sc.tenant_id=2 and c.tenant_id=2
                  INNER JOIN project p ON sc.projectId = p.projectId and sc.tenant_id=2 and p.tenant_id=2
-        where sc.tenant_id=2 and c.tenant_id=2 and p.tenant_id=2
+        where sc.tenant_id=2 and p.tenant_id=2
     </select>
 
-    <update id="updateSalescontract" parameterType="com.eleadmin.SalesManagement.salesContract.param.SalescontractParam">
-        update salescontract set number=#{number}, contraType=#{contratype},contractAmount=#{contractAmount},
-                                 signingTime=#{signingtime}, supplyPeriodStart=#{supplyperiodstart},
-                                 supplyPeriodEnd=#{supplyperiodend}, creator=#{creator}
+    <!--     根据客户名称查工程 -->
+    <select id="findSalescontractsByNumber" resultType="com.eleadmin.SalesManagement.salesContract.param.SalescontractParam">
+        SELECT sc.*, p.*
+        FROM salescontract sc
+                 INNER JOIN project p ON sc.projectId = p.projectId and sc.tenant_id=2 and p.tenant_id=2
+        where sc.tenant_id=2 and p.tenant_id=2 and number=#{number}
+    </select>
+
+    <insert id="addSalescontract" parameterType="com.eleadmin.SalesManagement.salesContract.entity.Salescontract">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into salescontract
+        (number,contraType,contractAmount,signingTime,projectId,supplyPeriodStart,supplyPeriodEnd,
+        creator,tenant_id)
+        values (#{number},#{contratype},#{contractamount},#{signingtime},#{projectid},#{supplyperiodstart},
+        #{supplyperiodend},#{creator},2)
+    </insert>
+
+    <update id="updateSalescontract" parameterType="com.eleadmin.SalesManagement.salesContract.entity.Salescontract">
+        update salescontract set number=#{number}, contraType=#{contratype},contractAmount=#{contractamount},
+            signingTime=#{signingtime}, projectId=#{projectid},supplyPeriodStart=#{supplyperiodstart},
+            supplyPeriodEnd=#{supplyperiodend}, creator=#{creator}
         where salesContractId = #{salescontractid}
     </update>
-    <update id="updateSalescontract" parameterType="com.eleadmin.SalesManagement.salesContract.param.SalescontractParam">
-        UPDATE project p
-        JOIN salescontract sc ON p.projectId = sc.projectId
-        SET p.projectId = #{projectId}
-        WHERE p.projectId = #{projectId}
 
-    </update>
+    <delete id="deleteSalescontract"> delete from salescontract where salescontractId = #{salescontractid} </delete>
+
 </mapper>

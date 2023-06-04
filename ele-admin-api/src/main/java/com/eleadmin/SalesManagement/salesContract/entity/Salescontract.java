@@ -43,10 +43,6 @@ public class Salescontract implements Serializable {
     @TableField("signingTime")
     private Date signingtime;
 
-    @ApiModelProperty(value = "客户id，外键")
-    @TableField("customerId")
-    private Integer customerid;
-
     @ApiModelProperty(value = "工程id，外键")
     @TableField("projectId")
     private Integer projectid;

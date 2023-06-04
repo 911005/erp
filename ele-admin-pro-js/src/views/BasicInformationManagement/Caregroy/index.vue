@@ -287,7 +287,7 @@ export default {
       demo.addStatus=true
     }
     const addEvent = async() => {
-      demo.addstatus = false;
+      demo.addStatus = false;
       let data={
         caregory:demo.addData.caregory,
         pid:demo.addData.pid

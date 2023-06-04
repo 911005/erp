@@ -2,6 +2,7 @@
   <div>
     <vxe-button status="primary" content="新增" @click="addProduction()"></vxe-button>
     <vxe-table
+      height="495"
       show-overflow
       :row-config="{isHover: true, useKey: true}"
       :column-config="{resizable: true}"

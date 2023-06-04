@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eleadmin.SalesManagement.order.mapper.OrderMapper">
+
+    <!-- 关联查询sql -->
+    <sql id="selectSql">
+        SELECT a.*
+        FROM order a
+        <where>
+            <if test="param.id != null">
+                AND a.id = #{param.id}
+            </if>
+            <if test="param.ordernumber != null">
+                AND a.orderNumber LIKE CONCAT('%', #{param.ordernumber}, '%')
+            </if>
+            <if test="param.orderdate != null">
+                AND a.orderDate LIKE CONCAT('%', #{param.orderdate}, '%')
+            </if>
+            <if test="param.status != null">
+                AND a.status LIKE CONCAT('%', #{param.status}, '%')
+            </if>
+            <if test="param.salecontracid != null">
+                AND a.saleContracId = #{param.salecontracid}
+            </if>
+            <if test="param.pouringdate != null">
+                AND a.pouringDate LIKE CONCAT('%', #{param.pouringdate}, '%')
+            </if>
+            <if test="param.concretemarkings != null">
+                AND a.concreteMarkings LIKE CONCAT('%', #{param.concretemarkings}, '%')
+            </if>
+            <if test="param.pouringmethod != null">
+                AND a.pouringMethod LIKE CONCAT('%', #{param.pouringmethod}, '%')
+            </if>
+            <if test="param.plannedsqueravolume != null">
+                AND a.plannedSqueraVolume LIKE CONCAT('%', #{param.plannedsqueravolume}, '%')
+            </if>
+            <if test="param.salesman != null">
+                AND a.salesman LIKE CONCAT('%', #{param.salesman}, '%')
+            </if>
+            <if test="param.remarks != null">
+                AND a.remarks LIKE CONCAT('%', #{param.remarks}, '%')
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageRel" resultType="com.eleadmin.SalesManagement.order.entity.Order">
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="selectListRel" resultType="com.eleadmin.SalesManagement.order.entity.Order">
+        <include refid="selectSql"></include>
+    </select>
+    <select id="findAllOrders" resultType="com.eleadmin.SalesManagement.order.param.OrderParam">
+        select o.*, sc.*, p.*
+               from `order` o
+                    inner join salescontract sc on o.salesContractId=sc.salesContractId and o.tenant_id=2 and sc.tenant_id=2
+                    INNER JOIN project p ON sc.projectId = p.projectId and sc.tenant_id=2 and p.tenant_id=2
+        where o.tenant_id=2 and sc.tenant_id=2 and p.tenant_id=2
+    </select>
+    <update id="updateOrder" parameterType="com.eleadmin.SalesManagement.order.entity.Order">
+        update `order` set orderNumber=#{ordernumber},orderDate=#{orderdate},
+                         status=#{status},salesContractId=#{salescontractid},pouringDate=#{pouringdate},
+                         concreteMarkings=#{concretemarkings},pouringMethod=#{pouringmethod},plannedSqueraVolume=#{plannedsqueravolume},
+                         salesman=#{salesman},remarks=#{remarks},Strengthlevel=#{strengthlevel},Slump=#{slump},
+                        Impermeabilitylevel=#{impermeabilitylevel},FrostResistancelevel=#{frostresistancelevel},
+                        SulfateResistancelevel=#{sulfateresistancelevel},Chlorideionresistancelevel=#{chlorideionresistancelevel},
+                        Admixture=#{admixture},Specialrawmaterials=#{specialrawmaterials}where id=#{id}
+    </update>
+    <insert id="addOrder" parameterType="com.eleadmin.SalesManagement.order.entity.Order">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into `order` (orderNumber,orderDate,status,salesContractId,pouringDate,concreteMarkings,
+                        pouringMethod,plannedSqueraVolume,salesman,remarks,Strengthlevel,Slump,
+                        Impermeabilitylevel,FrostResistancelevel,SulfateResistancelevel,Chlorideionresistancelevel,
+                        Admixture,Specialrawmaterials,tenant_id)
+                    values (#{ordernumber},#{orderdate},#{status},#{salescontractid},#{pouringdate},
+                        #{concretemarkings},#{pouringmethod},#{plannedsqueravolume},#{salesman},
+                        #{remarks},#{strengthlevel},#{slump},#{impermeabilitylevel},#{frostresistancelevel},
+                        #{sulfateresistancelevel},#{chlorideionresistancelevel},#{admixture},#{specialrawmaterials},2);
+    </insert>
+    <delete id="deleteOrder">
+        delete from `order` where id=#{id}
+    </delete>
+</mapper>

@@ -52,8 +52,8 @@
     <select id="findCarByCarNumber" resultType="com.eleadmin.ConvoyManagement.car.entity.Car">
         select  * from car where carNumber=#{carnumber}
     </select>
-    <select id="findCarBycarIdenNumber" resultType="com.eleadmin.ConvoyManagement.car.entity.Car">
-        select  * from car where carIdenNumber=#{caridennumber}
+    <select id="findCarBycarId" resultType="com.eleadmin.ConvoyManagement.car.entity.Car">
+        select  * from car where carId=#{carid}
     </select>
     <select id="findCarBypersonInCharge" resultType="com.eleadmin.ConvoyManagement.car.entity.Car">
         select  * from car where personInCharge=#{personincharge}

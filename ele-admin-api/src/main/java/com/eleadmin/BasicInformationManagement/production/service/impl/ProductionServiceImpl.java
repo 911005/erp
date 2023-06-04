@@ -52,6 +52,16 @@ public class ProductionServiceImpl extends ServiceImpl<ProductionMapper, Product
     }
 
     @Override
+    public List<Production> findProductionsToOrder() {
+        return productionMapper.findProductionsToOrder();
+    }
+
+    @Override
+    public Production findProductionsByid(int id) {
+        return productionMapper.findProductionsByid(id);
+    }
+
+    @Override
     public void deleteProduction(int id) {
         productionMapper.deleteProduction(id);
     }

@@ -27,7 +27,7 @@
     <!--  编辑弹窗-->
     <vxe-modal v-model="pro.status" :title=" '新增&保存'" width="800" min-width="600" min-height="300"  resize destroy-on-close >
       <vxe-form :data="pro.updateData" title-align="right" title-width="100" >
-        <vxe-form-item title="Basic information" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
+        <vxe-form-item title="编辑工程" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
         <vxe-form-item field="projectname" title="工程名称" :span="12" :item-render="{}">
           <template #default="{ data }">
             <vxe-input v-model="data.projectname" placeholder="请输入工程名称"></vxe-input>
@@ -48,6 +48,25 @@
             <vxe-input v-model="data.projectlevel" placeholder="请输入联系地址"></vxe-input>
           </template>
         </vxe-form-item>
+
+        <vxe-form-item field="customername" title="客户名称" :span="12" :item-render="{}">
+          <template #default="{ data }">
+            <vxe-select v-model="data.customername" :options="pro.options" placeholder="选择客户名称"></vxe-select>
+          </template>
+        </vxe-form-item>
+        <!--        <vxe-form-item field="customername" title="客户名称" :span="12" :item-render="{}">-->
+        <!--                    <template #default="{ data }">-->
+        <!--                      <vxe-select v-model="data.customername" :options="pro.options" placeholder="客户名称">-->
+        <!--                        <vxe-option :value="data.value" :label="data.label" v-for="(item, index) in options" :key="index" />-->
+        <!--                      </vxe-select>-->
+        <!--          <vxe-select v-model="pro.customername" placeholder="默认尺寸">-->
+        <!--            <vxe-option v-for="item in pro.options" :key="item.id" :value="item.unitname" :label="item.unitname"></vxe-option>-->
+        <!--          </vxe-select>-->
+
+        <!--                    </template>-->
+
+        <!--        </vxe-form-item>-->
+
         <vxe-form-item field="poursquare" title="浇筑方量" :span="12" :item-render="{}"  >
           <template #default="{ data }">
             <vxe-input v-model="data.poursquare" placeholder="请输入浇筑方量" type="integer" ><span >m³</span>
@@ -77,28 +96,15 @@
         </vxe-form-item>
         <vxe-form-item field="startdate" title="预计开设时间" :span="12" :item-render="{}" >
           <template #default="{ data }">
-            <a-date-picker
-              class="ele-fluid"
-              value-format="YYYY-MM-DD"
-              placeholder="请选择开设时间"
-              v-model:value="data.startdate"
-            />
+            <vxe-input v-model="data.startdate" placeholder="开设时间" type="datetime"></vxe-input>
+            <!--            <a-date-picker-->
+            <!--              class="ele-fluid"-->
+            <!--              value-format="YYYY-MM-DD"-->
+            <!--              placeholder="请选择开设时间"-->
+            <!--              v-model:value="data.startdate"-->
+            <!--            />-->
           </template>
         </vxe-form-item>
-        <!--        //-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
-        <vxe-form-item field="customername" title="客户名称" :span="12" :item-render="{}">
-          <template #default="{ data }">
-            <vxe-input v-model="data.customername" placeholder="请输入备注"></vxe-input>
-          </template>
-        </vxe-form-item>
-        <!--        下拉框-->
-        <!--        <vxe-form-item type="select" label="客户名称" title="客户名称2" prop="projectName">-->
-        <!--          <vxe-select v-model="pro.projectName">-->
-        <!--            <vxe-option v-for="item in pro.projects" :key="item.projectname" :value="item.projectname" :label="item.projectname">-->
-        <!--              {{ item.projectname }}-->
-        <!--            </vxe-option>-->
-        <!--          </vxe-select>-->
-        <!--        </vxe-form-item>-->
 
         <vxe-form-item field="state" title="状态" :span="12" :item-render="{}">
           <template #default="{ data }">
@@ -119,7 +125,7 @@
     <!--  新增弹窗-->
     <vxe-modal v-model="pro.addStatus" :title=" '新增&保存'" width="800" min-width="600" min-height="300"  resize destroy-on-close>
       <vxe-form :data="pro.addData" title-align="right" title-width="100" >
-        <vxe-form-item title="Basic information" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
+        <vxe-form-item title="新增工程" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
 
         <vxe-form-item field="projectname" title="工程名称" :span="12" :item-render="{}">
           <template #default="{ data }">
@@ -141,7 +147,18 @@
             <vxe-input v-model="data.projectlevel" placeholder="请输入联系地址"></vxe-input>
           </template>
         </vxe-form-item>
+        <vxe-form-item field="customername" title="客户名称" :span="12" :item-render="{}">
+          <template #default="{ data }">
+            <vxe-select v-model="data.customername" :options="pro.options" placeholder="客户名称">
+              <!--              <vxe-option :value="data.value" :label="data.label" v-for="(item, index) in options" :key="index" />-->
+            </vxe-select>
+            <!--            <vxe-select v-model="pro.customername" placeholder="默认尺寸">-->
+            <!--              <vxe-option v-for="item in pro.options" :key="item.id" :value="item.unitname" :label="item.unitname"></vxe-option>-->
+            <!--            </vxe-select>-->
 
+          </template>
+
+        </vxe-form-item>
 
         <vxe-form-item field="poursquare" title="浇筑方量" :span="12" :item-render="{}">
           <template #default="{ data }">
@@ -149,25 +166,7 @@
           </template>
         </vxe-form-item>
 
-        <!--        test-->
-        <!--        <vxe-form-item :title="'浇筑方量'" :prop="'vol'">-->
-        <!--          <vxe-input-number-->
-        <!--            ref="volInput"-->
-        <!--            class-name="vxe-input&#45;&#45;mini vxe-input-number&#45;&#45;mini"-->
-        <!--            :step="0.1"-->
-        <!--            :min="0"-->
-        <!--            :max="Infinity"-->
-        <!--            controls-->
-        <!--          />-->
-        <!--        </vxe-form-item>-->
-        <!--        <div class="btn-group">-->
-        <!--          <vxe-button icon="up" type="text" @click="onVolChange(0.1)" class="btn-up"></vxe-button>-->
-        <!--          <vxe-button icon="down" type="text" @click="onVolChange(-0.1)" class="btn-down"></vxe-button>-->
-        <!--        </div>-->
-        <!--        <vxe-form-item class-name="text-center">-->
-        <!--          <vxe-button type="primary" size="medium" icon="CheckOutlined" :disabled="submitBtnDisabled" @click="submitForm">Submit</vxe-button>-->
-        <!--        </vxe-form-item>-->
-        <!--        test-->
+
 
         <vxe-form-item field="projectaddress" title="工程地址" :span="12" :item-render="{}">
           <template #default="{ data }">
@@ -191,28 +190,17 @@
         </vxe-form-item>
         <vxe-form-item field="startdate" title="预计开设时间" :span="12" :item-render="{}" >
           <template #default="{ data }">
-            <a-date-picker
-              class="ele-fluid"
-              value-format="YYYY-MM-DD"
-              placeholder="请选择开设时间"
-              v-model:value="data.startdate"
-            />
+            <vxe-input v-model="data.startdate" placeholder="开设时间" type="datetime"></vxe-input>
+            <!--            <a-date-picker-->
+            <!--              class="ele-fluid"-->
+            <!--              value-format="YYYY-MM-DD"-->
+            <!--              placeholder="请选择开设时间"-->
+            <!--              v-model:value="data.startdate"-->
+            <!--            />-->
           </template>
         </vxe-form-item>
         <!--        //-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
-        <vxe-form-item field="customername" title="客户名称" :span="12" :item-render="{}">
-          <template #default="{ data }">
-            <vxe-input v-model="data.customername" placeholder="请输入备注"></vxe-input>
-          </template>
-        </vxe-form-item>
-        <!--        下拉框-->
-        <!--        <vxe-form-item type="select" label="客户名称" title="客户名称2" prop="projectName">-->
-        <!--          <vxe-select v-model="pro.projectName">-->
-        <!--            <vxe-option v-for="item in pro.projects" :key="item.projectname" :value="item.projectname" :label="item.projectname">-->
-        <!--              {{ item.projectname }}-->
-        <!--            </vxe-option>-->
-        <!--          </vxe-select>-->
-        <!--        </vxe-form-item>-->
+
 
         <vxe-form-item field="state" title="状态" :span="12" :item-render="{}">
           <template #default="{ data }">
@@ -241,10 +229,14 @@ export default {
   name: "index",
   setup() {
     onMounted(() => {
-      findProjects()
+      findProjects(),
+        findCustomerName()
     })
     const pro = reactive({
       projectName: '',
+      customername:'',
+      customers:[],
+      options:[{id:'',unitname: ''}],
       projects: [],
       status: false,
       addStatus: false,
@@ -287,6 +279,33 @@ export default {
       return res
     }
 
+//下拉框
+    const findCustomerName = async () => {
+      const res = await request.get('/customer/customer/findAllCustomers');
+      const data=res.data
+      if (data && data.length > 0) {
+        pro.options = data.map(item => {
+          return { value: item.unitname, label: item.unitname };
+        });
+      }
+      return res
+    }
+
+    //下拉框2
+    // const findCustomerName2 = async () => {
+    //   const res = await request.get('/customer/customer/findAllCustomers');
+    //   pro.options.values=res.data
+    //   console.log(pro.options)
+    //   console.log(res.data)
+    //   // if (data && data.length > 0) {
+    //   //   pro.options = data.map(item => {
+    //   //     return { value: item.id, label: item.unitname };
+    //   //   });
+    //   // }
+    //   return res
+    // }
+
+
     const deleteEvent = async (row) => {
       alert("已删除" + row.projectid + "工程")
       const res = await request.delete('/project/deleteProject/' + row.projectid)
@@ -306,6 +325,8 @@ export default {
       console.log(pro.updateData)
       pro.status = false
       let data = pro.updateData
+      //test
+
       const res = await request.put('/project/updateProject', data);
       if (res.data.code === 0) {
         return res.data.message;
@@ -335,7 +356,7 @@ export default {
       }
       console.log(data)
       const res = await request.put('/project/addProject', data)
-      console.log(pro.addData)
+      // console.log(pro.addData)
       if (res.data.code === 0) {
         return res.data.message;
       }
@@ -350,9 +371,11 @@ export default {
       submitEvent,
       addProject,
       addEvent,
-      findProjectsBycustomerName,
       findProjectsByprojectName,
+      findProjectsBycustomerName,
+      findCustomerName,
       proData,
+      // findCustomerName2
 
     }
 
@@ -363,61 +386,4 @@ export default {
 
 </script>
 
-<!--<template>-->
-<!--  <vxe-form ref="form" :model.sync="data" :rules="rules" @submit="handleSubmit">-->
-<!--    <vxe-form-item :title="'浇筑方量'" :prop="'vol'">-->
-<!--      <vxe-input-number-->
-<!--        ref="volInput"-->
-<!--        class-name="vxe-input&#45;&#45;mini vxe-input-number&#45;&#45;mini"-->
-<!--        :step="0.1"-->
-<!--        :min="0"-->
-<!--        :max="Infinity"-->
-<!--        controls-->
-<!--      />-->
-<!--    </vxe-form-item>-->
-<!--    <div class="btn-group">-->
-<!--      <vxe-button icon="up" type="text" @click="onVolChange(0.1)" class="btn-up"></vxe-button>-->
-<!--      <vxe-button icon="down" type="text" @click="onVolChange(-0.1)" class="btn-down"></vxe-button>-->
-<!--    </div>-->
-<!--    <vxe-form-item class-name="text-center">-->
-<!--      <vxe-button type="primary" size="medium" icon="CheckOutlined" :disabled="submitBtnDisabled" @click="submitForm">Submit</vxe-button>-->
-<!--    </vxe-form-item>-->
-<!--  </vxe-form>-->
-<!--</template>-->
-
-<!--<script>-->
-<!--export default {-->
-<!--  data() {-->
-<!--    return {-->
-<!--      data: {-->
-<!--        vol: 0,-->
-<!--      },-->
-<!--      rules: {-->
-<!--        vol: [-->
-<!--          { required: true, message: '浇筑方量不能为空'}-->
-<!--        ]-->
-<!--      },-->
-<!--      submitBtnDisabled: true-->
-<!--    }-->
-<!--  },-->
-<!--  methods: {-->
-<!--    onVolChange(value) {-->
-<!--      let fieldValue = this.$refs.volInput.value-->
-<!--      fieldValue = Math.max(0, Number((fieldValue + value).toFixed(1)))-->
-<!--      this.$refs.volInput.updateValue(fieldValue)-->
-<!--      this.submitBtnDisabled = fieldValue === 0-->
-<!--    },-->
-<!--    handleSubmit() {-->
-<!--      this.$refs.form.validate(valid => {-->
-<!--        if (valid) {-->
-<!--          console.log('Data submitted:', this.data)-->
-<!--        }-->
-<!--      })-->
-<!--    }-->
-<!--  },-->
-<!--  mounted() {-->
-<!--    this.$refs.volInput.updateValue(0) // 默认浇筑方量为0-->
-<!--  }-->
-<!--}-->
-<!--</script>-->
 

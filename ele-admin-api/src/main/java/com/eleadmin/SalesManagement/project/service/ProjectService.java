@@ -3,7 +3,6 @@ package com.eleadmin.SalesManagement.project.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import com.eleadmin.SalesManagement.project.entity.Project;
-import com.eleadmin.SalesManagement.project.param.ProjectParam;
 
 import java.util.List;
 

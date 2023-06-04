@@ -13,6 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,14 +49,14 @@ public class ProductionController extends BaseController {
         return productionService.findAllProductions();
     }
 
+    //浇筑方式
+
     @PreAuthorize("hasAuthority('sys:dict:list')")
     @OperationLog
     @ApiOperation("根据id查询")
-    @GetMapping("/{id}")
-    public ApiResult<Production> get(@PathVariable("id") Integer id) {
-        return success(productionService.getById(id));
-        // 使用关联查询
-        //return success(productionService.getByIdRel(id));
+    @GetMapping("/findProductionsByid/{id}")
+    public Production get(@PathVariable("id") Integer id) {
+        return productionService.findProductionsByid(id);
     }
 
     @PreAuthorize("hasAuthority('sys:dict:list')")
@@ -102,7 +103,140 @@ public class ProductionController extends BaseController {
         }
         return fail("添加失败");
     }
-
+    @PreAuthorize("hasAuthority('sys:dict:list')")
+    @OperationLog
+    @ApiOperation("查询全部")
+    @GetMapping("/findProductionsToOrder1")
+    public List<Production> list1(ProductionParam param) {
+        List<Production> list=productionService.findProductionsToOrder();
+        List<Production> list1=new ArrayList<>();
+        for (Production p:list) {
+            if (p.getParentid()==17){
+                list1.add(p);
+            }
+        }
+        return list1;
+    }
+    //强度等级
+    @PreAuthorize("hasAuthority('sys:dict:list')")
+    @OperationLog
+    @ApiOperation("查询全部")
+    @GetMapping("/findProductionsToOrder2")
+    public List<Production> list2(ProductionParam param) {
+        List<Production> list=productionService.findAllProductions();
+        List<Production> list1=new ArrayList<>();
+        for (Production p:list) {
+            if (p.getParentid()==4){
+                list1.add(p);
+            }
+        }
+        return list1;
+    }
+    //坍落度
+    @PreAuthorize("hasAuthority('sys:dict:list')")
+    @OperationLog
+    @ApiOperation("查询全部")
+    @GetMapping("/findProductionsToOrder3")
+    public List<Production> list3(ProductionParam param) {
+        List<Production> list=productionService.findAllProductions();
+        List<Production> list1=new ArrayList<>();
+        for (Production p:list) {
+            if (p.getParentid()==5){
+                list1.add(p);
+            }
+        }
+        return list1;
+    }
+    //抗渗强度
+    @PreAuthorize("hasAuthority('sys:dict:list')")
+    @OperationLog
+    @ApiOperation("查询全部")
+    @GetMapping("/findProductionsToOrder4")
+    public List<Production> list4(ProductionParam param) {
+        List<Production> list=productionService.findAllProductions();
+        List<Production> list1=new ArrayList<>();
+        for (Production p:list) {
+            if (p.getParentid()==6){
+                list1.add(p);
+            }
+        }
+        return list1;
+    }
+    //抗冻等级
+    @PreAuthorize("hasAuthority('sys:dict:list')")
+    @OperationLog
+    @ApiOperation("查询全部")
+    @GetMapping("/findProductionsToOrder5")
+    public List<Production> list5(ProductionParam param) {
+        List<Production> list=productionService.findAllProductions();
+        List<Production> list1=new ArrayList<>();
+        for (Production p:list) {
+            if (p.getParentid()==7){
+                list1.add(p);
+            }
+        }
+        return list1;
+    }
+    //抗硫酸盐强度
+    @PreAuthorize("hasAuthority('sys:dict:list')")
+    @OperationLog
+    @ApiOperation("查询全部")
+    @GetMapping("/findProductionsToOrder6")
+    public List<Production> list6(ProductionParam param) {
+        List<Production> list=productionService.findAllProductions();
+        List<Production> list1=new ArrayList<>();
+        for (Production p:list) {
+            if (p.getParentid()==8){
+                list1.add(p);
+            }
+        }
+        return list1;
+    }
+    //抗氯离子强度
+    @PreAuthorize("hasAuthority('sys:dict:list')")
+    @OperationLog
+    @ApiOperation("查询全部")
+    @GetMapping("/findProductionsToOrder7")
+    public List<Production> list7(ProductionParam param) {
+        List<Production> list=productionService.findAllProductions();
+        List<Production> list1=new ArrayList<>();
+        for (Production p:list) {
+            if (p.getParentid()==9){
+                list1.add(p);
+            }
+        }
+        return list1;
+    }
+    //特殊原材料
+    @PreAuthorize("hasAuthority('sys:dict:list')")
+    @OperationLog
+    @ApiOperation("查询全部")
+    @GetMapping("/findProductionsToOrder8")
+    public List<Production> list8(ProductionParam param) {
+        List<Production> list=productionService.findAllProductions();
+        List<Production> list1=new ArrayList<>();
+        for (Production p:list) {
+            if (p.getParentid()==18){
+                list1.add(p);
+            }
+        }
+        return list1;
+    }
+    //外加剂
+    @PreAuthorize("hasAuthority('sys:dict:list')")
+    @OperationLog
+    @ApiOperation("查询全部")
+    @GetMapping("/findProductionsToOrder9")
+    public List<Production> list9(ProductionParam param) {
+        List<Production> list=productionService.findAllProductions();
+        List<Production> list1=new ArrayList<>();
+        for (Production p:list) {
+            if (p.getParentid()==20){
+                list1.add(p);
+            }
+        }
+        return list1;
+    }
     @PreAuthorize("hasAuthority('production:production:update')")
     @OperationLog
     @ApiOperation("批量修改")

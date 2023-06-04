@@ -5,6 +5,7 @@
     <vxe-button style="padding-right: 10px" status="primary" content="查询所有供应原材料" @click="findSupplyM()"></vxe-button>
     <vxe-button style="padding-right: 10px" status="primary" content="新增供应原材料" @click="addSupplyM()"></vxe-button>
     <vxe-table
+      height="495"
       :span-method="objectSpanMethod"
       :data="demo.SupplyMaterials">
       <vxe-column type="seq" width="60" field="materialid" title="编号"></vxe-column>

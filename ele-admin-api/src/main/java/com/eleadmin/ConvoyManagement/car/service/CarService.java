@@ -43,7 +43,7 @@ public interface CarService extends IService<Car> {
 
     List<Car> findCarByCarNumber(String CarNumber);
 
-    List<Car> findCarBycarIdenNumber(String carIdenNumber);
+    List<Car> findCarBycarId(String carid);
 
     List<Car> findCarBypersonInCharge(String personInCharge);
 

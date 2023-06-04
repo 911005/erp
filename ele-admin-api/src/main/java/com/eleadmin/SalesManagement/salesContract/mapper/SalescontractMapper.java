@@ -2,7 +2,6 @@ package com.eleadmin.SalesManagement.salesContract.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.eleadmin.RawMaterialManagement.sypplymaterials.entity.Supplymaterials;
 import com.eleadmin.SalesManagement.salesContract.entity.Salescontract;
 import com.eleadmin.SalesManagement.salesContract.param.SalescontractParam;
 import org.apache.ibatis.annotations.Param;
@@ -36,8 +35,12 @@ public interface SalescontractMapper extends BaseMapper<Salescontract> {
     List<Salescontract> selectListRel(@Param("param") SalescontractParam param);
 
     List<SalescontractParam> findAllSalescontracts();
+    //    根据合同编号查找
+    List<SalescontractParam>findSalescontractsByNumber(String number);
 
     void addSalescontract(Salescontract salescontract);
 
     void updateSalescontract(Salescontract salescontract);
+
+    void deleteSalescontract(int salescontractId);
 }

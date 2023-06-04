@@ -35,7 +35,12 @@
         <include refid="selectSql"></include>
     </select>
 
-
+    <select id="findProductionsToOrder" resultType="com.eleadmin.BasicInformationManagement.production.entity.Production">
+        select id,parentId,subProperty from production
+    </select>
+    <select id="findProductionsByid" resultType="com.eleadmin.BasicInformationManagement.production.entity.Production">
+        select subProperty from production where id=#{id}
+    </select>
     <select id="findAllProductions" resultType="com.eleadmin.BasicInformationManagement.production.entity.Production">
         select *
         from production

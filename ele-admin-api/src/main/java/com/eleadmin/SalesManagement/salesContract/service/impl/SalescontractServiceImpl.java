@@ -21,6 +21,38 @@ import java.util.List;
 @Service
 public class SalescontractServiceImpl extends ServiceImpl<SalescontractMapper, Salescontract> implements SalescontractService {
 
+    @Autowired
+    SalescontractMapper salescontractMapper;
+    @Override
+    public List<SalescontractParam> findAllSalescontracts() {
+        return salescontractMapper.findAllSalescontracts();
+    }
+
+    @Override
+    public List<SalescontractParam> findSalescontractsByNumber(String number) {
+        return salescontractMapper.findSalescontractsByNumber(number);
+    }
+
+    @Override
+    public boolean addSalescontract(Salescontract salescontract) {
+        salescontractMapper.addSalescontract(salescontract);
+        System.out.println(salescontract.getSalescontractid());
+        return true;
+    }
+
+    @Override
+    public boolean updateSalescontract(Salescontract salescontract) {
+        salescontractMapper.updateSalescontract(salescontract);
+        System.out.println(salescontract.getNumber());
+        return true;
+    }
+
+    @Override
+    public void deleteSalescontract(int salescontractId) {
+        salescontractMapper.deleteSalescontract(salescontractId);
+    }
+
+
     @Override
     public PageResult<Salescontract> pageRel(SalescontractParam param) {
         PageParam<Salescontract, SalescontractParam> page = new PageParam<>(param);
@@ -44,24 +76,4 @@ public class SalescontractServiceImpl extends ServiceImpl<SalescontractMapper, S
         param.setSalescontractid(salescontractid);
         return param.getOne(baseMapper.selectListRel(param));
     }
-
-    @Autowired
-    SalescontractMapper salescontractMapper;
-    @Override
-    public List<SalescontractParam> findAllSalescontracts() {
-        return salescontractMapper.findAllSalescontracts();
-    }
-
-    @Override
-    public boolean addSalescontract(Salescontract salescontract) {
-        return false;
-    }
-
-    @Override
-    public boolean updateSalescontract(Salescontract salescontract) {
-        salescontractMapper.updateSalescontract(salescontract);
-        System.out.println(salescontract.getSalescontractid());
-        return true;
-    }
-
 }

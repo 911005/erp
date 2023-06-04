@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eleadmin.RawMaterialManagement.supplier.mapper.SupplierMapper">
+
+    <!-- 关联查询sql -->
+    <sql id="selectSql">
+        SELECT a.*
+        FROM supplier a
+        <where>
+            <if test="param.id != null">
+                AND a.id = #{param.id}
+            </if>
+            <if test="param.suppliername != null">
+                AND a.supplierName LIKE CONCAT('%', #{param.suppliername}, '%')
+            </if>
+            <if test="param.suppliertype != null">
+                AND a.supplierType LIKE CONCAT('%', #{param.suppliertype}, '%')
+            </if>
+            <if test="param.phone != null">
+                AND a.phone LIKE CONCAT('%', #{param.phone}, '%')
+            </if>
+            <if test="param.supplieraddress != null">
+                AND a.supplierAddress LIKE CONCAT('%', #{param.supplieraddress}, '%')
+            </if>
+            <if test="param.userid != null">
+                AND a.userId = #{param.userid}
+            </if>
+            <if test="param.remarks != null">
+                AND a.remarks LIKE CONCAT('%', #{param.remarks}, '%')
+            </if>
+            <if test="param.faxnumber != null">
+                AND a.faxNumber = #{param.faxnumber}
+            </if>
+            <if test="param.zipcode != null">
+                AND a.zipCode LIKE CONCAT('%', #{param.zipcode}, '%')
+            </if>
+            <if test="param.legalrepresentative != null">
+                AND a.legalRepresentative LIKE CONCAT('%', #{param.legalrepresentative}, '%')
+            </if>
+            <if test="param.email != null">
+                AND a.email LIKE CONCAT('%', #{param.email}, '%')
+            </if>
+            <if test="param.taxidnumber != null">
+                AND a.taxIDnumber = #{param.taxidnumber}
+            </if>
+            <if test="param.supplys != null">
+                AND a.supplys LIKE CONCAT('%', #{param.supplys}, '%')
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageRel" resultType="com.eleadmin.RawMaterialManagement.supplier.entity.Supplier">
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="selectListRel" resultType="com.eleadmin.RawMaterialManagement.supplier.entity.Supplier">
+        <include refid="selectSql"></include>
+    </select>
+
+    <select id="findAllSuppliers" resultType="com.eleadmin.RawMaterialManagement.supplier.param.SupplierParam">
+        select s.*, sm.*
+            from supplier s
+                    inner join supplymaterials sm on s.materialId = sm.materialId and s.tenant_id=2 and sm.tenant_id=2
+--                     inner join sys_user su on s.userId = su.user_id and s.tenant_id=2
+--         where s.tenant_id=2 and sm.tenant_id=2
+    </select>
+
+    <select id="findByName" resultType="com.eleadmin.RawMaterialManagement.supplier.param.SupplierParam">
+        select s.*, sm.*
+        from supplier s
+                 inner join supplymaterials sm on s.materialId = sm.materialId and s.tenant_id=2 and sm.tenant_id=2
+        where supplierName=#{suppliername}
+    </select>
+    <select id="findBySaleman" resultType="com.eleadmin.RawMaterialManagement.supplier.param.SupplierParam">
+        select s.*, sm.*
+        from supplier s
+                 inner join supplymaterials sm on s.materialId = sm.materialId and s.tenant_id=2 and sm.tenant_id=2
+        where saleman=#{saleman}
+    </select>
+    <update id="updateSupplier" parameterType="com.eleadmin.RawMaterialManagement.supplier.entity.Supplier">
+        update supplier set supplierName=#{suppliername},supplierType=#{suppliertype},phone=#{phone},
+                            supplierAddress=#{supplieraddress},saleman=#{saleman},remarks=#{remarks},
+                            faxNumber=#{faxnumber},zipCode=#{zipcode},legalRepresentative=#{legalrepresentative},
+                            email=#{email},taxIDnumber=#{taxidnumber},materialId=#{materialid},status=#{status} where id=#{id}
+    </update>
+    <insert id="addSupplier" parameterType="com.eleadmin.RawMaterialManagement.supplier.entity.Supplier">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+        select LAST_INSERT_ID()
+    </selectKey>
+        insert into supplier (supplierName,supplierType,phone,supplierAddress,saleman,remarks,faxNumber,zipCode,legalRepresentative,
+        email,taxIDnumber,materialId,status,tenant_id) values (#{suppliername},#{suppliertype},#{phone},#{supplieraddress},#{saleman},
+        #{remarks},#{faxnumber},#{zipcode},#{legalrepresentative},#{email},#{taxidnumber},#{materialid},#{status},2);
+
+    </insert>
+    <delete id="deleteSupplier">
+        delete from supplier where id=#{id}
+    </delete>
+
+</mapper>

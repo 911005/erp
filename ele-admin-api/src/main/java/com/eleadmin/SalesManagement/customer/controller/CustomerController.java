@@ -33,7 +33,7 @@ public class CustomerController extends BaseController {
 
     @PreAuthorize("hasAuthority('sys:dict:list')")
     @OperationLog
-    @ApiOperation("分页查询")
+    @ApiOperation("查询")
     @GetMapping("/findAllCustomers")
     public List<Customer> findAllCustomers(){
         return customerService.findAllCustomers();
@@ -41,7 +41,7 @@ public class CustomerController extends BaseController {
 
     @PreAuthorize("hasAuthority('sys:dict:list')")
     @OperationLog
-    @ApiOperation("根据id查询")
+    @ApiOperation("根据客户名称查询")
     @GetMapping("/findCustomersByunitName/{unitName}")
     public List<Customer> findCustomersByunitName(@PathVariable("unitName") String name) {
         return customerService.findCustomersByunitName(name);
@@ -49,7 +49,7 @@ public class CustomerController extends BaseController {
 
     @PreAuthorize("hasAuthority('sys:dict:list')")
     @OperationLog
-    @ApiOperation("根据id查询")
+    @ApiOperation("根据客户类型查询")
     @GetMapping("/findCustomersByunitType/{unitType}")
     public List<Customer> findCustomersByunitType(@PathVariable("unitType") String type) {
         return customerService.findCustomersByunitType(type);
@@ -92,7 +92,7 @@ public class CustomerController extends BaseController {
 
 
 
-//    @PreAuthorize("hasAuthority('customer:customer:list')")
+//    @PreAuthorize("hasAuthority('sys:dict:list')")
 //    @OperationLog
 //    @ApiOperation("分页查询")
 //    @GetMapping("/page")

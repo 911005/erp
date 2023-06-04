@@ -52,21 +52,21 @@ public class CarController extends BaseController {
     @PreAuthorize("hasAuthority('sys:dict:list')")
     @OperationLog
     @ApiOperation("根据CarNumber查询")
-    @GetMapping("/selectByCarNumber/CarNumber}")
+    @GetMapping("/selectByCarNumber/{CarNumber}")
     public List<Car> get(@PathVariable("CarNumber") String CarNumber) {
        return  carService.findCarByCarNumber(CarNumber);
     }
     @PreAuthorize("hasAuthority('sys:dict:list')")
     @OperationLog
     @ApiOperation("根据carIdenNumber查询")
-    @GetMapping("/selectBycarIdenNumber/carIdenNumber}")
-    public List<Car> getBycarIdenNumber(@PathVariable("carIdenNumber") String carIdenNumber) {
-        return  carService.findCarBycarIdenNumber(carIdenNumber);
+    @GetMapping("/selectBycarid/{carid}")
+    public List<Car> getBycarIdenNumber(@PathVariable("carid") String carid) {
+        return  carService.findCarBycarId(carid);
     }
     @PreAuthorize("hasAuthority('sys:dict:list')")
     @OperationLog
     @ApiOperation("根据personInCharge查询")
-    @GetMapping("/selectBypersonInCharge/CarNumber}")
+    @GetMapping("/selectBypersonInCharge/{personInCharge}")
     public List<Car> getBypersonInCharge(@PathVariable("personInCharge") String personInCharge) {
         return  carService.findCarBypersonInCharge(personInCharge);
     }

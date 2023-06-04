@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eleadmin.ProductionCenter.productiontask.mapper.ProductiontasksMapper">
+
+    <!-- 关联查询sql -->
+    <sql id="selectSql">
+        SELECT a.*
+        FROM productiontasks a
+        <where>
+            <if test="param.missonid != null">
+                AND a.missonId = #{param.missonid}
+            </if>
+            <if test="param.mnumber !=null">
+                AND a.mnumber = #{param.mnumber}
+            </if>
+            <if test="param.mstatus != null">
+                AND a.mstatus LIKE CONCAT('%', #{param.mstatus}, '%')
+            </if>
+            <if test="param.orderid != null">
+                AND a.orderId = #{param.orderid}
+            </if>
+            <if test="param.ordertime != null">
+                AND a.orderTime LIKE CONCAT('%', #{param.ordertime}, '%')
+            </if>
+            <if test="param.tasklevel != null">
+                AND a.taskLevel LIKE CONCAT('%', #{param.tasklevel}, '%')
+            </if>
+            <if test="param.opensettings != null">
+                AND a.openSettings LIKE CONCAT('%', #{param.opensettings}, '%')
+            </if>
+            <if test="param.remarks != null">
+                AND a.remarks LIKE CONCAT('%', #{param.remarks}, '%')
+            </if>
+            <if test="param.salesman != null">
+                AND a.salesman LIKE CONCAT('%', #{param.salesman}, '%')
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageRel" resultType="com.eleadmin.ProductionCenter.productiontask.entity.Productiontasks">
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="selectListRel" resultType="com.eleadmin.ProductionCenter.productiontask.entity.Productiontasks">
+        <include refid="selectSql"></include>
+    </select>
+
+
+    <select id="findAllProductiontasks" resultType="com.eleadmin.ProductionCenter.productiontask.param.ProductiontasksParam">
+        select pt.*, o.*, p.*
+        from productiontasks pt
+            inner join `order` o on pt.orderId = o.id and pt.tenant_id=2 and o.tenant_id=2
+            inner join salescontract sc on o.salesContractId = sc.salesContractId and o.tenant_id=2 and sc.tenant_id=2
+            inner join project p on sc.projectId = p.projectId and sc.tenant_id=2 and p.tenant_id=2
+        where pt.tenant_id=2 and o.tenant_id=2 and sc.tenant_id=2 and p.tenant_id=2
+    </select>
+    <select id="findProductionTasksByMnumber" resultType="com.eleadmin.ProductionCenter.productiontask.param.ProductiontasksParam">
+        select pt.*, o.*, p.*
+        from productiontasks pt
+                 inner join `order` o on pt.orderId = o.id and pt.tenant_id=2 and o.tenant_id=2
+                 inner join salescontract sc on o.salesContractId = sc.salesContractId and o.tenant_id=2 and sc.tenant_id=2
+                 inner join project p on sc.projectId = p.projectId and sc.tenant_id=2 and p.tenant_id=2
+        where pt.tenant_id=2 and o.tenant_id=2 and sc.tenant_id=2 and p.tenant_id=2 and mnumber=#{mnumber}
+    </select>
+
+    <insert id="addProductiontasks" parameterType="com.eleadmin.ProductionCenter.productiontask.entity.Productiontasks">
+        <selectKey keyProperty="missonid" order="AFTER" resultType="java.lang.Integer">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into productiontasks
+        (missonId,mnumber,mstatus,orderId,orderTime,taskLevel,shipmentProgress,openSettings,salesman,remarks,tenant_id)
+        values (#{missonid},#{mnumber},#{mstatus},#{orderid},#{ordertime},#{tasklevel},#{shipmentprogress},
+        #{opensettings},#{salesman},#{remarks},2)
+    </insert>
+    <update id="updateProductiontasks" parameterType="com.eleadmin.ProductionCenter.productiontask.param.ProductiontasksParam">
+        update productiontasks set mnumber=#{mnumber},mstatus=#{mstatus},orderId=#{orderid},orderTime=#{ordertime}
+                ,taskLevel=#{tasklevel},shipmentProgress=#{shipmentprogress},openSettings=#{opensettings},
+                salesman=#{salesman},remarks=#{remarks}
+        where missonId=#{missonid}
+    </update>
+    <delete id="deleteProductiontasks">
+        delete from productiontasks where missonId = #{missonid}
+    </delete>
+
+</mapper>

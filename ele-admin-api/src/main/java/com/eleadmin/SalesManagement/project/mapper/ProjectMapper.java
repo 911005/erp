@@ -1,11 +1,7 @@
 package com.eleadmin.SalesManagement.project.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.eleadmin.SalesManagement.customer.entity.Customer;
 import com.eleadmin.SalesManagement.project.entity.Project;
-import com.eleadmin.SalesManagement.project.param.ProjectParam;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 

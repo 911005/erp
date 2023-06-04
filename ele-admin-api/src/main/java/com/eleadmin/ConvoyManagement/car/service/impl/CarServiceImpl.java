@@ -59,8 +59,8 @@ public class CarServiceImpl extends ServiceImpl<CarMapper, Car> implements CarSe
     }
 
     @Override
-    public List<Car> findCarBycarIdenNumber(String carIdenNumber) {
-        return carMapper.findCarBycarIdenNumber(carIdenNumber);
+    public List<Car> findCarBycarId(String carid) {
+        return carMapper.findCarBycarId(carid);
     }
 
     @Override

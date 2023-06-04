@@ -8,7 +8,9 @@
 
     <vxe-button status="primary" content="查询所有单位信息" @click="findCustomers()"></vxe-button>
     <vxe-button status="primary" content="新增单位信息" @click="addCustomer()"></vxe-button>
-    <vxe-table
+  <!--      :data="cus.customers"-->
+  <vxe-table
+      height="495"
       :data="cus.customers">
       <vxe-column type="seq" width="60" field="id"></vxe-column>
       <vxe-column field="unitname" title="单位名称"></vxe-column>
@@ -27,12 +29,12 @@
     </vxe-table>
 
     <!--  编辑弹窗-->
-    <vxe-modal v-model="cus.status" :title=" '新增&保存'" width="800" min-width="600" min-height="300"  resize destroy-on-close>
+    <vxe-modal v-model="cus.status" :title=" '编辑&保存'" width="800" min-width="600" min-height="300"  resize destroy-on-close>
       <vxe-form :data="cus.updateData" title-align="right" title-width="100" >
         <vxe-form-item title="Basic information" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
         <vxe-form-item field="unitname" title="单位名称" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.unitname" placeholder="请输入单位名称"></vxe-input>
+            <vxe-input v-model="data.unitname" placeholder="请输入单位名称" disabled></vxe-input>
           </template>
         </vxe-form-item>
         <vxe-form-item field="unittype" title="单位类型" :span="12" :item-render="{}">
@@ -173,6 +175,7 @@ export default {
       updateData:[],
       addData:[]
     })
+
     const findCustomers=async () => {
       console.log(111)
       const res = await request.get('/customer/customer/findAllCustomers');
@@ -250,6 +253,7 @@ export default {
       return Promise.reject(new Error(res.data.message));
     }
 
+
     return {
       cus,
       findCustomers,
@@ -259,7 +263,7 @@ export default {
       addCustomer,
       addEvent,
       findCustomersByunitName,
-      findCustomersByunitType
+      findCustomersByunitType,
     }
   },
 

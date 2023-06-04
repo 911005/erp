@@ -1,9 +1,9 @@
 <template>
   <div>
     <vxe-input v-model="demo.searchInput1" placeholder="请输入车辆编号" type="search" ></vxe-input>
-    <vxe-button status="primary" content="查询" @click="selectByCarNumber()"></vxe-button>
+    <vxe-button status="primary" content="查询" @click="selectBycarid()"></vxe-button>
     <vxe-input v-model="demo.searchInput2" placeholder="请输入车牌号" type="search" ></vxe-input>
-    <vxe-button status="primary" content="查询" @click="selectBycarIdenNumber()"></vxe-button>
+    <vxe-button status="primary" content="查询" @click="selectByCarNumber()"></vxe-button>
     <vxe-input v-model="demo.searchInput3" placeholder="请输入负责人" type="search" ></vxe-input>
     <vxe-button status="primary" content="查询" @click="selectBypersonInCharge()"></vxe-button>
     <vxe-button status="primary" content="查询运输车辆信息" @click="findCars()"></vxe-button>
@@ -149,12 +149,11 @@
 
 <script>
 import {reactive,onMounted} from "vue";
-import {demoService} from "@/views/demo/demo"
 import request from "@/utils/request";
 
 export default {
   name: "index",
-  setup: function () {
+  setup() {
     onMounted(() => {
       findCars()
     })
@@ -176,17 +175,17 @@ export default {
       console.log(demo.cars)
       return res
     }
-    const selectByCarNumber = async () =>{
+    const selectBycarid = async () =>{
       console.log(111)
-      const res = await request.get('/car/car/selectByCarNumber'+demo.searchInput1);
+      const res = await request.get('/car/car/selectBycarid/'+demo.searchInput1);
       console.log(res)
       demo.cars = res.data
       console.log(demo.cars)
       return res
     }
-    const selectBycarIdenNumber = async () =>{
+    const selectByCarNumber = async () =>{
       console.log(111)
-      const res = await request.get('/car/car/selectBycarIdenNumber'+demo.searchInput2);
+      const res = await request.get('/car/car/selectByCarNumber/'+demo.searchInput2);
       console.log(res)
       demo.cars = res.data
       console.log(demo.cars)
@@ -194,7 +193,7 @@ export default {
     }
     const selectBypersonInCharge = async () =>{
       console.log(111)
-      const res = await request.get('/car/car/selectBypersonInCharge'+demo.searchInput3);
+      const res = await request.get('/car/car/selectBypersonInCharge/'+demo.searchInput3);
       console.log(res)
       demo.cars = res.data
       console.log(demo.cars)
@@ -260,7 +259,7 @@ export default {
       addCar,
       addEvent,
       selectByCarNumber,
-      selectBycarIdenNumber,
+      selectBycarid,
       selectBypersonInCharge
     }
   },

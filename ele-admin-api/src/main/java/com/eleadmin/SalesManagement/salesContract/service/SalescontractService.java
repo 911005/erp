@@ -41,9 +41,13 @@ public interface SalescontractService extends IService<Salescontract> {
     Salescontract getByIdRel(Integer salescontractid);
 
     List<SalescontractParam> findAllSalescontracts();
+    List<SalescontractParam>findSalescontractsByNumber(String number);
 
     boolean addSalescontract(Salescontract salescontract);
 
     boolean updateSalescontract(Salescontract salescontract);
+
+    void deleteSalescontract(int salescontractId);
+
 
 }
