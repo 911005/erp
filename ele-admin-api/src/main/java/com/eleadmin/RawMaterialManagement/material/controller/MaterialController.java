@@ -5,6 +5,7 @@ import com.eleadmin.RawMaterialManagement.material.service.MaterialService;
 import com.eleadmin.RawMaterialManagement.material.entity.Material;
 import com.eleadmin.RawMaterialManagement.material.param.MaterialParam;
 
+import com.eleadmin.RawMaterialManagement.mcustomer.entity.Mcustomer;
 import com.eleadmin.common.core.annotation.OperationLog;
 import com.eleadmin.common.core.web.*;
 import io.swagger.annotations.Api;
@@ -87,8 +88,9 @@ public class MaterialController extends BaseController {
 
     @OperationLog
     @ApiOperation("删除协议")
-    @GetMapping("/deleteMaterial{id}")
+    @DeleteMapping("/deleteMaterial/{id}")
     public void deleteMaterial(@PathVariable("id") int id){
+//        int id2 = Integer.parseInt(id);
         System.out.println(id);
         materialService.deleteMaterial(id);
     }
@@ -143,6 +145,7 @@ public class MaterialController extends BaseController {
         }
         return fail("添加失败");
     }
+
 
     @PreAuthorize("hasAuthority('material:material:update')")
     @OperationLog

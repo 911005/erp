@@ -15,6 +15,8 @@ import java.util.List;
  */
 public interface SupplymaterialsService extends IService<Supplymaterials> {
 
+
+
     /**
      * 分页关联查询
      *
@@ -39,7 +41,8 @@ public interface SupplymaterialsService extends IService<Supplymaterials> {
      */
     Supplymaterials getByIdRel(Integer meterialid);
 
-
+//通过id查语句
+    List<Supplymaterials> findSMById(int id);
 
     List<Supplymaterials> findAllSupplyM();
 

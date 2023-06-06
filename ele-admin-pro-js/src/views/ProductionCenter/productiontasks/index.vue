@@ -227,6 +227,7 @@
         </template>
       </vxe-form-item>
 
+
       <vxe-form-item title="混凝土标记" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
       <vxe-form-item field="strengthlevel" title="强度等级" :span="8" :item-render="{}">
         <template #default="{ data }">

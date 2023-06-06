@@ -47,6 +47,8 @@
       </vxe-table>
     </vxe-modal>
 
+
+
     <!--  编辑弹窗-->
     <vxe-modal v-model="demo.status" :title=" '编辑&保存'" width="800" min-width="600" min-height="300"  resize destroy-on-close>
       <vxe-form :data="demo.updateData" title-align="right" title-width="100" >
@@ -306,6 +308,8 @@ export default {
     const selectAllProjects=async () =>{
       demo.value5 = true
     }
+
+    //增加
     const addProjectname=async (row)=>{
       // alert(row.projectname);
       demo.addData.projectid=row.projectid;

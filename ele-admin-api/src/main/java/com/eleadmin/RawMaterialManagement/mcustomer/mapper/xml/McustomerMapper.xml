@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eleadmin.RawMaterialManagement.mcustomer.mapper.McustomerMapper">
+
+    <!-- 关联查询sql -->
+    <sql id="selectSql">
+        SELECT a.*
+        FROM mcustomer a
+        <where>
+            <if test="param.id != null">
+                AND a.id = #{param.id}
+            </if>
+            <if test="param.unitname != null">
+                AND a.unitName LIKE CONCAT('%', #{param.unitname}, '%')
+            </if>
+            <if test="param.unittype != null">
+                AND a.unitType LIKE CONCAT('%', #{param.unittype}, '%')
+            </if>
+            <if test="param.pnumber != null">
+                AND a.pnumber LIKE CONCAT('%', #{param.pnumber}, '%')
+            </if>
+            <if test="param.address != null">
+                AND a.address LIKE CONCAT('%', #{param.address}, '%')
+            </if>
+            <if test="param.operator != null">
+                AND a.operator LIKE CONCAT('%', #{param.operator}, '%')
+            </if>
+            <if test="param.state != null">
+                AND a.state LIKE CONCAT('%', #{param.state}, '%')
+            </if>
+            <if test="param.remarks != null">
+                AND a.remarks LIKE CONCAT('%', #{param.remarks}, '%')
+            </if>
+        </where>
+    </sql>
+<!--查询全部-->
+    <select id="findAllMcustomer" resultType="com.eleadmin.RawMaterialManagement.mcustomer.entity.Mcustomer">
+        select * from mcustomer
+    </select>
+
+    <!--    删除-->
+    <delete id="deleteMcustomer">
+        delete from mcustomer where id = #{id}
+    </delete>
+
+ <update id="updateMcustomer" parameterType="com.eleadmin.RawMaterialManagement.mcustomer.entity.Mcustomer">
+        update mcustomer set unitName=#{unitname},unitType=#{unittype},pnumber=#{pnumber},address=#{address},operator=#{operator}
+        ,state=#{state},remarks=#{remarks} where id=#{id}
+    </update>
+
+
+<!--    增加用户-->
+   <insert id="addMcustomer" parameterType="com.eleadmin.RawMaterialManagement.mcustomer.entity.Mcustomer">
+       <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer"> select LAST_INSERT_ID() </selectKey>
+       insert into mcustomer(id,unitName,unitType,pnumber,address,operator,state,remarks,tenant_id)
+       values (#{id},#{unitname}, #{unittype},#{pnumber},#{address},#{operator},#{state},#{remarks},2)
+   </insert>
+
+    <!-- 分页查询 -->
+    <select id="selectPageRel" resultType="com.eleadmin.RawMaterialManagement.mcustomer.entity.Mcustomer">
+        <include refid="selectSql"></include>
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="selectListRel" resultType="com.eleadmin.RawMaterialManagement.mcustomer.entity.Mcustomer">
+        <include refid="selectSql"></include>
+    </select>
+
+</mapper>

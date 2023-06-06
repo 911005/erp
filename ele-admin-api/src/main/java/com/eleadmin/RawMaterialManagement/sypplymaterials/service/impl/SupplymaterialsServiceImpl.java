@@ -58,6 +58,12 @@ public class SupplymaterialsServiceImpl extends ServiceImpl<SupplymaterialsMappe
         return supplymaterialsMapper.findSupplyMById(supplymaterialname);
     }
 
+//通过id找
+    @Override
+    public List<Supplymaterials> findSMById(int id) {
+        return supplymaterialsMapper.findSMById(id);
+    }
+
     @Override
     public void deleteSupplyM(int id) {
         supplymaterialsMapper.deleteSupplyM(id);

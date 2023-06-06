@@ -39,6 +39,15 @@
         select *
         from supplymaterials where supplyMaterialName=#{supplymaterialname}
     </select>
+
+<!--    通过id找-->
+    <select id="findSMById" resultType="com.eleadmin.RawMaterialManagement.sypplymaterials.entity.Supplymaterials">
+        select *
+        from supplymaterials where materialId=#{materialid}
+    </select>
+
+
+
     <update id="updateSupplyM" parameterType="com.eleadmin.RawMaterialManagement.sypplymaterials.entity.Supplymaterials">
         update supplymaterials set platformMaterialName=#{platformmaterialname}, supplyMaterialName=#{supplymaterialname},specifications=#{specifications} where materialId = #{materialid}
     </update>

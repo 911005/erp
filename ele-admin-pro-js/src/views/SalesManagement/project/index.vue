@@ -9,6 +9,7 @@
     <vxe-button status="primary" content="查询所有工程信息" @click="findProjects()"></vxe-button>
     <vxe-button status="primary" content="新增工程信息" @click="addProject()"></vxe-button>
     <vxe-table
+      height="495"
       :data="pro.projects">
       <vxe-column type="seq" width="60" field="projectid"></vxe-column>
       <vxe-column field="projectname" title="工程名称"></vxe-column>

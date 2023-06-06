@@ -42,5 +42,6 @@ public interface SupplymaterialsMapper extends BaseMapper<Supplymaterials> {
 
     void updateSupplyM(Supplymaterials supplymaterials);
 
+    List<Supplymaterials> findSMById(int id);
     List<Supplymaterials> findSupplyMById(String supplymaterialname);
 }

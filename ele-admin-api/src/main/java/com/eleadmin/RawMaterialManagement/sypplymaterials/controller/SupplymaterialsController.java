@@ -57,6 +57,18 @@ public class SupplymaterialsController extends BaseController {
         return supplymaterialsService.findSupplyMById(supplymaterialname);
     }
 
+
+    //通过id找
+    @PreAuthorize("hasAuthority('sys:dict:list')")
+    @OperationLog
+    @ApiOperation("根据id查询")
+    @GetMapping("/findSMById/{materialid}")
+    public List<Supplymaterials> get(@PathVariable("materialid") int id) {
+        return supplymaterialsService.findSMById(id);
+    }
+
+
+
     @PreAuthorize("hasAuthority('sys:dict:list')")
     @OperationLog
     @ApiOperation("添加")

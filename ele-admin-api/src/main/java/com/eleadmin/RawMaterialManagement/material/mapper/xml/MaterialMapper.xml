@@ -72,7 +72,7 @@
 
     <!--根据供应商查询采购协议-->
     <select id="findMABysupplier" resultType="com.eleadmin.RawMaterialManagement.material.entity.Material">
-        select * from material where supplier=#{supplier}
+        select * from material where correspondenceUnit=#{correspondenceunit}
     </select>
 
 <!--    删除-->
@@ -82,27 +82,18 @@
 
 <!--    更新-->
     <update id="updateMaterial" parameterType="com.eleadmin.RawMaterialManagement.material.entity.Material">
-        update material set correspondenceUnit=#{correspondenceunit},supplyMethod=#{supplymethod},contacts=#{contacts},
+        update material set correspondenceUnit=#{correspondenceunit},state=#{state},supplyMethod=#{supplymethod},contacts=#{contacts},
      procurementTime= #{procurementtime},deliveryPlace=#{deliveryplace},supplyMaterials=#{supplymaterials},
     platformMaterials=#{platformmaterials}, pricingUnit=#{pricingunit},conversionCoefficient=#{conversioncoefficient},
-    plannedQuantity=#{plannedquantity},unitPrice=#{unitprice},dgnTime=#{dgntime},state=#{state},supplier=#{supplier}
-        ,number=#{number}
-       where Id=#{id}
+    plannedQuantity=#{plannedquantity},unitPrice=#{unitprice},dgnTime=#{dgntime},number=#{number}
+       where id=#{id}
     </update>
-<!--&lt;!&ndash;    新增&ndash;&gt;-->
-<!--    <insert id="addMaterial" parameterType="Material">-->
-<!--        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer"> select LAST_INSERT_ID() </selectKey>-->
-<!--        insert into material(Id,purchaseAgreementNum,correspondenceUnit,supplyMethod,contacts,procurementTime,deliveryPlace,supplyMaterials-->
-<!--        platformMaterials,pricingUnit,conversionCoefficient,plannedQuantity,unitPrice,dgnTime,state,number,tenant_id)-->
-<!--        values (#{id},#{purchaseAgreementnum},#{correspondenceunit}, #{supplymethod},#{contacts},#{procurementtime},-->
-<!--          #{deliveryplace},#{supplymaterials},#{platformmaterials}, #{pricingunit},#{conversioncoefficient},-->
-<!--          #{plannedquantity},#{unitprice},#{dgntime},#{state},#{number},2)-->
-<!--    </insert>-->
+
     <!--    新增-->
     <insert id="addMaterial" parameterType="com.eleadmin.RawMaterialManagement.material.entity.Material">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer"> select LAST_INSERT_ID() </selectKey>
-        insert into material(Id,correspondenceUnit,supplyMethod,contacts,procurementTime,deliveryplace,number,tenant_id)
-        values (#{id},#{correspondenceunit}, #{supplymethod},#{contacts},#{procurementtime},#{deliveryplace},#{number},2)
+        insert into material(Id,purchaseAgreementNum,state,unitPrice,plannedQuantity,pricingUnit,platformMaterials,supplyMaterials,correspondenceUnit,supplyMethod,contacts,procurementTime,deliveryplace,number,tenant_id)
+        values (#{id},#{purchaseagreementnum},#{state},#{unitprice},#{plannedquantity},#{pricingunit},#{platformmaterials},#{supplymaterials},#{correspondenceunit}, #{supplymethod},#{contacts},#{procurementtime},#{deliveryplace},#{number},2)
     </insert>
     <!-- 分页查询 -->
     <select id="selectPageRel" resultType="com.eleadmin.RawMaterialManagement.material.entity.Material">
