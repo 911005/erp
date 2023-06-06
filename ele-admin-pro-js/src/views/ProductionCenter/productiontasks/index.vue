@@ -1,11 +1,13 @@
 <template>
 <div>
+  &nbsp;&nbsp;&nbsp;&nbsp;
   <vxe-input v-model="demo.searchInput1" placeholder="输入任务编号" type="search" ></vxe-input>
   <vxe-button status="primary" content="查询" @click="findProductionTasksByMnumber()"></vxe-button>
-  <vxe-button status="primary" content="查询所有任务信息" @click="findProductiontasks()"></vxe-button>
-  <vxe-button status="primary" content="新增生产任务信息" @click="addProductiontasks()"></vxe-button>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <vxe-button status="primary" content="刷新" @click="findProductiontasks()"></vxe-button>
+  <vxe-button status="primary" content="新增" @click="addProductiontasks()"></vxe-button>
   <vxe-table
-    height="495"
+    height="595"
     :data="demo.productionTasks">
     <vxe-column type="seq" width="60" field="missonid" title="序号"></vxe-column>
     <vxe-column field="mnumber" title="任务编号"></vxe-column>
@@ -52,7 +54,7 @@
   </vxe-modal>
 
   <!--  编辑弹窗-->
-  <vxe-modal v-model.sync="demo.status" :title=" '编辑&保存'" width="800" min-width="600" min-height="300"  resize destroy-on-close>
+  <vxe-modal v-model.sync="demo.status" :title=" '编辑'" width="800" min-width="600" min-height="300"  resize destroy-on-close>
     <vxe-form :data="demo.updateData" title-align="right" title-width="100" >
       <vxe-form-item title="生产任务单" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
 
@@ -183,7 +185,7 @@
 
 
   <!--  新增弹窗-->
-  <vxe-modal v-model.sync="demo.addStatus" :title=" '新增&保存'" width="800" min-width="600" min-height="300"  resize destroy-on-close>
+  <vxe-modal v-model.sync="demo.addStatus" :title=" '新增'" width="800" min-width="600" min-height="300"  resize destroy-on-close>
     <vxe-form :data="demo.addData" title-align="right" title-width="100" >
       <vxe-form-item title="生产任务单" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
 

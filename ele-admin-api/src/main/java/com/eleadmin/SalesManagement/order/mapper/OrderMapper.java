@@ -36,6 +36,8 @@ public interface OrderMapper extends BaseMapper<Order> {
 
     List<OrderParam> findAllOrders();
 
+    List<OrderParam> findOrdersByNumber(String ordernumber);
+
     void addOrder(Order order);
 
 //    void addConcrete(Concrete concrete);

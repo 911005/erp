@@ -28,6 +28,12 @@ public class McustomerServiceImpl extends ServiceImpl<McustomerMapper, Mcustomer
    public List<Mcustomer> findAllMcustomer(){
         return mcustomerMapper.findAllMcustomer();
     }
+
+    @Override
+    public List<Mcustomer> findMcustomerByName(String name) {
+        return mcustomerMapper.findMcustomerByName(name);
+    }
+
     @Override
     public PageResult<Mcustomer> pageRel(McustomerParam param) {
         PageParam<Mcustomer, McustomerParam> page = new PageParam<>(param);

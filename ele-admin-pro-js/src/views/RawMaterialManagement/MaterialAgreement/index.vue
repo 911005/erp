@@ -1,16 +1,19 @@
 <template >
   <div>
-    <vxe-button status="primary" content="刷新" type="datetime" @click="findAllMA()"></vxe-button>
+    &nbsp;&nbsp;&nbsp;&nbsp;
     <vxe-input v-model="demo.searchInput1" placeholder="采购时间" type="datetime" ></vxe-input>
     <vxe-button status="primary" content="查询" @click="findMAByPtime()"></vxe-button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <vxe-input v-model="demo.searchInput2" placeholder="供应商" type="search" ></vxe-input>
     <vxe-button status="primary" content="查询" @click="findMABysupplier()"></vxe-button>
-    <vxe-button status="primary" content="新增协议信息" @click="addMA()"></vxe-button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <vxe-button status="primary" content="刷新" type="datetime" @click="findAllMA()"></vxe-button>
+    <vxe-button status="primary" content="新增" @click="addMA()"></vxe-button>
 
 
 <!--    底层table-->
     <vxe-table
-      height="495"
+      height="595"
       :data="demo.ma">
       <vxe-column type="seq" width="60" field="id" title="编号"></vxe-column>
       <vxe-column field="purchaseagreementnum" title="协议编号"></vxe-column>
@@ -57,7 +60,7 @@
 
 
 <!--新增窗口-->
-    <vxe-modal v-model="demo.addStatus" :title=" '编辑&保存'" width="800" min-width="600" min-height="300"  resize destroy-on-close>
+    <vxe-modal v-model="demo.addStatus" :title=" '新增'" width="800" min-width="600" min-height="300"  resize destroy-on-close>
       <vxe-form :data="demo.addData" title-align="right" title-width="100" >
         <vxe-form-item title="采购协议" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
 
@@ -136,7 +139,7 @@
         </vxe-form-item>
 
         <vxe-form-item field="unitprice" title="单价" :span="12" :item-render="{}">
-          <vxe-input v-model="demo.addData.unitprice" placeholder="输入单价"  ></vxe-input>
+          <vxe-input v-model="demo.addData.unitprice" placeholder="输入单价"  type="integer"></vxe-input>
         </vxe-form-item>
 
 
@@ -155,7 +158,7 @@
     <!--  编辑弹窗-->
     <!--    status 默认false 窗口是否显示-->
     <!--    表单输入项绑定到data里 -->
-    `<vxe-modal v-model="demo.status" :title=" '编辑&保存'" width="800" min-width="600" min-height="300"  resize destroy-on-close>
+    `<vxe-modal v-model="demo.status" :title=" '编辑'" width="800" min-width="600" min-height="300"  resize destroy-on-close>
     <vxe-form :data="demo.updateData" title-align="right" title-width="100" >
       <vxe-form-item title="采购协议" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
 
@@ -232,7 +235,7 @@
       </vxe-form-item>
 
       <vxe-form-item field="unitprice" title="单价" :span="12" :item-render="{}">
-        <vxe-input v-model="demo.updateData.unitprice" placeholder="输入单价"  ></vxe-input>
+        <vxe-input v-model="demo.updateData.unitprice" placeholder="输入单价"  type="integer"></vxe-input>
       </vxe-form-item>
 
 <!--      -------------------------------------------------------------------------------------------------->

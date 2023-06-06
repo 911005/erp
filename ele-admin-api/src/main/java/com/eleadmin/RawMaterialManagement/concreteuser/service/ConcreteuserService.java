@@ -21,6 +21,8 @@ public interface ConcreteuserService extends IService<Concreteuser> {
     //    查询
     List<Concreteuser> findAllConcreteuser();
 
+    List<Concreteuser> findConcreteuserByName(String name);
+
     void deleteConcreteuser(int id);
 
     boolean updateConcreteuser(Concreteuser concreteuser);

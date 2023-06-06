@@ -44,6 +44,12 @@ public class ConcreteuserServiceImpl extends ServiceImpl<ConcreteuserMapper, Con
     public List<Concreteuser> findAllConcreteuser(){
         return concreteuserMapper.findAllConcreteuser();
     }
+
+    @Override
+    public List<Concreteuser> findConcreteuserByName(String name) {
+        return concreteuserMapper.findConcreteuserByName(name);
+    }
+
     //删除
     @Override
     public void deleteConcreteuser(int id){

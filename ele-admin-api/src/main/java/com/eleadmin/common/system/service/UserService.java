@@ -16,6 +16,8 @@ import java.util.List;
  */
 public interface UserService extends IService<User>, UserDetailsService {
 
+    List<User> findAllUsers();
+
     /**
      * 关联分页查询用户
      *

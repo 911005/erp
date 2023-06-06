@@ -53,12 +53,10 @@ public class OrderController extends BaseController {
 
     @PreAuthorize("hasAuthority('sys:dict:list')")
     @OperationLog
-    @ApiOperation("根据id查询")
-    @GetMapping("/{id}")
-    public ApiResult<Order> get(@PathVariable("id") Integer id) {
-        return success(orderService.getById(id));
-        // 使用关联查询
-        //return success(orderService.getByIdRel(id));
+    @ApiOperation("根据number查询")
+    @GetMapping("/findOrderByNumber/{ordernumber}")
+    public List<OrderParam> get(@PathVariable("ordernumber") String number) {
+        return orderService.findOrdersByNumber(number);
     }
 
     @PreAuthorize("hasAuthority('sys:dict:list')")

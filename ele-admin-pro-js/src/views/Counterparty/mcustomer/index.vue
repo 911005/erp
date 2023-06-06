@@ -1,11 +1,11 @@
 <template >
   <div>
-    <vxe-button status="primary" content="查询所有客户" type="datetime" @click="findAllConcreteuser()"></vxe-button>
-<!--    <vxe-input v-model="demo.searchInput1" placeholder="采购时间" type="datetime" ></vxe-input>-->
-<!--    <vxe-button status="primary" content="查询" @click="findMAByPtime()"></vxe-button>-->
-<!--    <vxe-input v-model="demo.searchInput2" placeholder="供应商" type="search" ></vxe-input>-->
-<!--    <vxe-button status="primary" content="查询全部客户" @click="findAllMcustomer()"></vxe-button>-->
-    <vxe-button status="primary" content="新增协议信息" @click="addMcustomer()"></vxe-button>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <vxe-input v-model="demo.searchInput1" placeholder="请输入单位名称" type="search" ></vxe-input>
+    <vxe-button status="primary" content="查询" @click="findMcustomerByName()"></vxe-button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <vxe-button status="primary" content="刷新" type="datetime" @click="findAllMcustomer()"></vxe-button>
+    <vxe-button status="primary" content="新增" @click="addMcustomer()"></vxe-button>
     <vxe-table
       height="495"
       :data="demo.ma">
@@ -29,9 +29,9 @@
 
 <!--新增窗口-->
 
-    <vxe-modal v-model="demo.addStatus" :title=" '新增客户'" width="800" min-width="600" min-height="300"  resize destroy-on-close>
+    <vxe-modal v-model="demo.addStatus" :title=" '新增'" width="800" min-width="600" min-height="300"  resize destroy-on-close>
       <vxe-form :data="demo.addData" title-align="right" title-width="100" >
-        <vxe-form-item title="采购协议" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
+        <vxe-form-item title="原材料客户" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
 
 
         <vxe-form-item field="unitname" title="单位名称" :span="12" :item-render="{}">
@@ -40,7 +40,7 @@
 
         <vxe-form-item field="unittype" title="单位类型" :span="12" :item-render="{}">
           <vxe-select v-model="demo.addData.unittype" placeholder="单位类型">
-            <vxe-option :value="'混凝土客户'" label="混凝土客户"></vxe-option>
+            <vxe-option :value="'原材料客户'" label="原材料客户"></vxe-option>
           </vxe-select>
         </vxe-form-item>
 
@@ -57,7 +57,10 @@
         </vxe-form-item>
 
         <vxe-form-item field="state" title="状态" :span="12" :item-render="{}">
-          <vxe-input v-model="demo.addData.state" placeholder="状态"></vxe-input>
+          <vxe-select v-model="demo.addData.state" placeholder="状态">
+            <vxe-option :value="'启用'" label="启用"></vxe-option>
+            <vxe-option :value="'停用'" label="停用"></vxe-option>
+          </vxe-select>
         </vxe-form-item>
 
         <vxe-form-item field="remarks" title="备注" :span="12" :item-render="{}">
@@ -81,7 +84,7 @@
     <!--    表单输入项绑定到data里 -->
     `<vxe-modal v-model="demo.status" :title=" '编辑&保存'" width="800" min-width="600" min-height="300"  resize destroy-on-close>
     <vxe-form :data="demo.updateData" title-align="right" title-width="100" >
-      <vxe-form-item title="采购协议" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
+      <vxe-form-item title="原材料客户" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
 
 
       <vxe-form-item field="unitname" title="单位名称" :span="12" :item-render="{}">
@@ -90,7 +93,7 @@
 
       <vxe-form-item field="unittype" title="单位类型" :span="12" :item-render="{}">
         <vxe-select v-model="demo.updateData.unittype" placeholder="单位类型">
-          <vxe-option :value="'混凝土客户'" label="混凝土客户"></vxe-option>
+          <vxe-option :value="'原材料客户'" label="原材料客户"></vxe-option>
         </vxe-select>
       </vxe-form-item>
 
@@ -107,7 +110,10 @@
       </vxe-form-item>
 
       <vxe-form-item field="state" title="状态" :span="12" :item-render="{}">
-        <vxe-input v-model="demo.updateData.state" placeholder="状态"></vxe-input>
+        <vxe-select v-model="demo.updateData.state" placeholder="状态">
+          <vxe-option :value="'启用'" label="启用"></vxe-option>
+          <vxe-option :value="'停用'" label="停用"></vxe-option>
+        </vxe-select>
       </vxe-form-item>
 
 
@@ -139,11 +145,11 @@ export default {
   name: "index",
   setup(){
     onMounted(() => {
-      findAllConcreteuser()
+      findAllMcustomer()
     })
     const demo = reactive({
       ma:[],
-      // searchInput1:[],
+      searchInput1:[],
       // searchInput2:[],
       projectname: '',
       status: false,
@@ -154,10 +160,17 @@ export default {
 
     })
 
+    const findMcustomerByName = async () =>{
+      const res = await request.get('/mcustomer/findMcustomerByName/'+demo.searchInput1);
+      console.log(res)
+      demo.ma = res.data
+      console.log(demo.ma)
+      return res
+    }
 
-    const findAllConcreteuser= async () =>{
+    const findAllMcustomer = async () =>{
       console.log(111)
-      const res = await request.get('/concreteuser/findAllConcreteuser');
+      const res = await request.get('/mcustomer/findAllMcustomer');
       console.log(res.data)
       demo.ma = res.data
       return res
@@ -192,7 +205,7 @@ export default {
     const deleteEvent = async (row) => {
       alert(row.id)
 
-      const res = await request.delete('/concreteuser/deleteConcreteuser/' + row.id)
+      const res = await request.delete('/mcustomer/deleteMcustomer/' + row.id)
       if (res.data.code == 0) {
         return res.data.message
       }
@@ -205,7 +218,7 @@ export default {
       console.log(demo.updateData)
       demo.status=false
       let data=demo.updateData
-      const res = await request.put('/concreteuser/updateConcreteuser',data);
+      const res = await request.put('/mcustomer/updateMcustomer',data);
       if (res.data.code === 0) {
         return res.data.message;
       }
@@ -227,7 +240,7 @@ export default {
         remarks:demo.addData.remarks
       }
       console.log(data)
-      const res = await request.put('/concreteuser/addConcreteuser', data)
+      const res = await request.put('/mcustomer/addMcustomer', data)
       if (res.data.code === 0) {
         return res.data.message;
       }
@@ -236,12 +249,18 @@ export default {
 
     return{
       demo,
-      findAllConcreteuser,
+      findAllMcustomer,
+      findMcustomerByName,
       deleteEvent,
       updateEvent,
       submitEvent,
       addEvent,
-      addMcustomer
+      // findMAByPtime,
+      // findMABysupplier,
+      addMcustomer,
+      // selectAllGoods,
+      // demo1,
+      // rawMaterials,
     }
   }
 }

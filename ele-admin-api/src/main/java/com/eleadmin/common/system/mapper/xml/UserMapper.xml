@@ -136,5 +136,7 @@
             </if>
         </where>
     </select>
-
+    <select id="findAllUsers" resultType="com.eleadmin.common.system.entity.User">
+        select * from sys_user
+    </select>
 </mapper>

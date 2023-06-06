@@ -1,11 +1,13 @@
 <template>
   <div>
+    &nbsp;&nbsp;&nbsp;&nbsp;
     <vxe-input v-model="demo.searchInput" placeholder="请输入供应原材料" type="search" ></vxe-input>
     <vxe-button status="primary" content="查询" @click="findSupplyMById()"></vxe-button>
-    <vxe-button style="padding-right: 10px" status="primary" content="查询所有供应原材料" @click="findSupplyM()"></vxe-button>
-    <vxe-button style="padding-right: 10px" status="primary" content="新增供应原材料" @click="addSupplyM()"></vxe-button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <vxe-button style="padding-right: 10px" status="primary" content="刷新" @click="findSupplyM()"></vxe-button>
+    <vxe-button style="padding-right: 10px" status="primary" content="新增" @click="addSupplyM()"></vxe-button>
     <vxe-table
-      height="495"
+      height="595"
       :span-method="objectSpanMethod"
       :data="demo.SupplyMaterials">
       <vxe-column type="seq" width="60" field="materialid" title="编号"></vxe-column>
@@ -20,25 +22,38 @@
         </template>
       </vxe-column>
     </vxe-table>
+    <vxe-modal v-model="demo.value5" width="1000" show-footer>
+      <vxe-table
+        stripe
+        :span-method="colspanMethod"
+        :data="demo.materials">
+        <vxe-column type="seq" width="60" field="id" title="编号"></vxe-column>
+        <vxe-column field="rawname" title="名称"></vxe-column>
+        <vxe-column field="model" title="规格型号"></vxe-column>
+        <vxe-column field="operate" title="operate" #default="{ row }">
+          <vxe-button type="text" status="danger" content="添加" @click="addMaterials(row)"></vxe-button>
+        </vxe-column>
+      </vxe-table>
+    </vxe-modal>
 
     <!--  编辑弹窗-->
-    <vxe-modal v-model="demo.status" :title=" '新增&保存'" width="800" min-width="600" min-height="300"  resize destroy-on-close>
+    <vxe-modal v-model="demo.status" :title=" '编辑'" width="800" height="395" min-width="600" min-height="300"  resize destroy-on-close>
       <vxe-form :data="demo.updateData" title-align="right" title-width="100" >
-        <vxe-form-item title="Basic information" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
-        <vxe-form-item field="type" title="平台原材料" :span="12" :item-render="{}">
+        <vxe-form-item title="原材料" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
+        <vxe-form-item field="platformmaterialname" title="平台原材料" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.platformmaterialname" placeholder="请输入平台原材料"></vxe-input>
+            <vxe-select v-model="demo.updateData.platformmaterialname" :model-value="demo.updateData.platformmaterialname" placeholder="平台原材料" @click="selectAllMats"></vxe-select>
           </template>
         </vxe-form-item>
-        <vxe-form-item field="type" title="供应原材料" :span="12" :item-render="{}">
+        <vxe-form-item field="supplymaterialname" title="供应原材料" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.supplymaterialname" placeholder="请输入供应原材料"></vxe-input>
+            <vxe-input v-model="data.supplymaterialname" placeholder="供应原材料"></vxe-input>
           </template>
         </vxe-form-item>
 
-        <vxe-form-item field="type" title="规格类型" :span="12" :item-render="{}">
+        <vxe-form-item field="specifications" title="规格类型" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.specifications" placeholder="请输入规格类型"></vxe-input>
+            <vxe-input v-model="demo.updateData.specifications" placeholder="规格类型"></vxe-input>
           </template>
         </vxe-form-item>
         <vxe-form-item align="center" title-align="left" :span="24">
@@ -51,23 +66,23 @@
     </vxe-modal>
 
     <!--  新增弹窗-->
-    <vxe-modal v-model="demo.addStatus" :title=" '新增&保存'" width="800" min-width="600" min-height="300"  resize destroy-on-close>
+    <vxe-modal v-model="demo.addStatus" :title=" '新增'" width="800" height="395" min-width="600" min-height="300"  resize destroy-on-close>
       <vxe-form :data="demo.addData" title-align="right" title-width="100" >
-        <vxe-form-item title="Basic information" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
+        <vxe-form-item title="原材料" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
         <vxe-form-item field="platformmaterialname" title="平台原材料" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.platformmaterialname" placeholder="请输入平台原材料"></vxe-input>
+            <vxe-select v-model="demo.addData.platformmaterialname" :model-value="demo.addData.platformmaterialname" placeholder="平台原材料" @click="selectAllMats"></vxe-select>
           </template>
         </vxe-form-item>
         <vxe-form-item field="supplymaterialname" title="供应原材料" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.supplymaterialname" placeholder="请输入供应原材料"></vxe-input>
+            <vxe-input v-model="data.supplymaterialname" placeholder="供应原材料"></vxe-input>
           </template>
         </vxe-form-item>
 
         <vxe-form-item field="specifications" title="规格类型" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.specifications" placeholder="请输入规格类型"></vxe-input>
+            <vxe-input v-model="demo.addData.specifications" placeholder="规格类型"></vxe-input>
           </template>
         </vxe-form-item>
 
@@ -93,14 +108,25 @@ export default {
   setup() {
     onMounted(() => {
       findSupplyM()
+      findmaterials()
+      findAllmaterials()
     })
     const demo = reactive({
+      value5:false,
+      materials:[],
+      options:[],
       searchInput: [],
       SupplyMaterials: [],
       status: false,
       addStatus: false,
-      updateData: [],
-      addData: []
+      updateData: {
+        platformmaterialname:'',
+        specifications:'',
+      },
+      addData: {
+        platformmaterialname:'',
+        specifications:'',
+      }
     })
 
     const objectSpanMethod= async ({ row, column, rowIndex, visibleData }) =>{
@@ -121,6 +147,39 @@ export default {
           }
         }
       }
+    }
+    const findAllmaterials = async () =>{
+      console.log(111)
+      const res = await request.get('/materials/materials/findmaterials');
+      console.log(res)
+      demo.materials= res.data
+      console.log(demo.materials)
+      return res
+    }
+    const selectAllMats=async ()=>{
+      demo.value5=true
+    }
+    const addMaterials=async (row)=>{
+      if (demo.addStatus){
+        demo.addData.platformmaterialname=row.rawname;
+        demo.addData.specifications=row.model;
+      }
+      else if (demo.status){
+        demo.updateData.platformmaterialname=row.rawname;
+        demo.updateData.specifications=row.model;
+      }
+      demo.value5=false;
+    }
+    const findmaterials = async () =>{
+      console.log(111)
+      const res = await request.get('/materials/materials/findmaterials');
+      const data=res.data
+      if (data && data.length > 0) {
+        demo.options = data.map(item => {
+          return { value: item.rawname, label: item.rawname };
+        });
+      }
+      return res
     }
     const findSupplyM = async () => {
       console.log(111)
@@ -186,6 +245,10 @@ export default {
     return {
       demo,
       findSupplyM,
+      findAllmaterials,
+      findmaterials,
+      selectAllMats,
+      addMaterials,
       deleteEvent,
       updateEvent,
       submitEvent,

@@ -1,16 +1,16 @@
 <template>
   <div>
-    <vxe-input v-model="demo.searchInput1" placeholder="请输入车辆编号" type="search" ></vxe-input>
+    &nbsp;&nbsp;&nbsp;&nbsp;<vxe-input v-model="demo.searchInput1" placeholder="请输入车辆编号" type="search" ></vxe-input>
     <vxe-button status="primary" content="查询" @click="selectBycarid()"></vxe-button>
-    <vxe-input v-model="demo.searchInput2" placeholder="请输入车牌号" type="search" ></vxe-input>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<vxe-input v-model="demo.searchInput2" placeholder="请输入车牌号" type="search" ></vxe-input>
     <vxe-button status="primary" content="查询" @click="selectByCarNumber()"></vxe-button>
-    <vxe-input v-model="demo.searchInput3" placeholder="请输入负责人" type="search" ></vxe-input>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<vxe-input v-model="demo.searchInput3" placeholder="请输入负责人" type="search" ></vxe-input>
     <vxe-button status="primary" content="查询" @click="selectBypersonInCharge()"></vxe-button>
-    <vxe-button status="primary" content="查询运输车辆信息" @click="findCars()"></vxe-button>
-    <vxe-button status="primary" content="新增运输车辆信息" @click="addCar()"></vxe-button>
+    <vxe-button status="primary" content="刷新" @click="findCars()"></vxe-button>
+    <vxe-button status="primary" content="新增" @click="addCar()"></vxe-button>
     <vxe-table
       :data="demo.cars">
-      <vxe-column type="seq" width="60" field="id"></vxe-column>
+      <vxe-column type="seq" width="60" field="id" title="编号"></vxe-column>
       <vxe-column field="carid" title="车辆编号"></vxe-column>
       <vxe-column field="status" title="状态"></vxe-column>
       <vxe-column field="carnumber" title="车牌号"></vxe-column>
@@ -29,39 +29,42 @@
     </vxe-table>
 
     <!--  编辑弹窗-->
-    <vxe-modal v-model="demo.status" :title=" '新增&保存'" width="800" min-width="600" min-height="300"  resize destroy-on-close>
+    <vxe-modal v-model="demo.status" :title=" '编辑'" width="800" min-width="600" min-height="300"  resize destroy-on-close>
       <vxe-form :data="demo.updateData" title-align="right" title-width="100" >
-        <vxe-form-item title="Basic information" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
+        <vxe-form-item title="运输车辆" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
         <vxe-form-item field="carid" title="车辆编号" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.carid" placeholder="请输入车辆编号"></vxe-input>
+            <vxe-input v-model="data.carid" placeholder="车辆编号"></vxe-input>
           </template>
         </vxe-form-item>
         <vxe-form-item field="status" title="状态" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.status" placeholder="请输入状态"></vxe-input>
+            <vxe-select v-model="data.status" placeholder="状态">
+              <vxe-option :value="'启用'" label="启用"></vxe-option>
+              <vxe-option :value="'停用'" label="停用"></vxe-option>
+            </vxe-select>
           </template>
         </vxe-form-item>
         <vxe-form-item field="carnumber" title="车牌号" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.carnumber" placeholder="请输入车牌号"></vxe-input>
+            <vxe-input v-model="data.carnumber" placeholder="车牌号"></vxe-input>
           </template>
         </vxe-form-item>
 
         <vxe-form-item field="caridennumber" title="车辆识别码" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.caridennumber" placeholder="请输入车辆识别码"></vxe-input>
+            <vxe-input v-model="data.caridennumber" placeholder="车辆识别码"></vxe-input>
           </template>
         </vxe-form-item>
 
         <vxe-form-item field="gpsidennumber" title="GPS识别码" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.gpsidennumber" placeholder="请输入GPS识别码"></vxe-input>
+            <vxe-input v-model="data.gpsidennumber" placeholder="GPS识别码"></vxe-input>
           </template>
         </vxe-form-item>
         <vxe-form-item field="subunit" title="所属单位" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.subunit" placeholder="请输入所属单位"></vxe-input>
+            <vxe-input v-model="data.subunit" placeholder="所属单位"></vxe-input>
           </template>
         </vxe-form-item>
 
@@ -73,7 +76,7 @@
 
         <vxe-form-item field="remarks" title="备注" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.remarks" placeholder="请输入备注"></vxe-input>
+            <vxe-input v-model="data.remarks" placeholder="备注"></vxe-input>
           </template>
         </vxe-form-item>
         <vxe-form-item align="center" title-align="left" :span="24">
@@ -86,39 +89,42 @@
     </vxe-modal>
 
     <!--  新增弹窗-->
-    <vxe-modal v-model="demo.addStatus" :title=" '新增&保存'" width="800" min-width="600" min-height="300"  resize destroy-on-close>
+    <vxe-modal v-model="demo.addStatus" :title=" '新增'" width="800" min-width="600" min-height="300"  resize destroy-on-close>
       <vxe-form :data="demo.addData" title-align="right" title-width="100" >
-        <vxe-form-item title="Basic information" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
+        <vxe-form-item title="运输车辆" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
         <vxe-form-item field="carid" title="车辆编号" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.carid" placeholder="请输入车辆编号"></vxe-input>
+            <vxe-input v-model="data.carid" placeholder="车辆编号"></vxe-input>
           </template>
         </vxe-form-item>
         <vxe-form-item field="status" title="状态" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.status" placeholder="请输入状态"></vxe-input>
+            <vxe-select v-model="data.status" placeholder="状态">
+              <vxe-option :value="'启用'" label="启用"></vxe-option>
+              <vxe-option :value="'停用'" label="停用"></vxe-option>
+            </vxe-select>
           </template>
         </vxe-form-item>
         <vxe-form-item field="carnumber" title="车牌号" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.carnumber" placeholder="请输入车牌号"></vxe-input>
+            <vxe-input v-model="data.carnumber" placeholder="车牌号"></vxe-input>
           </template>
         </vxe-form-item>
 
         <vxe-form-item field="caridennumber" title="车辆识别码" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.caridennumber" placeholder="请输入车辆识别码"></vxe-input>
+            <vxe-input v-model="data.caridennumber" placeholder="车辆识别码"></vxe-input>
           </template>
         </vxe-form-item>
 
         <vxe-form-item field="gpsidennumber" title="GPS识别码" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.gpsidennumber" placeholder="请输入GPS识别码"></vxe-input>
+            <vxe-input v-model="data.gpsidennumber" placeholder="GPS识别码"></vxe-input>
           </template>
         </vxe-form-item>
         <vxe-form-item field="subunit" title="所属单位" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.subunit" placeholder="请输入所属单位"></vxe-input>
+            <vxe-input v-model="data.subunit" placeholder="所属单位"></vxe-input>
           </template>
         </vxe-form-item>
 
@@ -130,7 +136,7 @@
 
         <vxe-form-item field="remarks" title="备注" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.remarks" placeholder="请输入备注"></vxe-input>
+            <vxe-input v-model="data.remarks" placeholder="备注"></vxe-input>
           </template>
         </vxe-form-item>
 

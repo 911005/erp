@@ -54,20 +54,20 @@ public class UserController extends BaseController {
     @Resource
     private DictionaryDataService dictionaryDataService;
 
+    @PreAuthorize("hasAuthority('sys:dict:list')")
+    @OperationLog
+    @ApiOperation("查询全部用户")
+    @GetMapping("/findAllUsers")
+    public List<User> list(UserParam param) {
+        return userService.findAllUsers();
+    }
+
     @PreAuthorize("hasAuthority('sys:user:list')")
     @OperationLog
     @ApiOperation("分页查询用户")
     @GetMapping("/page")
     public ApiResult<PageResult<User>> page(UserParam param) {
         return success(userService.pageRel(param));
-    }
-
-    @PreAuthorize("hasAuthority('sys:user:list')")
-    @OperationLog
-    @ApiOperation("查询全部用户")
-    @GetMapping()
-    public ApiResult<List<User>> list(UserParam param) {
-        return success(userService.listRel(param));
     }
 
     @PreAuthorize("hasAuthority('sys:user:list')")

@@ -25,7 +25,7 @@ public class ConcreteuserController extends BaseController {
     @Resource
     private ConcreteuserService concreteuserService;
 
-
+    @PreAuthorize("hasAuthority('sys:dict:list')")
     @OperationLog
     @ApiOperation("查找所有客户")
     @GetMapping("/findAllConcreteuser")
@@ -36,7 +36,15 @@ public class ConcreteuserController extends BaseController {
     }
 
 
-    //    @PreAuthorize("hasAuthority('mcustomer:mcustomer:list')")
+    @PreAuthorize("hasAuthority('sys:dict:list')")
+    @OperationLog
+    @ApiOperation("根据id查询")
+    @GetMapping("/findConcreteuserByName/{unitname}")
+    public List<Concreteuser> get1(@PathVariable("unitname") String name) {
+        return concreteuserService.findConcreteuserByName(name);
+    }
+
+    @PreAuthorize("hasAuthority('sys:dict:list')")
     @OperationLog
     @ApiOperation("增加客户")
     @PutMapping("/addConcreteuser")
@@ -54,7 +62,7 @@ public class ConcreteuserController extends BaseController {
 
     }
 
-
+    @PreAuthorize("hasAuthority('sys:dict:list')")
     @OperationLog
     @ApiOperation("删除协议")
     @DeleteMapping("/deleteConcreteuser/{id}")
@@ -64,7 +72,7 @@ public class ConcreteuserController extends BaseController {
     }
 
 
-
+    @PreAuthorize("hasAuthority('sys:dict:list')")
     @OperationLog
     @ApiOperation("更新客户")
     @PutMapping("/updateConcreteuser")
@@ -83,104 +91,104 @@ public class ConcreteuserController extends BaseController {
 
 
 
-    @PreAuthorize("hasAuthority('concreteuser:concreteuser:list')")
-    @OperationLog
-    @ApiOperation("分页查询")
-    @GetMapping("/page")
-    public ApiResult<PageResult<Concreteuser>> page(ConcreteuserParam param) {
-        PageParam<Concreteuser, ConcreteuserParam> page = new PageParam<>(param);
-        //page.setDefaultOrder("create_time desc");
-        return success(concreteuserService.page(page, page.getWrapper()));
-        // 使用关联查询
-        //return success(concreteuserService.pageRel(param));
-    }
-
-    @PreAuthorize("hasAuthority('concreteuser:concreteuser:list')")
-    @OperationLog
-    @ApiOperation("查询全部")
-    @GetMapping()
-    public ApiResult<List<Concreteuser>> list(ConcreteuserParam param) {
-        PageParam<Concreteuser, ConcreteuserParam> page = new PageParam<>(param);
-        //page.setDefaultOrder("create_time desc");
-        return success(concreteuserService.list(page.getOrderWrapper()));
-        // 使用关联查询
-        //return success(concreteuserService.listRel(param));
-    }
-
-    @PreAuthorize("hasAuthority('concreteuser:concreteuser:list')")
-    @OperationLog
-    @ApiOperation("根据id查询")
-    @GetMapping("/{id}")
-    public ApiResult<Concreteuser> get(@PathVariable("id") Integer id) {
-        return success(concreteuserService.getById(id));
-        // 使用关联查询
-        //return success(concreteuserService.getByIdRel(id));
-    }
-
-    @PreAuthorize("hasAuthority('concreteuser:concreteuser:save')")
-    @OperationLog
-    @ApiOperation("添加")
-    @PostMapping()
-    public ApiResult<?> save(@RequestBody Concreteuser concreteuser) {
-        if (concreteuserService.save(concreteuser)) {
-            return success("添加成功");
-        }
-        return fail("添加失败");
-    }
-
-    @PreAuthorize("hasAuthority('concreteuser:concreteuser:update')")
-    @OperationLog
-    @ApiOperation("修改")
-    @PutMapping()
-    public ApiResult<?> update(@RequestBody Concreteuser concreteuser) {
-        if (concreteuserService.updateById(concreteuser)) {
-            return success("修改成功");
-        }
-        return fail("修改失败");
-    }
-
-    @PreAuthorize("hasAuthority('concreteuser:concreteuser:remove')")
-    @OperationLog
-    @ApiOperation("删除")
-    @DeleteMapping("/{id}")
-    public ApiResult<?> remove(@PathVariable("id") Integer id) {
-        if (concreteuserService.removeById(id)) {
-            return success("删除成功");
-        }
-        return fail("删除失败");
-    }
-
-    @PreAuthorize("hasAuthority('concreteuser:concreteuser:save')")
-    @OperationLog
-    @ApiOperation("批量添加")
-    @PostMapping("/batch")
-    public ApiResult<?> saveBatch(@RequestBody List<Concreteuser> list) {
-        if (concreteuserService.saveBatch(list)) {
-            return success("添加成功");
-        }
-        return fail("添加失败");
-    }
-
-    @PreAuthorize("hasAuthority('concreteuser:concreteuser:update')")
-    @OperationLog
-    @ApiOperation("批量修改")
-    @PutMapping("/batch")
-    public ApiResult<?> removeBatch(@RequestBody BatchParam<Concreteuser> batchParam) {
-        if (batchParam.update(concreteuserService, "id")) {
-            return success("修改成功");
-        }
-        return fail("修改失败");
-    }
-
-    @PreAuthorize("hasAuthority('concreteuser:concreteuser:remove')")
-    @OperationLog
-    @ApiOperation("批量删除")
-    @DeleteMapping("/batch")
-    public ApiResult<?> removeBatch(@RequestBody List<Integer> ids) {
-        if (concreteuserService.removeByIds(ids)) {
-            return success("删除成功");
-        }
-        return fail("删除失败");
-    }
+//    @PreAuthorize("hasAuthority('concreteuser:concreteuser:list')")
+//    @OperationLog
+//    @ApiOperation("分页查询")
+//    @GetMapping("/page")
+//    public ApiResult<PageResult<Concreteuser>> page(ConcreteuserParam param) {
+//        PageParam<Concreteuser, ConcreteuserParam> page = new PageParam<>(param);
+//        //page.setDefaultOrder("create_time desc");
+//        return success(concreteuserService.page(page, page.getWrapper()));
+//        // 使用关联查询
+//        //return success(concreteuserService.pageRel(param));
+//    }
+//
+//    @PreAuthorize("hasAuthority('concreteuser:concreteuser:list')")
+//    @OperationLog
+//    @ApiOperation("查询全部")
+//    @GetMapping()
+//    public ApiResult<List<Concreteuser>> list(ConcreteuserParam param) {
+//        PageParam<Concreteuser, ConcreteuserParam> page = new PageParam<>(param);
+//        //page.setDefaultOrder("create_time desc");
+//        return success(concreteuserService.list(page.getOrderWrapper()));
+//        // 使用关联查询
+//        //return success(concreteuserService.listRel(param));
+//    }
+//
+//    @PreAuthorize("hasAuthority('concreteuser:concreteuser:list')")
+//    @OperationLog
+//    @ApiOperation("根据id查询")
+//    @GetMapping("/{id}")
+//    public ApiResult<Concreteuser> get(@PathVariable("id") Integer id) {
+//        return success(concreteuserService.getById(id));
+//        // 使用关联查询
+//        //return success(concreteuserService.getByIdRel(id));
+//    }
+//
+//    @PreAuthorize("hasAuthority('concreteuser:concreteuser:save')")
+//    @OperationLog
+//    @ApiOperation("添加")
+//    @PostMapping()
+//    public ApiResult<?> save(@RequestBody Concreteuser concreteuser) {
+//        if (concreteuserService.save(concreteuser)) {
+//            return success("添加成功");
+//        }
+//        return fail("添加失败");
+//    }
+//
+//    @PreAuthorize("hasAuthority('concreteuser:concreteuser:update')")
+//    @OperationLog
+//    @ApiOperation("修改")
+//    @PutMapping()
+//    public ApiResult<?> update(@RequestBody Concreteuser concreteuser) {
+//        if (concreteuserService.updateById(concreteuser)) {
+//            return success("修改成功");
+//        }
+//        return fail("修改失败");
+//    }
+//
+//    @PreAuthorize("hasAuthority('concreteuser:concreteuser:remove')")
+//    @OperationLog
+//    @ApiOperation("删除")
+//    @DeleteMapping("/{id}")
+//    public ApiResult<?> remove(@PathVariable("id") Integer id) {
+//        if (concreteuserService.removeById(id)) {
+//            return success("删除成功");
+//        }
+//        return fail("删除失败");
+//    }
+//
+//    @PreAuthorize("hasAuthority('concreteuser:concreteuser:save')")
+//    @OperationLog
+//    @ApiOperation("批量添加")
+//    @PostMapping("/batch")
+//    public ApiResult<?> saveBatch(@RequestBody List<Concreteuser> list) {
+//        if (concreteuserService.saveBatch(list)) {
+//            return success("添加成功");
+//        }
+//        return fail("添加失败");
+//    }
+//
+//    @PreAuthorize("hasAuthority('concreteuser:concreteuser:update')")
+//    @OperationLog
+//    @ApiOperation("批量修改")
+//    @PutMapping("/batch")
+//    public ApiResult<?> removeBatch(@RequestBody BatchParam<Concreteuser> batchParam) {
+//        if (batchParam.update(concreteuserService, "id")) {
+//            return success("修改成功");
+//        }
+//        return fail("修改失败");
+//    }
+//
+//    @PreAuthorize("hasAuthority('concreteuser:concreteuser:remove')")
+//    @OperationLog
+//    @ApiOperation("批量删除")
+//    @DeleteMapping("/batch")
+//    public ApiResult<?> removeBatch(@RequestBody List<Integer> ids) {
+//        if (concreteuserService.removeByIds(ids)) {
+//            return success("删除成功");
+//        }
+//        return fail("删除失败");
+//    }
 
 }

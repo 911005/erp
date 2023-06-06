@@ -1,17 +1,18 @@
 <template>
   <div>
+    &nbsp;&nbsp;&nbsp;&nbsp;
     <vxe-input v-model="pro.searchInput1" placeholder="输入客户名称" type="search" ></vxe-input>
     <vxe-button status="primary" content="查询" @click="findProjectsBycustomerName()"></vxe-button>
-
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <vxe-input v-model="pro.searchInput2" placeholder="输入工程名称" type="search" ></vxe-input>
     <vxe-button status="primary" content="查询" @click="findProjectsByprojectName()"></vxe-button>
-
-    <vxe-button status="primary" content="查询所有工程信息" @click="findProjects()"></vxe-button>
-    <vxe-button status="primary" content="新增工程信息" @click="addProject()"></vxe-button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <vxe-button status="primary" content="刷新" @click="findProjects()"></vxe-button>
+    <vxe-button status="primary" content="新增" @click="addProject()"></vxe-button>
     <vxe-table
-      height="495"
+      height="595"
       :data="pro.projects">
-      <vxe-column type="seq" width="60" field="projectid"></vxe-column>
+      <vxe-column type="seq" width="60" field="projectid" title="编号"></vxe-column>
       <vxe-column field="projectname" title="工程名称"></vxe-column>
       <vxe-column field="customername" title="客户名称"></vxe-column>
       <vxe-column field="projectaddress" title="工程地址"></vxe-column>
@@ -26,33 +27,33 @@
     </vxe-table>
 
     <!--  编辑弹窗-->
-    <vxe-modal v-model="pro.status" :title=" '新增&保存'" width="800" min-width="600" min-height="300"  resize destroy-on-close >
+    <vxe-modal v-model="pro.status" :title=" '新增'" width="800" min-width="600" min-height="300"  resize destroy-on-close >
       <vxe-form :data="pro.updateData" title-align="right" title-width="100" >
-        <vxe-form-item title="编辑工程" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
+        <vxe-form-item title="工程" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
         <vxe-form-item field="projectname" title="工程名称" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.projectname" placeholder="请输入工程名称"></vxe-input>
+            <vxe-input v-model="data.projectname" placeholder="工程名称"></vxe-input>
           </template>
         </vxe-form-item>
         <vxe-form-item field="projectprogress" title="工程进度" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.projectprogress" placeholder="请输入工程进度"></vxe-input>
+            <vxe-input v-model="data.projectprogress" placeholder="工程进度"></vxe-input>
           </template>
         </vxe-form-item>
         <vxe-form-item field="projecttype" title="工程类别" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.projecttype" placeholder="请输入联系电话"></vxe-input>
+            <vxe-input v-model="data.projecttype" placeholder="工程类别"></vxe-input>
           </template>
         </vxe-form-item>
         <vxe-form-item field="projectlevel" title="工程级别" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.projectlevel" placeholder="请输入联系地址"></vxe-input>
+            <vxe-input v-model="data.projectlevel" placeholder="工程级别"></vxe-input>
           </template>
         </vxe-form-item>
 
         <vxe-form-item field="customername" title="客户名称" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-select v-model="data.customername" :options="pro.options" placeholder="选择客户名称"></vxe-select>
+            <vxe-select v-model="data.customername" :options="pro.options" placeholder="客户名称"></vxe-select>
           </template>
         </vxe-form-item>
         <!--        <vxe-form-item field="customername" title="客户名称" :span="12" :item-render="{}">-->
@@ -70,29 +71,29 @@
 
         <vxe-form-item field="poursquare" title="浇筑方量" :span="12" :item-render="{}"  >
           <template #default="{ data }">
-            <vxe-input v-model="data.poursquare" placeholder="请输入浇筑方量" type="integer" ><span >m³</span>
+            <vxe-input v-model="data.poursquare" placeholder="浇筑方量" type="integer" ><span >m³</span>
             </vxe-input>
           </template>
         </vxe-form-item>
 
         <vxe-form-item field="projectaddress" title="工程地址" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.projectaddress" placeholder="请输入工程地址"></vxe-input>
+            <vxe-input v-model="data.projectaddress" placeholder="工程地址"></vxe-input>
           </template>
         </vxe-form-item>
-        <vxe-form-item field=" transportationdistance" title="运输距离" :span="12" :item-render="{}">
+        <vxe-form-item field=" transportationdistance" title="备注" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.transportationdistance" placeholder="请输入备注"></vxe-input>
+            <vxe-input v-model="data.transportationdistance" placeholder="备注"></vxe-input>
           </template>
         </vxe-form-item>
         <vxe-form-item field="construction" title="建设单位" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.construction" placeholder="请输入备注"></vxe-input>
+            <vxe-input v-model="data.construction" placeholder="建设单位"></vxe-input>
           </template>
         </vxe-form-item>
         <vxe-form-item field="constructionunit" title="施工单位" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.constructionunit" placeholder="请输入施工单位"></vxe-input>
+            <vxe-input v-model="data.constructionunit" placeholder="施工单位"></vxe-input>
           </template>
         </vxe-form-item>
         <vxe-form-item field="startdate" title="预计开设时间" :span="12" :item-render="{}" >
@@ -109,7 +110,10 @@
 
         <vxe-form-item field="state" title="状态" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.state" placeholder="请输入备注"></vxe-input>
+            <vxe-select v-model="data.state" placeholder="状态">
+              <vxe-option :value="'启用'" label="启用"></vxe-option>
+              <vxe-option :value="'停用'" label="停用"></vxe-option>
+            </vxe-select>
           </template>
         </vxe-form-item>
         <vxe-form-item align="center" title-align="left" :span="24">
@@ -124,28 +128,28 @@
 
 
     <!--  新增弹窗-->
-    <vxe-modal v-model="pro.addStatus" :title=" '新增&保存'" width="800" min-width="600" min-height="300"  resize destroy-on-close>
+    <vxe-modal v-model="pro.addStatus" :title=" '新增'" width="800" min-width="600" min-height="300"  resize destroy-on-close>
       <vxe-form :data="pro.addData" title-align="right" title-width="100" >
-        <vxe-form-item title="新增工程" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
+        <vxe-form-item title="工程" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
 
         <vxe-form-item field="projectname" title="工程名称" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.projectname" placeholder="请输入工程名称"></vxe-input>
+            <vxe-input v-model="data.projectname" placeholder="工程名称"></vxe-input>
           </template>
         </vxe-form-item>
         <vxe-form-item field="projectprogress" title="工程进度" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.projectprogress" placeholder="请输入工程进度"></vxe-input>
+            <vxe-input v-model="data.projectprogress" placeholder="工程进度"></vxe-input>
           </template>
         </vxe-form-item>
         <vxe-form-item field="projecttype" title="工程类别" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.projecttype" placeholder="请输入联系电话"></vxe-input>
+            <vxe-input v-model="data.projecttype" placeholder="工程类别"></vxe-input>
           </template>
         </vxe-form-item>
         <vxe-form-item field="projectlevel" title="工程级别" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.projectlevel" placeholder="请输入联系地址"></vxe-input>
+            <vxe-input v-model="data.projectlevel" placeholder="工程级别"></vxe-input>
           </template>
         </vxe-form-item>
         <vxe-form-item field="customername" title="客户名称" :span="12" :item-render="{}">
@@ -163,7 +167,7 @@
 
         <vxe-form-item field="poursquare" title="浇筑方量" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.poursquare" placeholder="请输入浇筑方量" type="integer" ></vxe-input>
+            <vxe-input v-model="data.poursquare" placeholder="浇筑方量" type="integer" ></vxe-input>
           </template>
         </vxe-form-item>
 
@@ -171,22 +175,22 @@
 
         <vxe-form-item field="projectaddress" title="工程地址" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.projectaddress" placeholder="请输入状态"></vxe-input>
+            <vxe-input v-model="data.projectaddress" placeholder="工程地址"></vxe-input>
           </template>
         </vxe-form-item>
         <vxe-form-item field=" transportationdistance" title="运输距离" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.transportationdistance" placeholder="请输入备注"></vxe-input>
+            <vxe-input v-model="data.transportationdistance" placeholder="运输距离"></vxe-input>
           </template>
         </vxe-form-item>
         <vxe-form-item field="construction" title="建设单位" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.construction" placeholder="请输入备注"></vxe-input>
+            <vxe-input v-model="data.construction" placeholder="建设单位"></vxe-input>
           </template>
         </vxe-form-item>
         <vxe-form-item field="constructionunit" title="施工单位" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.constructionunit" placeholder="请输入备注"></vxe-input>
+            <vxe-input v-model="data.constructionunit" placeholder="施工单位"></vxe-input>
           </template>
         </vxe-form-item>
         <vxe-form-item field="startdate" title="预计开设时间" :span="12" :item-render="{}" >
@@ -205,7 +209,10 @@
 
         <vxe-form-item field="state" title="状态" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.state" placeholder="请输入备注"></vxe-input>
+            <vxe-select v-model="data.state" placeholder="状态">
+              <vxe-option :value="'启用'" label="启用"></vxe-option>
+              <vxe-option :value="'停用'" label="停用"></vxe-option>
+            </vxe-select>
           </template>
         </vxe-form-item>
 

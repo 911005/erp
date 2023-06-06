@@ -2,11 +2,11 @@
   <div>
     <vxe-button status="primary" content="新增" @click="addProduction()"></vxe-button>
     <vxe-table
-      height="495"
+      height="595"
       show-overflow
       :row-config="{isHover: true, useKey: true}"
       :column-config="{resizable: true}"
-      :tree-config="{transform: true, rowField: 'id', parentField: 'parentid', line: true}"
+      :tree-config="{transform: true, rowField: 'id', parentField: 'parentid', line: true,expandAll: true}"
       :data="demo.productions"
       :scroll-y="{enabled: false}">
       <vxe-column field="propertyname" title="产品名称" tree-node></vxe-column>
@@ -22,9 +22,9 @@
     </vxe-table>
 
     <!--  编辑弹窗-->
-    <vxe-modal v-model="demo.status" :title=" '编辑&保存'" width="800" min-width="600" min-height="300"  resize destroy-on-close>
+    <vxe-modal v-model="demo.status" :title=" '编辑'" width="800" min-width="600" min-height="300"  resize destroy-on-close>
       <vxe-form :data="demo.updateData" title-align="right" title-width="100" >
-        <vxe-form-item title="Basic information" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
+        <vxe-form-item title="产品属性" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
 
         <!--        <vxe-form-item field="propertyname" title="名称" :span="12" :item-render="{}">-->
         <!--          <template #default="{ data }">-->
@@ -33,17 +33,20 @@
         <!--        </vxe-form-item>-->
         <vxe-form-item field="parentid" title="父节点" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.parentid" placeholder="请输入产品父节点" disabled></vxe-input>
+            <vxe-input v-model="data.parentid" placeholder="产品父节点" disabled></vxe-input>
           </template>
         </vxe-form-item>
         <vxe-form-item field="subproperty" title="等级" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.subproperty" placeholder="请输入产品等级"></vxe-input>
+            <vxe-input v-model="data.subproperty" placeholder="产品等级"></vxe-input>
           </template>
         </vxe-form-item>
         <vxe-form-item field="propertystate" title="状态" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.propertystate" placeholder="请输入产品状态"></vxe-input>
+            <vxe-select v-model="data.propertystate" placeholder="产品状态">
+              <vxe-option :value="'启用'" label="启用"></vxe-option>
+              <vxe-option :value="'停用'" label="停用"></vxe-option>
+            </vxe-select>
           </template>
         </vxe-form-item>
 
@@ -57,9 +60,9 @@
     </vxe-modal>
 
     <!--  新增弹窗-->
-    <vxe-modal v-model="demo.addStatus" :title=" '新增&保存'" width="800" min-width="600" min-height="300"  resize destroy-on-close>
+    <vxe-modal v-model="demo.addStatus" :title=" '新增'" width="800" min-width="600" min-height="300"  resize destroy-on-close>
       <vxe-form :data="demo.addData" title-align="right" title-width="100" >
-        <vxe-form-item title="Basic information" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
+        <vxe-form-item title="产品属性" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
         <!--        <vxe-form-item field="propertyname" title="名称" :span="12" :item-render="{}">-->
         <!--          <template #default="{ data }">-->
         <!--            <vxe-input v-model="data.propertyname" placeholder="请输入产品等级"></vxe-input>-->
@@ -67,17 +70,20 @@
         <!--        </vxe-form-item>-->
         <vxe-form-item field="parentid" title="父节点" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.parentid" placeholder="请输入产品等级"></vxe-input>
+            <vxe-input v-model="data.parentid" placeholder="父节点"></vxe-input>
           </template>
         </vxe-form-item>
         <vxe-form-item field="subproperty" title="等级" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.subproperty" placeholder="请输入产品等级"></vxe-input>
+            <vxe-input v-model="data.subproperty" placeholder="产品等级"></vxe-input>
           </template>
         </vxe-form-item>
         <vxe-form-item field="propertystate" title="状态" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.propertystate" placeholder="请输入产品等级"></vxe-input>
+            <vxe-select v-model="data.propertystate" placeholder="请输入状态">
+              <vxe-option :value="'启用'" label="启用"></vxe-option>
+              <vxe-option :value="'停用'" label="停用"></vxe-option>
+            </vxe-select>
           </template>
         </vxe-form-item>
 

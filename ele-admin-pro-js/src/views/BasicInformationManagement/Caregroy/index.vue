@@ -22,9 +22,9 @@
     </vxe-table>
 
     <!--  编辑弹窗-->
-    <vxe-modal v-model="demo.status" :title=" '编辑&保存'" width="800" min-width="600" min-height="300"  resize destroy-on-close>
+    <vxe-modal v-model="demo.status" :title=" '编辑'" width="800" min-width="600" min-height="300"  resize destroy-on-close>
       <vxe-form :data="demo.updateData" title-align="right" title-width="100" >
-        <vxe-form-item title="Basic information" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
+        <vxe-form-item title="原材料品种" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
         <vxe-form-item field="caregory" title="类别名称" :span="12" :item-render="{}">
           <template #default="{ data }">
             <vxe-input v-model="data.caregory" placeholder="请输入类别名称"></vxe-input>
@@ -41,9 +41,9 @@
     </vxe-modal>
 
     <!--  新增弹窗-->
-    <vxe-modal v-model="demo.addStatus" :title=" '新增&保存'" width="800" min-width="600" min-height="300"  resize destroy-on-close>
+    <vxe-modal v-model="demo.addStatus" :title=" '新增'" width="800" height="295" min-width="600" min-height="300"  resize destroy-on-close>
       <vxe-form :data="demo.addData" title-align="right" title-width="100" >
-        <vxe-form-item title="Basic information" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
+        <vxe-form-item title="原材料品种" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
         <vxe-form-item field="caregory" title="类别名称" :span="12" :item-render="{}">
           <template #default="{ data }">
             <vxe-input v-model="data.caregory" placeholder="请输入类别名称"></vxe-input>
@@ -51,7 +51,7 @@
         </vxe-form-item>
         <vxe-form-item field="pid" title="父节点" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.pid" placeholder="请输入父节点"></vxe-input>
+            <vxe-select v-model="data.pid" :options="demo.options1" placeholder="请输入父节点"></vxe-select>
           </template>
         </vxe-form-item>
 
@@ -65,7 +65,7 @@
     </vxe-modal>
   </div>
   <div style="float:right;width: 900px;">
-    <vxe-button status="primary" content="查询所有信息" @click="findmaterials()"></vxe-button>
+    <vxe-button status="primary" content="刷新" @click="findmaterials()"></vxe-button>
     <vxe-button status="primary" content="新增" @click="addmaterials()"></vxe-button>
     <vxe-table
       border
@@ -87,9 +87,9 @@
 
 
     <!--  编辑弹窗-->
-    <vxe-modal v-model="demo.statusNew" :title=" '编辑&保存'" width="800" min-width="600" min-height="300"  resize destroy-on-close>
+    <vxe-modal v-model="demo.statusNew" :title=" '编辑'" width="800" height="395" min-width="600" min-height="300"  resize destroy-on-close>
       <vxe-form :data="demo.updateDataNew" title-align="right" title-width="100" >
-        <vxe-form-item title="Basic information" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
+        <vxe-form-item title="原材料" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
         <vxe-form-item field="rawname" title="名称" :span="12" :item-render="{}">
           <template #default="{ data }">
             <vxe-input v-model="data.rawname" placeholder="请输入名称" ></vxe-input>
@@ -120,9 +120,9 @@
     </vxe-modal>
 
     <!--  新增弹窗-->
-    <vxe-modal v-model="demo.addStatusNew" :title=" '新增&保存'" width="800" min-width="600" min-height="300"  resize destroy-on-close>
+    <vxe-modal v-model="demo.addStatusNew" :title=" '新增'" width="800" height="395" min-width="600" min-height="300"  resize destroy-on-close>
       <vxe-form :data="demo.addDataNew" title-align="right" title-width="100" >
-        <vxe-form-item title="Basic information" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
+        <vxe-form-item title="原材料" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
         <vxe-form-item field="rawname" title="名称" :span="12" :item-render="{}">
           <template #default="{ data }">
             <vxe-input v-model="data.rawname" placeholder="请输入名称" ></vxe-input>
@@ -167,14 +167,16 @@ export default {
   name: "index",
   setup() {
     onMounted(() => {
-      findCaregorys(),
-        findmaterials(),
-        findCaregoryToMaterials()
+      findCaregorys()
+      findmaterials()
+      findCaregoryToMaterials()
+      findPCaregorys()
     })
     const demo = reactive({
       materials:[],
       caregorys: [],
       options:[],
+      options1:[],
       status: false,
       addStatus: false,
       updateData: [],
@@ -204,6 +206,16 @@ export default {
       const data=res.data
       if (data && data.length > 0) {
         demo.options = data.map(item => {
+          return { value: item.id, label: item.caregory };
+        });
+      }
+      return res
+    }
+    const findPCaregorys=async () => {
+      const res = await request.get('/caregory/caregory/findPCaregorys');
+      const data=res.data
+      if (data && data.length > 0) {
+        demo.options1 = data.map(item => {
           return { value: item.id, label: item.caregory };
         });
       }
@@ -331,6 +343,7 @@ export default {
       findCaregorys,
       findmaterials,
       findCaregoryToMaterials,
+      findPCaregorys,
       addCaregory,
       addEvent,
       updateEvent,

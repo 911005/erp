@@ -38,6 +38,9 @@
         select * from mcustomer
     </select>
 
+    <select id="findMcustomerByName" resultType="com.eleadmin.RawMaterialManagement.mcustomer.entity.Mcustomer">
+        select * from mcustomer where unitName=#{unitname}
+    </select>
     <!--    删除-->
     <delete id="deleteMcustomer">
         delete from mcustomer where id = #{id}

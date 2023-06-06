@@ -22,6 +22,8 @@ public interface McustomerMapper extends BaseMapper<Mcustomer> {
     void deleteMcustomer(int id);
 
     List<Mcustomer>findAllMcustomer();
+
+    List<Mcustomer> findMcustomerByName(String name);
     /**
      * 分页查询
      *

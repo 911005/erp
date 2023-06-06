@@ -1,14 +1,17 @@
 <template>
 <div>
+  &nbsp;&nbsp;&nbsp;&nbsp;
   <vxe-input v-model="dr.searchInput1" placeholder="请输入工号" type="search" ></vxe-input>
   <vxe-button status="primary" content="查询" @click="findDriversByjobNumber()"></vxe-button>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <vxe-input v-model="dr.searchInput2" placeholder="请输入司机名字" type="search" ></vxe-input>
   <vxe-button status="primary" content="查询" @click="findDriversBydriverName()"></vxe-button>
-  <vxe-button status="primary" content="查询所有司机信息" @click="findDrivers()"></vxe-button>
-  <vxe-button status="primary" content="新增司机信息" @click="addDriver()"></vxe-button>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <vxe-button status="primary" content="刷新" @click="findDrivers()"></vxe-button>
+  <vxe-button status="primary" content="新增" @click="addDriver()"></vxe-button>
   <vxe-table
     :data="dr.drivers">
-    <vxe-column type="seq" width="60" field="id"></vxe-column>
+    <vxe-column type="seq" width="60" field="id" title="编号"></vxe-column>
     <vxe-column field="jobnumber" title="工号"></vxe-column>
     <vxe-column field="drivername" title="司机姓名"></vxe-column>
     <vxe-column field="drivertype" title="司机类型"></vxe-column>
@@ -26,35 +29,44 @@
   <!--  编辑弹窗-->
   <vxe-modal v-model="dr.status" :title=" '新增&保存'" width="800" min-width="600" min-height="300"  resize destroy-on-close>
     <vxe-form :data="dr.updateData" title-align="right" title-width="100" >
-      <vxe-form-item title="Basic information" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
+      <vxe-form-item title="司机" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
       <vxe-form-item field="jobnumber" title="工号" :span="12" :item-render="{}">
         <template #default="{ data }">
-          <vxe-input v-model="data.jobnumber" placeholder="请输入工号"></vxe-input>
+          <vxe-input v-model="data.jobnumber" placeholder="工号"></vxe-input>
         </template>
       </vxe-form-item>
       <vxe-form-item field="drivername" title="司机姓名" :span="12" :item-render="{}">
         <template #default="{ data }">
-          <vxe-input v-model="data.drivername" placeholder="请输入司机姓名"></vxe-input>
+          <vxe-input v-model="data.drivername" placeholder="司机姓名"></vxe-input>
         </template>
       </vxe-form-item>
       <vxe-form-item field="drivertype" title="司机类型" :span="12" :item-render="{}">
         <template #default="{ data }">
-          <vxe-input v-model="data.drivertype" placeholder="请输入司机类型"></vxe-input>
+          <vxe-select v-model="data.drivertype" placeholder="司机类型">
+            <vxe-option :value="'罐车司机'" label="罐车司机"></vxe-option>
+            <vxe-option :value="'泵车司机'" label="泵车司机"></vxe-option>
+          </vxe-select>
         </template>
       </vxe-form-item>
       <vxe-form-item field="drivercategory" title="司机类别" :span="12" :item-render="{}">
         <template #default="{ data }">
-          <vxe-input v-model="data.drivercategory" placeholder="请输入司机类别"></vxe-input>
+          <vxe-select v-model="data.drivercategory" placeholder="司机类别">
+            <vxe-option :value="'站内'" label="站内"></vxe-option>
+            <vxe-option :value="'租方'" label="租方"></vxe-option>
+          </vxe-select>
         </template>
       </vxe-form-item>
       <vxe-form-item field="driverphone" title="联系电话" :span="12" :item-render="{}">
         <template #default="{ data }">
-          <vxe-input v-model="data.driverphone" placeholder="请输入联系电话"></vxe-input>
+          <vxe-input v-model="data.driverphone" placeholder="联系电话"></vxe-input>
         </template>
       </vxe-form-item>
       <vxe-form-item field="driverstate" title="状态" :span="12" :item-render="{}">
         <template #default="{ data }">
-          <vxe-input v-model="data.driverstate" placeholder="请输入状态"></vxe-input>
+          <vxe-select v-model="data.driverstate" placeholder="状态">
+            <vxe-option :value="'启用'" label="启用"></vxe-option>
+            <vxe-option :value="'停用'" label="停用"></vxe-option>
+          </vxe-select>
         </template>
       </vxe-form-item>
 
@@ -69,36 +81,45 @@
   <!--  新增弹窗-->
   <vxe-modal v-model="dr.addStatus" :title=" '新增&保存'" width="800" min-width="600" min-height="300"  resize destroy-on-close>
     <vxe-form :data="dr.addData" title-align="right" title-width="100" >
-      <vxe-form-item title="Basic information" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
+      <vxe-form-item title="司机" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
 
       <vxe-form-item field="jobnumber" title="工号" :span="12" :item-render="{}">
         <template #default="{ data }">
-          <vxe-input v-model="data.jobnumber" placeholder="请输入工号"></vxe-input>
+          <vxe-input v-model="data.jobnumber" placeholder="工号"></vxe-input>
         </template>
       </vxe-form-item>
       <vxe-form-item field="drivername" title="司机姓名" :span="12" :item-render="{}">
         <template #default="{ data }">
-          <vxe-input v-model="data.drivername" placeholder="请输入司机姓名"></vxe-input>
+          <vxe-input v-model="data.drivername" placeholder="司机姓名"></vxe-input>
         </template>
       </vxe-form-item>
       <vxe-form-item field="drivertype" title="司机类型" :span="12" :item-render="{}">
         <template #default="{ data }">
-          <vxe-input v-model="data.drivertype" placeholder="请输入司机类型"></vxe-input>
+          <vxe-select v-model="data.drivertype" placeholder="司机类型">
+            <vxe-option :value="'罐车司机'" label="罐车司机"></vxe-option>
+            <vxe-option :value="'泵车司机'" label="泵车司机"></vxe-option>
+          </vxe-select>
         </template>
       </vxe-form-item>
       <vxe-form-item field="drivercategory" title="司机类别" :span="12" :item-render="{}">
         <template #default="{ data }">
-          <vxe-input v-model="data.drivercategory" placeholder="请输入司机类别"></vxe-input>
+          <vxe-select v-model="data.drivercategory" placeholder="司机类别">
+            <vxe-option :value="'站内'" label="站内"></vxe-option>
+            <vxe-option :value="'租方'" label="租方"></vxe-option>
+          </vxe-select>
         </template>
       </vxe-form-item>
       <vxe-form-item field="driverphone" title="联系电话" :span="12" :item-render="{}">
         <template #default="{ data }">
-          <vxe-input v-model="data.driverphone" placeholder="请输入联系电话"></vxe-input>
+          <vxe-input v-model="data.driverphone" placeholder="联系电话"></vxe-input>
         </template>
       </vxe-form-item>
       <vxe-form-item field="driverstate" title="状态" :span="12" :item-render="{}">
         <template #default="{ data }">
-          <vxe-input v-model="data.driverstate" placeholder="请输入状态"></vxe-input>
+          <vxe-select v-model="data.driverstate" placeholder="状态">
+              <vxe-option :value="'启用'" label="启用"></vxe-option>
+              <vxe-option :value="'停用'" label="停用"></vxe-option>
+          </vxe-select>
         </template>
       </vxe-form-item>
 

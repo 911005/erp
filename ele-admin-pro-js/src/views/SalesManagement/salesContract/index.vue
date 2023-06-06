@@ -1,11 +1,13 @@
 <template>
   <div>
+    &nbsp;&nbsp;&nbsp;&nbsp;
     <vxe-input v-model="demo.searchInput1" placeholder="输入合同编号" type="search" ></vxe-input>
     <vxe-button status="primary" content="查询" @click="findSalescontractsByNumber()"></vxe-button>
-    <vxe-button status="primary" content="查询所有合同信息" @click="findSalescontracts()"></vxe-button>
-    <vxe-button status="primary" content="新增合同信息" @click="addSalesContract()"></vxe-button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <vxe-button status="primary" content="刷新" @click="findSalescontracts()"></vxe-button>
+    <vxe-button status="primary" content="新增" @click="addSalesContract()"></vxe-button>
     <vxe-table
-      height="495"
+      height="595"
       :data="demo.salesContracts">
       <vxe-column type="seq" width="60" field="salescontractid" title="编号"></vxe-column>
       <vxe-column field="number" title="合同编号"></vxe-column>
@@ -50,7 +52,7 @@
 
 
     <!--  编辑弹窗-->
-    <vxe-modal v-model="demo.status" :title=" '编辑&保存'" width="800" min-width="600" min-height="300"  resize destroy-on-close>
+    <vxe-modal v-model="demo.status" :title=" '编辑'" width="800" min-width="600" min-height="300"  resize destroy-on-close>
       <vxe-form :data="demo.updateData" title-align="right" title-width="100" >
         <vxe-form-item title="销售合同" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
 
@@ -136,7 +138,7 @@
 
         <vxe-form-item field="creator" title="制单人" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.creator" placeholder="制单人"></vxe-input>
+            <vxe-select v-model="data.creator" :options="demo.options" placeholder="制单人"></vxe-select>
           </template>
         </vxe-form-item>
 
@@ -239,7 +241,7 @@
 
         <vxe-form-item field="creator" title="制单人" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.creator" placeholder="制单人"></vxe-input>
+            <vxe-select v-model="data.creator" :options="demo.options" placeholder="制单人"></vxe-select>
           </template>
         </vxe-form-item>
 
@@ -266,12 +268,14 @@ export default {
       findSalescontracts()
       findProjects()
       generateNumber()
+      findToSaleContracts()
     })
     const savedCounter = localStorage.getItem("counter"); // 从本地存储中获取上次使用的计数器值
     const demo = reactive({
       value5: false,
       counter: savedCounter ? Number(savedCounter) : 0, // 如果存在保存的计数器值，则使用它；否则初始化为 0
       number:'',
+      options:[],
       projectid:'',
       projectname:'',
       salesContracts:[],
@@ -302,6 +306,16 @@ export default {
         creator:''
       }
     })
+    const findToSaleContracts = async () =>{
+      const res = await request.get('/system/user/findAllUsers');
+      const data=res.data
+      if (data && data.length > 0) {
+        demo.options = data.map(item => {
+          return { value: item.username, label: item.username};
+        });
+      }
+      return res
+    }
 
     const projects = ref([]);
 
@@ -428,6 +442,7 @@ export default {
         addEvent,
         addSalesContract,
         findSalescontracts,
+        findToSaleContracts,
         findSalescontractsByNumber,
         updateEvent,
         submitEvent,

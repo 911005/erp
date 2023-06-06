@@ -41,6 +41,9 @@ public interface OrderService extends IService<Order> {
 
     List<OrderParam> findAllOrders();
 
+    List<OrderParam> findOrdersByNumber(String ordernumber);
+
+
     boolean addOrder(Order order);
 
     boolean updateOrder(Order order);

@@ -6,6 +6,7 @@ import com.eleadmin.RawMaterialManagement.concreteuser.entity.Concreteuser;
 import com.eleadmin.RawMaterialManagement.concreteuser.param.ConcreteuserParam;
 import com.eleadmin.RawMaterialManagement.mcustomer.entity.Mcustomer;
 import org.apache.ibatis.annotations.Param;
+import org.etsi.uri.x01903.v13.SignerRoleType;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ public interface ConcreteuserMapper extends BaseMapper<Concreteuser> {
     void deleteConcreteuser(int id);
     List<Concreteuser>findAllConcreteuser();
 
-
+    List<Concreteuser> findConcreteuserByName(String name);
     /**
      * 分页查询
      *

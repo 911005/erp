@@ -59,6 +59,13 @@
                     INNER JOIN project p ON sc.projectId = p.projectId and sc.tenant_id=2 and p.tenant_id=2
         where o.tenant_id=2 and sc.tenant_id=2 and p.tenant_id=2
     </select>
+    <select id="findOrdersByNumber" resultType="com.eleadmin.SalesManagement.order.param.OrderParam">
+        select o.*, sc.*, p.*
+        from `order` o
+                 inner join salescontract sc on o.salesContractId=sc.salesContractId and o.tenant_id=2 and sc.tenant_id=2
+                 INNER JOIN project p ON sc.projectId = p.projectId and sc.tenant_id=2 and p.tenant_id=2
+        where o.tenant_id=2 and sc.tenant_id=2 and p.tenant_id=2 and orderNumber=#{ordernumber}
+    </select>
     <update id="updateOrder" parameterType="com.eleadmin.SalesManagement.order.entity.Order">
         update `order` set orderNumber=#{ordernumber},orderDate=#{orderdate},
                          status=#{status},salesContractId=#{salescontractid},pouringDate=#{pouringdate},

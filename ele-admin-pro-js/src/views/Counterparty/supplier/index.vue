@@ -1,10 +1,13 @@
 <template>
   <div>
+    &nbsp;&nbsp;&nbsp;&nbsp;
     <vxe-input v-model="demo.searchInput1" placeholder="请输入单位名称" type="search" ></vxe-input>
     <vxe-button status="primary" content="查询" @click="findByName()"></vxe-button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <vxe-input v-model="demo.searchInput2" placeholder="请输入采购员" type="search" ></vxe-input>
     <vxe-button status="primary" content="查询" @click="findBySaleman()"></vxe-button>
-    <vxe-button status="primary" content="查询所有供应商信息" @click="findSuppliers()"></vxe-button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <vxe-button status="primary" content="刷新" @click="findSuppliers()"></vxe-button>
     <vxe-button status="primary" content="新增" @click="addSupplier()"></vxe-button>
     <vxe-table
       height="595"
@@ -41,7 +44,7 @@
 
 
     <!--  编辑弹窗-->
-    <vxe-modal v-model="demo.status" :title=" '新增&保存'" width="800" min-width="600" min-height="300"  resize destroy-on-close>
+    <vxe-modal v-model="demo.status" :title=" '新增'" width="800" min-width="600" min-height="300"  resize destroy-on-close>
       <vxe-form :data="demo.updateData" title-align="right" title-width="100" >
         <vxe-form-item title="原材料供应商" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
         <vxe-form-item field="suppliername" title="单位名称" :span="12" :item-render="{}">
@@ -120,7 +123,7 @@
     </vxe-modal>
 
     <!--  新增弹窗-->
-    <vxe-modal v-model="demo.addStatus" :title=" '新增&保存'" width="800" min-width="600" min-height="300"  resize destroy-on-close>
+    <vxe-modal v-model="demo.addStatus" :title=" '新增'" width="800" min-width="600" min-height="300"  resize destroy-on-close>
       <vxe-form :data="demo.addData" title-align="right" title-width="100" >
         <vxe-form-item title="原材料供应商" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
         <vxe-form-item field="suppliername" title="单位名称" :span="12" :item-render="{}">

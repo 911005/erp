@@ -15,6 +15,7 @@ import com.eleadmin.common.system.param.UserParam;
 import com.eleadmin.common.system.service.RoleMenuService;
 import com.eleadmin.common.system.service.UserRoleService;
 import com.eleadmin.common.system.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -34,12 +35,21 @@ import java.util.stream.Collectors;
  */
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
+
+    @Autowired
+    UserMapper userMapper;
+
     @Resource
     private UserRoleService userRoleService;
     @Resource
     private RoleMenuService roleMenuService;
     @Resource
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Override
+    public List<User> findAllUsers() {
+        return userMapper.findAllUsers();
+    }
 
     @Override
     public PageResult<User> pageRel(UserParam param) {

@@ -1,6 +1,10 @@
 <template>
   <div>
-    <vxe-button status="primary" content="查询所有订单信息" @click="findOrders()"></vxe-button>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <vxe-input v-model="demo.searchInput1" placeholder="输入订单编号" type="search" ></vxe-input>
+    <vxe-button status="primary" content="查询销售订单" @click="findOrderByNumber()"></vxe-button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <vxe-button status="primary" content="刷新" @click="findOrders()"></vxe-button>
     <vxe-button status="primary" content="新增" @click="addOrder()"></vxe-button>
     <vxe-table
       height="595"
@@ -56,7 +60,7 @@
         </vxe-form-item>
         <vxe-form-item field="orderdate" title="订货日期" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.orderdate" placeholder="请输入订货日期 " type="datetime"></vxe-input>
+            <vxe-input v-model="data.orderdate" placeholder="订货日期 " type="datetime"></vxe-input>
           </template>
         </vxe-form-item>
         <vxe-form-item field="number" title="销售合同" :span="12" :item-render="{}">
@@ -145,7 +149,7 @@
         </vxe-form-item>
         <vxe-form-item field="salesman" title="业务员" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.salesman" placeholder="业务员 "></vxe-input>
+            <vxe-select v-model="data.salesman" :options="demo.options" placeholder="业务员 "></vxe-select>
           </template>
         </vxe-form-item>
 
@@ -170,7 +174,7 @@
         </vxe-form-item>
         <vxe-form-item field="orderdate" title="订货日期" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.orderdate" placeholder="请输入订货日期 " type="datetime"></vxe-input>
+            <vxe-input v-model="data.orderdate" placeholder="订货日期" type="datetime"></vxe-input>
           </template>
         </vxe-form-item>
         <vxe-form-item field="number" title="销售合同" :span="12" :item-render="{}">
@@ -258,7 +262,7 @@
         </vxe-form-item>
         <vxe-form-item field="salesman" title="业务员" :span="12" :item-render="{}">
           <template #default="{ data }">
-            <vxe-input v-model="data.salesman" placeholder="业务员 "></vxe-input>
+            <vxe-select v-model="data.salesman" :options="demo.options" placeholder="业务员 "></vxe-select>
           </template>
         </vxe-form-item>
         <vxe-form-item align="center" title-align="left" :span="24">
@@ -293,6 +297,7 @@ export default {
       findProductionsToOrder()
       findSalescontractsToOrder()
       generateNumber()
+      findToOrders()
       findToOrder1()
       findToOrder2()
       findToOrder3()
@@ -306,10 +311,11 @@ export default {
     const demo = reactive({
       value5:false,
       counter: savedCounter ? Number(savedCounter) : 0, // 如果存在保存的计数器值，则使用它；否则初始化为 0
+      // searchInput1:[],
       ordernumber:'',
       salescontracts:[],
       orders:[],
-      optionsNew:[],
+      options:[],
       options0:[],
       options1:[],
       options2:[],
@@ -349,6 +355,23 @@ export default {
     //     return "custom-cell-class-name2"
     //   }
     // }
+    const findToOrders = async () =>{
+      const res = await request.get('/system/user/findAllUsers');
+      const data=res.data
+      if (data && data.length > 0) {
+        demo.options = data.map(item => {
+          return { value: item.username, label: item.username};
+        });
+      }
+      return res
+    }
+    const findOrderByNumber = async () =>{
+      const res = await request.get('/order/order/findOrderByNumber/' +demo.searchInput1);
+      console.log(res)
+      demo.orders = res.data
+      console.log(demo.orders)
+      return res
+    }
     const findOrders = async () =>{
       console.log(111)
       const res = await request.get('/order/order/findAllOrders');
@@ -369,7 +392,7 @@ export default {
       demo.value5=true
     }
     const addSalesContract=async (row)=>{
-      if (demo.addStatus=true){
+      if (demo.addStatus){
         demo.addData.salescontractid=row.salescontractid;
         demo.addData.number=row.number;
         demo.addData.customername=row.customername;
@@ -377,7 +400,7 @@ export default {
         demo.addData.projectaddress=row.projectaddress;
         demo.addData.constructionunit=row.constructionunit;
       }
-      else if (demo.status=true){
+      else if (demo.status){
         demo.updateData.salescontractid=row.salescontractid;
         demo.updateData.number=row.number;
         demo.updateData.customername=row.customername;
@@ -614,6 +637,7 @@ export default {
     return{
       demo,
       findOrders,
+      findOrderByNumber,
       findSalescontracts1,
       addOrder,
       addSalesContract,
@@ -627,6 +651,7 @@ export default {
       findSalescontractsToOrder,
       findProductionsToOrder,
       generateNumber,
+      findToOrders,
       findToOrder1,
       findToOrder2,
       findToOrder3,

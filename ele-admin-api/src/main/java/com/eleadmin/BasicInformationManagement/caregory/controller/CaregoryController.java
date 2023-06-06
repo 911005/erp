@@ -3,6 +3,7 @@ package com.eleadmin.BasicInformationManagement.caregory.controller;
 import com.eleadmin.BasicInformationManagement.caregory.entity.Caregory;
 import com.eleadmin.BasicInformationManagement.caregory.param.CaregoryParam;
 import com.eleadmin.BasicInformationManagement.caregory.service.CaregoryService;
+import com.eleadmin.BasicInformationManagement.production.entity.Production;
 import com.eleadmin.common.core.web.BaseController;
 import com.eleadmin.common.core.web.ApiResult;
 import com.eleadmin.common.core.web.PageResult;
@@ -49,6 +50,21 @@ public class CaregoryController extends BaseController {
     @GetMapping("/findAllCaregorys")
     public List<Caregory> list(Caregory param) {
        return caregoryService.findAllCaregorys();
+    }
+
+    @PreAuthorize("hasAuthority('sys:dict:list')")
+    @OperationLog
+    @ApiOperation("查询全部")
+    @GetMapping("/findPCaregorys")
+    public List<Caregory> list2(Caregory param) {
+        List<Caregory> list=caregoryService.findAllCaregorys();
+        List<Caregory> list1=new ArrayList<>();
+        for (Caregory c:list) {
+            if (c.getPid()==0){
+                list1.add(c);
+            }
+        }
+        return list1;
     }
 
     @PreAuthorize("hasAuthority('sys:dict:list')")

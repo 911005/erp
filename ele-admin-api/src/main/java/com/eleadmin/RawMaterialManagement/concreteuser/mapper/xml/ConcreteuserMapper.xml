@@ -43,7 +43,9 @@
     <select id="findAllConcreteuser" resultType="com.eleadmin.RawMaterialManagement.concreteuser.entity.Concreteuser">
         select * from concreteuser
     </select>
-
+    <select id="findConcreteuserByName" resultType="com.eleadmin.RawMaterialManagement.concreteuser.entity.Concreteuser">
+        select * from concreteuser where unitName=#{unitname}
+    </select>
     <!--    删除-->
     <delete id="deleteConcreteuser">
         delete from concreteuser where id = #{id}

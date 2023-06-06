@@ -21,6 +21,8 @@ public interface McustomerService extends IService<Mcustomer> {
 //    查询
     List<Mcustomer> findAllMcustomer();
 
+    List<Mcustomer> findMcustomerByName(String name);
+
     void deleteMcustomer(int id);
 
     boolean updateMcustomer(Mcustomer mcustomer);

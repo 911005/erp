@@ -1,10 +1,12 @@
 <template>
 <div>
+  &nbsp;&nbsp;&nbsp;&nbsp;
   <vxe-input v-model="sto.searchInput1" placeholder="请输入储料仓名称" type="search" ></vxe-input>
   <vxe-button status="primary" content="查询" @click="findStoragesilosBystoragesiloName()"></vxe-button>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <vxe-input v-model="sto.searchInput2" placeholder="请输入储存类别" type="search" ></vxe-input>
   <vxe-button status="primary" content="查询" @click="findStoragesilosBystorageslioType()"></vxe-button>
-  <vxe-button status="primary" content="查询" @click="findStoragesilos()"></vxe-button>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<vxe-button status="primary" content="刷新" @click="findStoragesilos()"></vxe-button>
   <vxe-button status="primary" content="新增" @click="addStoragesilo()"></vxe-button>
   <vxe-table
     :data="sto.storagesilos">
@@ -29,9 +31,9 @@
 
 
   <!--  编辑弹窗-->
-  <vxe-modal v-model="sto.status" :title=" '新增&保存'" width="800" min-width="600" min-height="300"  resize destroy-on-close>
+  <vxe-modal v-model="sto.status" :title=" '编辑'" width="800" height="500" min-width="600" min-height="300"  resize destroy-on-close>
     <vxe-form :data="sto.updateData" title-align="right" title-width="100" >
-      <vxe-form-item title="Basic information" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
+      <vxe-form-item title="储料仓" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
       <vxe-form-item field="storagesiloname" title="储料仓名称" :span="12" :item-render="{}">
         <template #default="{ data }">
           <vxe-input v-model="data.storagesiloname" placeholder="请输入储料仓名称"></vxe-input>
@@ -44,27 +46,27 @@
       </vxe-form-item>
       <vxe-form-item field="volume" title="容量" :span="12" :item-render="{}">
         <template #default="{ data }">
-          <vxe-input v-model="data.volume" placeholder="请输入容量"></vxe-input>
+          <vxe-input v-model="data.volume" placeholder="请输入容量" type="integer"></vxe-input>
         </template>
       </vxe-form-item>
       <vxe-form-item field="warnuplimit" title="预警上限" :span="12" :item-render="{}">
         <template #default="{ data }">
-          <vxe-input v-model="data.warnuplimit" placeholder="请输入预警上限"></vxe-input>
+          <vxe-input v-model="data.warnuplimit" placeholder="请输入预警上限" type="integer"></vxe-input>
         </template>
       </vxe-form-item>
       <vxe-form-item field="warndpwnlimit" title="预警下限" :span="12" :item-render="{}">
         <template #default="{ data }">
-          <vxe-input v-model="data.warndpwnlimit" placeholder="请输入预警下限"></vxe-input>
+          <vxe-input v-model="data.warndpwnlimit" placeholder="请输入预警下限" type="integer"></vxe-input>
         </template>
       </vxe-form-item>
       <vxe-form-item field="safevolume" title="安全容量" :span="12" :item-render="{}">
         <template #default="{ data }">
-          <vxe-input v-model="data.safevolume" placeholder="请输入安全容量"></vxe-input>
+          <vxe-input v-model="data.safevolume" placeholder="请输入安全容量" type="integer"></vxe-input>
         </template>
       </vxe-form-item>
       <vxe-form-item field="username" title="库管员" :span="12" :item-render="{}">
         <template #default="{ data }">
-          <vxe-input v-model="data.username" placeholder="请输入库管员"></vxe-input>
+          <vxe-select v-model="data.username" :options="sto.options" placeholder="请输入库管员"></vxe-select>
         </template>
       </vxe-form-item>
       <vxe-form-item field="remarks" title="备注" :span="12" :item-render="{}">
@@ -74,7 +76,10 @@
       </vxe-form-item>
       <vxe-form-item field="storagesilostate" title="状态" :span="12" :item-render="{}">
         <template #default="{ data }">
-          <vxe-input v-model="data.storagesilostate" placeholder="请输入状态"></vxe-input>
+          <vxe-select v-model="data.storagesilostate" placeholder="请输入状态">
+            <vxe-option :value="'启用'" label="启用"></vxe-option>
+            <vxe-option :value="'停用'" label="停用"></vxe-option>
+          </vxe-select>
         </template>
       </vxe-form-item>
 
@@ -87,9 +92,9 @@
     </vxe-form>
   </vxe-modal>
   <!--  新增弹窗-->
-  <vxe-modal v-model="sto.addStatus" :title=" '新增&保存'" width="800" min-width="600" min-height="300"  resize destroy-on-close>
+  <vxe-modal v-model="sto.addStatus" :title=" '新增'" width="800" height="500" min-width="600" min-height="300"  resize destroy-on-close>
     <vxe-form :data="sto.addData" title-align="right" title-width="100" >
-      <vxe-form-item title="Basic information" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
+      <vxe-form-item title="储料仓" title-align="left" :title-width="200" :span="24" :title-prefix="{icon: 'vxe-icon-comment'}"></vxe-form-item>
 
       <vxe-form-item field="storagesiloname" title="储料仓名称" :span="12" :item-render="{}">
         <template #default="{ data }">
@@ -98,32 +103,32 @@
       </vxe-form-item>
       <vxe-form-item field="storagesliotype" title="储存类别" :span="12" :item-render="{}">
         <template #default="{ data }">
-          <vxe-input v-model="data.storagesliotype" placeholder="请输入储存类别"></vxe-input>
+          <vxe-input v-model="data.storagesliotype" placeholder="请输入储存类别" type="integer"></vxe-input>
         </template>
       </vxe-form-item>
       <vxe-form-item field="volume" title="容量" :span="12" :item-render="{}">
         <template #default="{ data }">
-          <vxe-input v-model="data.volume" placeholder="请输入容量"></vxe-input>
+          <vxe-input v-model="data.volume" placeholder="请输入容量" type="integer"></vxe-input>
         </template>
       </vxe-form-item>
       <vxe-form-item field="warnuplimit" title="预警上限" :span="12" :item-render="{}">
         <template #default="{ data }">
-          <vxe-input v-model="data.warnuplimit" placeholder="请输入预警上限"></vxe-input>
+          <vxe-input v-model="data.warnuplimit" placeholder="请输入预警上限" type="integer"></vxe-input>
         </template>
       </vxe-form-item>
       <vxe-form-item field="warndpwnlimit" title="预警下限" :span="12" :item-render="{}">
         <template #default="{ data }">
-          <vxe-input v-model="data.warndpwnlimit" placeholder="请输入预警下限"></vxe-input>
+          <vxe-input v-model="data.warndpwnlimit" placeholder="请输入预警下限" type="integer"></vxe-input>
         </template>
       </vxe-form-item>
       <vxe-form-item field="safevolume" title="安全容量" :span="12" :item-render="{}">
         <template #default="{ data }">
-          <vxe-input v-model="data.safevolume" placeholder="请输入安全容量"></vxe-input>
+          <vxe-input v-model="data.safevolume" placeholder="请输入安全容量" type="integer"></vxe-input>
         </template>
       </vxe-form-item>
       <vxe-form-item field="username" title="库管员" :span="12" :item-render="{}">
         <template #default="{ data }">
-          <vxe-input v-model="data.username" placeholder="请输入库管员"></vxe-input>
+          <vxe-select v-model="data.username" :options="sto.options" placeholder="请输入库管员"></vxe-select>
         </template>
       </vxe-form-item>
       <vxe-form-item field="remarks" title="备注" :span="12" :item-render="{}">
@@ -133,7 +138,10 @@
       </vxe-form-item>
       <vxe-form-item field="storagesilostate" title="状态" :span="12" :item-render="{}">
         <template #default="{ data }">
-          <vxe-input v-model="data.storagesilostate" placeholder="请输入状态"></vxe-input>
+          <vxe-select v-model="data.storagesilostate" placeholder="请输入状态">
+            <vxe-option :value="'启用'" label="启用"></vxe-option>
+            <vxe-option :value="'停用'" label="停用"></vxe-option>
+          </vxe-select>
         </template>
       </vxe-form-item>
 
@@ -156,16 +164,28 @@ export default {
   setup() {
     onMounted(() => {
       findStoragesilos()
+      findToStoragesilos()
     })
     const sto = reactive({
       searchInput1:[],
       searchInput2:[],
       storagesilos: [],
+      options:[],
       status: false,
       addStatus: false,
       updateData: [],
       addData: []
     })
+    const findToStoragesilos = async () =>{
+      const res = await request.get('/system/user/findAllUsers');
+      const data=res.data
+      if (data && data.length > 0) {
+        sto.options = data.map(item => {
+          return { value: item.username, label: item.username};
+        });
+      }
+      return res
+    }
     const findStoragesilos = async () => {
       console.log(111)
       const res = await request.get('/storagesilo/storagesilo/findAllStoragesilos');
@@ -238,6 +258,7 @@ export default {
     }
     return {
       sto,
+      findToStoragesilos,
       findStoragesilos,
       updateEvent,
       submitEvent,

@@ -54,6 +54,11 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
     }
 
     @Override
+    public List<OrderParam> findOrdersByNumber(String ordernumber) {
+        return orderMapper.findOrdersByNumber(ordernumber);
+    }
+
+    @Override
     public boolean addOrder(Order order) {
         System.out.println(order.getOrdernumber());
 //        System.out.println(concrete.getConcretemarkings());
